@@ -18,7 +18,7 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 ##### 克隆仓库到$XDG_CONFIG_HOME(即~/.config)
 
 ```shell
-git clone https://github.com/Ic-arbon/home-manager ~/.config
+git clone https://github.com/Ic-arbon/home-manager-dotfiles ~/.config/home-manager
 ```
 
 ##### nix flake安装home-manager并自动初始化
@@ -58,6 +58,7 @@ nixlang较为晦涩，我不会讲其中的细节，但使用者应该了解`hom
 集中管理[软件包](https://search.nixos.org/packages)，而不是按传统包管理器的方式一行一行敲命令
 
 ```nix
+# home.nix
 { config, pkgs, ...}:  # 整体结构为 {函数的输入}:{函数的表达式} 比如“pkgs”就是函数的一个输入参数
 
 { 
@@ -72,9 +73,11 @@ nixlang较为晦涩，我不会讲其中的细节，但使用者应该了解`hom
 同样的，比起在各种`etc`目录下找配置文件了，nix-way更倾向于集中管理dotfiles，逐渐转向[home-manager](https://home-manager-options.extranix.com/?query=&release=master)
 
 ```nix
+# apps/astronvim.nix
 { pkgs, ... }: 
 
-{
+{ 
+...
 xdg.configFile = {
     "nvim" = {
       source = pkgs.fetchFromGitHub {
