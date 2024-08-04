@@ -1,6 +1,6 @@
 {
   programs.bash = {
-    #enable = true;	#导致ksplashqml崩溃
+    #enable = true;	# 导致Steamdeck切换桌面模式时ksplashqml崩溃
     bashrcExtra = '' 
       export XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS"
     '';

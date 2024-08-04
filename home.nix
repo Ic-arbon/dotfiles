@@ -78,6 +78,7 @@
       ls = "ls --color=auto";
       ll = "ls -lah";
       ra = "ranger";
+      lg = "lazygit";
       #gst = "git status";
       #gp = "git pull";
       #gco = "git checkout";
