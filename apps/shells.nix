@@ -17,7 +17,10 @@
     };
     oh-my-zsh = {
       enable = true;
-      #plugins = [ "docker-compose" "docker" ];
+      plugins = [ 
+        # "docker-compose"
+        # "docker"
+      ];
       theme = "robbyrussell";
     };
     initExtra = ''

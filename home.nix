@@ -1,26 +1,48 @@
-{ config, pkgs, ... }:
+{ config, pkgs, libs, ... }:
 
+let
+  isLinux = pkgs.stdenv.hostPlatform.isLinux;
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+  unsupported = builtins.abort "Unsupported platform";
+
+  homeDir = "${config.home.homeDirectory}";
+  # stuffDir =
+  #   if isLinux then "/stuff" else
+  #   if isDarwin then "${homeDir}/stuff" else unsupported;
+  # hmDir = "${stuffDir}/nix/home-manager";
+in
 {
   #导入部分apps的配置文件
   imports = [
-    ./apps/firefox.nix
-    ./apps/ranger.nix
     ./apps/shells.nix
     ./apps/git.nix
+    ./apps/ssh.nix  # 不能全自动化部署，需要ssh-keygen -t ed25519，并上传公钥
+    ./apps/ranger.nix
     ./apps/astronvim.nix
+    ./apps/firefox.nix
   ];
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = with pkgs; [
+  home.packages = with pkgs; ([
     # # 已经加了"with pkgs;"了，意味着分号后的表达式都是pkgs的子集，只需要包名就行了
-    bind
-    nload
+    # Common packages
+    bat
     neofetch
     v2raya
     v2ray
-    go-musicfox
-    bluetuith
     ffmpeg
+    go-musicfox
+  ] 
+  ++ lib.optionals isLinux [
+    # GNU/Linux packages
+    bind
+    nload
+    bluetuith
+  ]
+  ++ lib.optionals isDarwin [
+    # macOS packages
+    gnused
+  
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -37,8 +59,11 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-  ];
-
+  ]);
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (pkgs.lib.getName pkg) [
+      "spotify"
+    ];
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
@@ -98,7 +123,9 @@
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "deck";
-  home.homeDirectory = "/home/deck";
+  home.homeDirectory =
+    if isLinux then "/home/deck" else
+    if isDarwin then "/Users/deck" else unsupported;
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
