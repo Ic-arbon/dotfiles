@@ -1,18 +1,17 @@
 {pkgs, ...}: {
-  programs = {
-    git = {
-      enable = true;
-      userName = "Ic-arbon";
-      userEmail = "dty2015@hotmail.com";
-    };
+  programs.git = {
+    enable = true;
+    #  TODO: REPLACE with your username and email
+    userName = "Ic-arbon";
+    userEmail = "dty2015@hotmail.com";
+  };
 
-    lazygit = {
-      enable = true;
-    };
+  programs.lazygit = {
+    enable = true;
+  };
 
-    git-credential-oauth = {
-      enable = true;
-    };
+  programs.git-credential-oauth = {
+    enable = true;
   };
 
   home.file = {

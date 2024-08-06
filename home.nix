@@ -7,30 +7,40 @@
   config,
   pkgs,
   ...
-}: {
+}: 
+let
+  isLinux = pkgs.stdenv.hostPlatform.isLinux;
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+  unsupported = builtins.abort "Unsupported platform";
+
+  homeDir = "${config.home.homeDirectory}";
+  dotfileDir = "$HOME/dotfiles";
+  # stuffDir =
+  #   if isLinux then "/stuff" else
+  #   if isDarwin then "${homeDir}/stuff" else unsupported;
+  # hmDir = "${stuffDir}/nix/home-manager";
+in{
   # TODO: Set your username
   home = {
     username = "deck";
-    homeDirectory = "/home/deck";
+    homeDirectory = 
+      if isLinux then "/home/deck" else
+      if isDarwin then "/Users/deck" else unsupported;
   };
 
   # You can import other home-manager modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/home-manager):
     # outputs.homeManagerModules.example
-    # outputs.homeManagerModules.git
-    # outputs.homeManagerModules.shells
-    # outputs.homeManagerModules.ssh # 不能全自动化部署，需要ssh-keygen -t ed25519，并上传公钥
-    # outputs.homeManagerModules.ranger
-    # outputs.homeManagerModules.astronvim
-    # outputs.homeManagerModules.firefox
 
     # Or modules exported from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModules.default
 
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
-  ]++ (builtins.attrValues outputs.homeManagerModules);
+  ]
+  # 导入所有模块
+  ++ (builtins.attrValues outputs.homeManagerModules);
 
   nixpkgs = {
     # You can add overlays here
@@ -69,6 +79,7 @@
     ffmpeg
     go-musicfox
     spotify
+    qq
     # GNU/Linux packages
     bind
     nload
@@ -90,10 +101,7 @@
     ll = "ls -lah";
     ra = "ranger";
     lg = "lazygit";
-    #gst = "git status";
-    #gp = "git pull";
-    #gco = "git checkout";
-    update = "home-manager switch";
+    update = "home-manager switch --flake ${dotfileDir}";
   };
 
   # Misc

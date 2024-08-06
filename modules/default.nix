@@ -5,7 +5,7 @@
   # my-module = import ./my-module.nix;
   git = import ./git.nix;
   shells = import ./shells.nix;
-  ssh = import ./ssh.nix;
+  ssh = import ./ssh.nix; # 不能全自动化部署，需要ssh-keygen -t ed25519，并上传公钥
   ranger = import ./ranger.nix;
   astronvim = import ./astronvim.nix;
   firefox = import ./firefox.nix;
