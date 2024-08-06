@@ -1,8 +1,10 @@
 # Modular
 我为什么不用中文写呢(哭
 
-write your own module to config apps.
-import them in `default.nix` .
+write your own module to config apps
+
+import them in `default.nix` 
+
 [搜索设置关键词：pkgname home-manager](https://mynixos.com/)
 
 ### Standard
