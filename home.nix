@@ -9,9 +9,9 @@
   ...
 }: 
 let
-  isLinux = pkgs.stdenv.hostPlatform.isLinux;
-  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
-  unsupported = builtins.abort "Unsupported platform";
+  # isLinux = pkgs.stdenv.hostPlatform.isLinux;
+  # isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+  # unsupported = builtins.abort "Unsupported platform";
 
   homeDir = "${config.home.homeDirectory}";
   dotfileDir = "$HOME/dotfiles";
@@ -24,8 +24,9 @@ in{
   home = {
     username = "deck";
     homeDirectory = 
-      if isLinux then "/home/deck" else
-      if isDarwin then "/Users/deck" else unsupported;
+      "/home/deck";
+      # if isLinux then "/home/deck" else
+      # if isDarwin then "/Users/deck" else unsupported;
   };
 
   # You can import other home-manager modules here
@@ -78,12 +79,11 @@ in{
     v2ray
     ffmpeg
     go-musicfox
-    spotify
-    qq
     # GNU/Linux packages
     bind
     nload
     bluetuith
+    qq
     # macOS packages
     gnused
   ];
