@@ -12,6 +12,9 @@
       "AddKeysToAgent" = "yes";
     };
   };
+  services.ssh-agent = {
+    enable = true;
+  };
   programs.zsh = {
     enable = true;
     oh-my-zsh = {
