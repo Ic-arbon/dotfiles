@@ -19,27 +19,21 @@ It works on my machine :)
 ```shell
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install 
 ```
-##### 克隆仓库到本地
+##### 获取模板
 
 ```shell
-git clone https://github.com/Ic-arbon/dotfiles ~/dotfiles
-```
-
-```shell
-# or you can customize target dir, 
-# remember to replace `dotfileDir` in `home.nix`
-git clone https://github.com/Ic-arbon/dotfiles /path/to/dotfiles
+nix flake init -t github:Ic-arbon/dotfiles ~/dotfiles
 ```
 
 ##### 用[standalone方式](https://nix-community.github.io/home-manager/index.xhtml#ch-nix-flakes)安装home-manager并自动初始化
 
 ```shell
 nix run home-manager \
--- \
-switch \
---flake \
--b backup\
-~/dotfiles # or /path/to/dotfiles
+--        \
+switch    \
+--flake   \
+-b backup \
+~/dotfiles 
 ```
 
 ### Usage & Example
