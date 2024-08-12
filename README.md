@@ -34,7 +34,11 @@ git clone https://github.com/Ic-arbon/dotfiles /path/to/dotfiles
 ##### 用[standalone方式](https://nix-community.github.io/home-manager/index.xhtml#ch-nix-flakes)安装home-manager并自动初始化
 
 ```shell
-nix run home-manager -- switch \
+nix run home-manager \
+-- \
+switch \
+--flake \
+-b backup\
 ~/dotfiles # or /path/to/dotfiles
 ```
 
