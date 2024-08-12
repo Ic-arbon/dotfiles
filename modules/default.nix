@@ -4,6 +4,7 @@
   # List your module files here
   # my-module = import ./my-module.nix;
   astronvim = import ./astronvim.nix;
+  asus = import ./asus.nix;
   fcitx5 = import ./fcitx5.nix;
   firefox = import ./firefox.nix;
   git = import ./git.nix;
