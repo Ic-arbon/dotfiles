@@ -3,10 +3,11 @@
 {
   # List your module files here
   # my-module = import ./my-module.nix;
-  git = import ./git.nix;
-  shells = import ./shells.nix;
-  ssh = import ./ssh.nix; # 不能全自动化部署，需要ssh-keygen -t ed25519，并上传公钥
-  ranger = import ./ranger.nix;
   astronvim = import ./astronvim.nix;
+  fcitx5 = import ./fcitx5.nix;
   firefox = import ./firefox.nix;
+  git = import ./git.nix;
+  ranger = import ./ranger.nix;
+  shell = import ./shell.nix;
+  ssh = import ./ssh.nix; # 不能全自动化部署，需要ssh-keygen -t ed25519，并上传公钥
 }

@@ -7,41 +7,39 @@
   config,
   pkgs,
   ...
-}: 
-let
+}: let
   # isLinux = pkgs.stdenv.hostPlatform.isLinux;
   # isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
   # unsupported = builtins.abort "Unsupported platform";
-
   homeDir = "${config.home.homeDirectory}";
   dotfileDir = "$HOME/dotfiles";
   # stuffDir =
   #   if isLinux then "/stuff" else
   #   if isDarwin then "${homeDir}/stuff" else unsupported;
   # hmDir = "${stuffDir}/nix/home-manager";
-in{
+in {
   # TODO: Set your username
   home = {
-    username = "deck";
-    homeDirectory = 
-      "/home/deck";
-      # if isLinux then "/home/deck" else
-      # if isDarwin then "/Users/deck" else unsupported;
+    username = "tyd";
+    homeDirectory = "/home/tyd";
+    # if isLinux then "/home/deck" else
+    # if isDarwin then "/Users/deck" else unsupported;
   };
 
   # You can import other home-manager modules here
-  imports = [
-    # If you want to use modules your own flake exports (from modules/home-manager):
-    # outputs.homeManagerModules.example
+  imports =
+    [
+      # If you want to use modules your own flake exports (from modules/home-manager):
+      # outputs.homeManagerModules.example
 
-    # Or modules exported from other flakes (such as nix-colors):
-    # inputs.nix-colors.homeManagerModules.default
+      # Or modules exported from other flakes (such as nix-colors):
+      # inputs.nix-colors.homeManagerModules.default
 
-    # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
-  ]
-  # 导入所有模块
-  ++ (builtins.attrValues outputs.homeManagerModules);
+      # You can also split up your configuration and import pieces of it here:
+      # ./nvim.nix
+    ]
+    # 导入所有模块
+    ++ (builtins.attrValues outputs.homeManagerModules);
 
   nixpkgs = {
     # You can add overlays here
@@ -101,6 +99,7 @@ in{
     ll = "ls -lah";
     ra = "ranger";
     lg = "lazygit";
+    bui = "bluetuith";
     update = "home-manager switch --flake ${dotfileDir}";
   };
 
