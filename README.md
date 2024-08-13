@@ -19,10 +19,10 @@ It works on my machine :)
 ```shell
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install 
 ```
-### 获取模板
+### 克隆仓库到本地
 
 ```shell
-nix flake init -t github:Ic-arbon/dotfiles ~/dotfiles
+git clone https://github.com/Ic-arbon/dotfiles ~/dotfiles
 ```
 ##### 修改文件内用户为当前用户
 ```shell
