@@ -24,6 +24,10 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 ```shell
 nix flake init -t github:Ic-arbon/dotfiles ~/dotfiles
 ```
+修改文件内用户为当前用户
+```shell
+~/dotfiles/modules/rename_user.sh
+```
 
 ##### 用[standalone方式](https://nix-community.github.io/home-manager/index.xhtml#ch-nix-flakes)安装home-manager并自动初始化
 
@@ -111,11 +115,3 @@ update
 到这里如果你的环境已经能工作了，恭喜你，在别的机器上这个环境大概率能直接工作。
 
 你只需要让别人clone你的配置，并用3行命令安装。
-
-> !!!不要忘记有关用户名的TODO
->
-> home.nix
->
-> flake.nix
->
-> modules/git.nix
