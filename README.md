@@ -1,6 +1,6 @@
 # Dotfiles for home-manager
 
-### Target
+## Target
 
 多机器多系统同步一套配置，快速移植开发环境。
 
@@ -10,16 +10,16 @@
 
 It works on my machine :)
 
-### Installation
+## Installation
 
-##### 安装nix包管理器
+### 安装nix包管理器
 
 [zero-to-nix](https://zero-to-nix.com/)相比官方安装脚本修复了多用户模式安装守护进程nix-daemon不启动的问题，也默认启用flakes
 
 ```shell
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install 
 ```
-##### 获取模板
+### 获取模板
 
 ```shell
 nix flake init -t github:Ic-arbon/dotfiles ~/dotfiles
@@ -29,7 +29,7 @@ nix flake init -t github:Ic-arbon/dotfiles ~/dotfiles
 ~/dotfiles/modules/rename_user.sh
 ```
 
-##### 用[standalone方式](https://nix-community.github.io/home-manager/index.xhtml#ch-nix-flakes)安装home-manager并自动初始化
+### 用[standalone方式](https://nix-community.github.io/home-manager/index.xhtml#ch-nix-flakes)安装home-manager并自动初始化
 
 ```shell
 nix run home-manager \
@@ -40,7 +40,7 @@ switch    \
 ~/dotfiles 
 ```
 
-### Usage & Example
+## Usage & Example
 
 > 在一台机器上能工作的环境，在任何机器上都应该工作
 
