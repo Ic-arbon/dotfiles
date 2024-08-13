@@ -24,7 +24,7 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 ```shell
 nix flake init -t github:Ic-arbon/dotfiles ~/dotfiles
 ```
-修改文件内用户为当前用户
+##### 修改文件内用户为当前用户
 ```shell
 ~/dotfiles/modules/rename_user.sh
 ```
