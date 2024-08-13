@@ -29,7 +29,7 @@ nix flake init -t github:Ic-arbon/dotfiles ~/dotfiles
 ~/dotfiles/modules/rename_user.sh
 ```
 
-### 用[standalone方式](https://nix-community.github.io/home-manager/index.xhtml#ch-nix-flakes)安装home-manager并自动初始化
+### 用[standalone方式](https://nix-community.github.io/home-manager/index.xhtml#ch-nix-flakes)安装home-manager
 
 ```shell
 nix run home-manager \
