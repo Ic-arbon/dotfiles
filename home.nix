@@ -17,6 +17,7 @@
   #   if isLinux then "/stuff" else
   #   if isDarwin then "${homeDir}/stuff" else unsupported;
   # hmDir = "${stuffDir}/nix/home-manager";
+  nixGLIntel = inputs.nixGL.packages."${pkgs.system}".nixGLIntel;
 in {
   # TODO: Set your username
   home = {
@@ -29,6 +30,10 @@ in {
   # You can import other home-manager modules here
   imports =
     [
+      (builtins.fetchurl {
+        url = "https://raw.githubusercontent.com/Smona/home-manager/nixgl-compat/modules/misc/nixgl.nix";
+        sha256 = "01dkfr9wq3ib5hlyq9zq662mp0jl42fw3f6gd2qgdf8l8ia78j7i";
+      })
       # If you want to use modules your own flake exports (from modules/home-manager):
       # outputs.homeManagerModules.example
 
@@ -39,7 +44,7 @@ in {
       # ./nvim.nix
     ]
     # 导入所有模块
-    ++ (builtins.attrValues outputs.homeManagerModules);
+      ++(builtins.attrValues outputs.homeManagerModules);
 
   nixpkgs = {
     # You can add overlays here
@@ -82,16 +87,33 @@ in {
     nload
     bluetuith
     qq
+    avidemux
+    libsForQt5.qtstyleplugins
+    libsForQt5.qt5ct
+    lxappearance
     # macOS packages
     gnused
   ];
+
+  nixGL.prefix = "${nixGLIntel}/bin/nixGLIntel";
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
   programs.git.enable = true;
   
+  # home.language = {
+  #   base = "zh_CN.UTF-8";
+  # };
+
+  xresources.properties = {
+    # "Xft.dpi" = 144;
+  };
+  
   home.sessionVariables = {
     EDITOR = "nvim";
+    QT_QPA_PLATFORMTHEME = "qt5ct";
+    LANG="zh_CN.UTF-8";
+    LANGUAGE="zh_CN:en_US";
   };
 
   home.shellAliases = {
@@ -100,7 +122,7 @@ in {
     ra = "ranger";
     lg = "lazygit";
     bui = "bluetuith";
-    update = "home-manager switch --flake ${dotfileDir}";
+    update = "home-manager switch --impure --flake ${dotfileDir}";
   };
 
   # Misc

@@ -4,9 +4,9 @@
 
 多机器多系统同步一套配置，快速移植开发环境。
 
-不要让命令式部署环境，化作你项目伙伴构建失败的泪水。
+不要让命令式部署环境，化作项目伙伴构建失败的泪水。
 
-不要让处理更新和依赖，化作你天天写Dockerfile的汗水。
+不要让处理更新和依赖，化作天天写Dockerfile的汗水。
 
 It works on my machine :)
 
@@ -35,6 +35,7 @@ git clone https://github.com/Ic-arbon/dotfiles ~/dotfiles
 nix run home-manager \
 --        \
 switch    \
+--impure  \
 --flake   \
 -b backup \
 ~/dotfiles 
