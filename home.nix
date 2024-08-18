@@ -93,6 +93,7 @@ in {
     avidemux
     # (config.lib.nixGL.wrap pkgs.kdePackages.kdenlive)
     # glibc
+    libsForQt5.krdc
     libsForQt5.qtstyleplugins
     libsForQt5.qt5ct
     lxappearance
