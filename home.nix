@@ -94,6 +94,7 @@ in {
     # (config.lib.nixGL.wrap pkgs.kdePackages.kdenlive)
     # glibc
     libsForQt5.krdc
+    libsForQt5.krfb
     libsForQt5.qtstyleplugins
     libsForQt5.qt5ct
     lxappearance
@@ -113,6 +114,12 @@ in {
 
   xresources.properties = {
     # "Xft.dpi" = 144;
+  };
+
+  home.activation = {
+    rename = lib.hm.dag.entryBefore ["writeBoundary"] ''
+      $DRY_RUN_CMD $HOME/dotfiles/modules/rename_user.sh
+    '';
   };
 
   home.sessionVariables = {

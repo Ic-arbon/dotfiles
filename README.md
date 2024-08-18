@@ -28,6 +28,17 @@ git clone https://github.com/Ic-arbon/dotfiles ~/dotfiles
 ```shell
 ~/dotfiles/modules/rename_user.sh
 ```
+### 设置代理
+```shell
+sudo mkdir /run/systemd/system/nix-daemon.service.d/
+sudo cat << EOF >/run/systemd/system/nix-daemon.service.d/override.conf
+[Service]
+Environment="ALL_PROXY=socks5://代理服务器地址:端口"
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart nix-daemon
+
+```
 
 ### 用[standalone方式](https://nix-community.github.io/home-manager/index.xhtml#ch-nix-flakes)安装home-manager
 
@@ -35,9 +46,9 @@ git clone https://github.com/Ic-arbon/dotfiles ~/dotfiles
 nix run home-manager \
 --        \
 switch    \
+-b backup \
 --impure  \
 --flake   \
--b backup \
 ~/dotfiles 
 ```
 
