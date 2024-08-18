@@ -9,11 +9,11 @@
     # at the same time. Here's an working example:
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
-    
+
     # nixGL
     nixGL.url = "github:nix-community/nixGL";
     nixGL.inputs.nixpkgs.follows = "nixpkgs";
-    
+
     # Home manager
     # home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.url = "github:nix-community/home-manager";

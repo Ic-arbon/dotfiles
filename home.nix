@@ -44,7 +44,7 @@ in {
       # ./nvim.nix
     ]
     # 导入所有模块
-      ++(builtins.attrValues outputs.homeManagerModules);
+    ++ (builtins.attrValues outputs.homeManagerModules);
 
   nixpkgs = {
     # You can add overlays here
@@ -82,12 +82,15 @@ in {
     v2ray
     ffmpeg
     go-musicfox
+    screenkey
     # GNU/Linux packages
     bind
     nload
     bluetuith
     qq
     avidemux
+    # (config.lib.nixGL.wrap pkgs.kdePackages.kdenlive)
+    # glibc
     libsForQt5.qtstyleplugins
     libsForQt5.qt5ct
     lxappearance
@@ -100,7 +103,7 @@ in {
   # Enable home-manager and git
   programs.home-manager.enable = true;
   programs.git.enable = true;
-  
+
   # home.language = {
   #   base = "zh_CN.UTF-8";
   # };
@@ -108,12 +111,12 @@ in {
   xresources.properties = {
     # "Xft.dpi" = 144;
   };
-  
+
   home.sessionVariables = {
     EDITOR = "nvim";
     QT_QPA_PLATFORMTHEME = "qt5ct";
-    LANG="zh_CN.UTF-8";
-    LANGUAGE="zh_CN:en_US";
+    LANG = "zh_CN.UTF-8";
+    LANGUAGE = "zh_CN:en_US";
   };
 
   home.shellAliases = {

@@ -1,4 +1,8 @@
-{lib, pkgs, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   # Dependencies
   fonts.fontconfig.enable = true;
 
@@ -35,7 +39,7 @@
       };
     };
   };
-  
+
   home.activation = {
     backup = lib.hm.dag.entryBefore ["writeBoundary"] ''
       $DRY_RUN_CMD $HOME/dotfiles/modules/backup_nvim.sh
