@@ -48,12 +48,7 @@
 
   xdg.configFile = {
     "nvim" = {
-      source = pkgs.fetchFromGitHub {
-        owner = "Ic-arbon";
-        repo = "AstroNvim";
-        rev = "";
-        sha256 = "sha256-P6AC1L5wWybju3+Pkuca3KB4YwKEdG7GVNvAR8w+X1I=";
-      };
+      source = ~/dotfiles/AstroNvim;
       executable = true;
       recursive = true;
     };

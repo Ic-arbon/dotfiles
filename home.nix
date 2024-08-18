@@ -88,6 +88,8 @@ in {
     nload
     bluetuith
     qq
+    spotify
+    onlyoffice-bin_latest
     avidemux
     # (config.lib.nixGL.wrap pkgs.kdePackages.kdenlive)
     # glibc
