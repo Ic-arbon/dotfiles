@@ -92,7 +92,7 @@ in {
     spotify
     onlyoffice-bin_latest
     avidemux
-    # (config.lib.nixGL.wrap pkgs.kdePackages.kdenlive)
+    (config.lib.nixGL.wrap pkgs.kdePackages.kdenlive)
     # glibc
     libsForQt5.krdc
     libsForQt5.krfb
