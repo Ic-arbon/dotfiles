@@ -57,7 +57,7 @@
     # Available through 'home-manager --flake .#your-username@your-hostname'
     homeConfigurations = {
       #  TODO: FIXME replace with your username@hostname
-      "tyd" = home-manager.lib.homeManagerConfiguration {
+      "deck" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [

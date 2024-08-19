@@ -21,8 +21,8 @@
 in {
   # TODO: Set your username
   home = {
-    username = "tyd";
-    homeDirectory = "/home/tyd";
+    username = "deck";
+    homeDirectory = "/home/deck";
     # if isLinux then "/home/deck" else
     # if isDarwin then "/Users/deck" else unsupported;
   };
@@ -84,6 +84,7 @@ in {
     go-musicfox
     screenkey
     # GNU/Linux packages
+    libgccjit
     bind
     nload
     bluetuith
