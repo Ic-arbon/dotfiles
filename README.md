@@ -22,7 +22,7 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 ### 克隆仓库到本地
 
 ```shell
-git clone https://github.com/Ic-arbon/dotfiles ~/dotfiles
+git clone --recursive https://github.com/Ic-arbon/dotfiles ~/dotfiles
 ```
 ##### 修改文件内用户为当前用户
 ```shell
@@ -30,8 +30,8 @@ git clone https://github.com/Ic-arbon/dotfiles ~/dotfiles
 ```
 ### 设置代理
 ```shell
-sudo mkdir /run/systemd/system/nix-daemon.service.d/
-sudo cat << EOF >/run/systemd/system/nix-daemon.service.d/override.conf
+sudo mkdir /etc/systemd/system/nix-daemon.service.d/
+sudo cat << EOF >/etc/systemd/system/nix-daemon.service.d/override.conf
 [Service]
 Environment="ALL_PROXY=socks5://代理服务器地址:端口"
 EOF
