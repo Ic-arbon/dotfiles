@@ -10,6 +10,9 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
 
+    # NUR
+    nur.url = "github:nix-community/NUR";
+
     # nixGL
     nixGL.url = "github:nix-community/nixGL";
     nixGL.inputs.nixpkgs.follows = "nixpkgs";
@@ -23,6 +26,7 @@
   outputs = {
     self,
     nixpkgs,
+    nur,
     # nixGL,
     home-manager,
     ...
@@ -57,7 +61,7 @@
     # Available through 'home-manager --flake .#your-username@your-hostname'
     homeConfigurations = {
       #  TODO: FIXME replace with your username@hostname
-      "deck" = home-manager.lib.homeManagerConfiguration {
+      "tyd" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [

@@ -21,8 +21,8 @@
 in {
   # TODO: Set your username
   home = {
-    username = "deck";
-    homeDirectory = "/home/deck";
+    username = "tyd";
+    homeDirectory = "/home/tyd";
     # if isLinux then "/home/deck" else
     # if isDarwin then "/Users/deck" else unsupported;
   };
@@ -53,6 +53,7 @@ in {
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
+      outputs.overlays.nur-packages
 
       # You can also add overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default
@@ -83,8 +84,8 @@ in {
     ffmpeg
     go-musicfox
     screenkey
+    btdu
     # GNU/Linux packages
-    libgccjit
     bind
     nload
     bluetuith
