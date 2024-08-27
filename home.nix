@@ -137,7 +137,7 @@ in {
     ra = "ranger";
     lg = "lazygit";
     bui = "bluetuith";
-    update = "home-manager switch --impure --flake ${dotfileDir}";
+    update = "home-manager switch -b backup --impure --flake ${dotfileDir}";
   };
 
   # Misc
