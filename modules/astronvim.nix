@@ -13,7 +13,7 @@
     python3
     nodejs
     gcc
-    rustup
+    # rustup
   ];
 
   programs = {
