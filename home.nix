@@ -21,8 +21,8 @@
 in {
   # TODO: Set your username
   home = {
-    username = "tyd";
-    homeDirectory = "/home/tyd";
+    username = "deck";
+    homeDirectory = "/home/deck";
     # if isLinux then "/home/deck" else
     # if isDarwin then "/Users/deck" else unsupported;
   };
@@ -82,7 +82,9 @@ in {
     v2raya
     v2ray
     ffmpeg
+    vlc
     go-musicfox
+    waylyrics
     screenkey
     btdu
     # GNU/Linux packages
@@ -90,9 +92,10 @@ in {
     nload
     bluetuith
     qq
-    spotify
     onlyoffice-bin_latest
     avidemux
+    obexd
+    (config.lib.nixGL.wrap pkgs.qcm)
     (config.lib.nixGL.wrap pkgs.octaveFull)
     (config.lib.nixGL.wrap pkgs.kdePackages.kdenlive)
     # glibc
@@ -107,9 +110,19 @@ in {
 
   nixGL.prefix = "${nixGLIntel}/bin/nixGLIntel";
 
-  # Enable home-manager and git
+  # Enable home-manager, git, and direnv
   programs.home-manager.enable = true;
   programs.git.enable = true;
+  # ...other config, other config...
+  programs = {
+    direnv = {
+      enable = true;
+      enableZshIntegration = true; # see note on other shells below
+      nix-direnv.enable = true;
+    };
+
+    zsh.enable = true; # see note on other shells below
+  };
 
   # home.language = {
   #   base = "zh_CN.UTF-8";
@@ -147,6 +160,11 @@ in {
 
   #让home-manager在非NixOS下更好地工作，能让kde集成桌面应用
   targets.genericLinux.enable = true;
+  home.file.".local/share/applications" = {
+    # enable = false;
+    source = ~/.nix-profile/share/applications;
+    recursive = true;
+  };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

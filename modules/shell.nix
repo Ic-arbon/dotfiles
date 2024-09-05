@@ -18,6 +18,7 @@
     oh-my-zsh = {
       enable = true;
       plugins = [
+        "direnv"
         # "docker-compose"
         # "docker"
       ];
