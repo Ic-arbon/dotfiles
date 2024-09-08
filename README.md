@@ -97,22 +97,21 @@ home.packages = with pkgs; [<pkg1> <pkg2> <pkg3>];
 { pkgs, ... }: 
 
 {
-xdg.configFile = {
-"nvim" = {
-  source = pkgs.fetchFromGitHub {
-    # 为fetcher提供4个参数，用非shell脚本的方式，自动把配置文件从github配置文件拉到本地
-    owner = "Ic-arbon";
-    repo = "AstroNvim";
-    # commit hash or tag
-    rev = "";
-    # nix flake prefetch github:Ic-arbon/AstroNvim
-    sha256 = "sha256-P6AC1L5wWybju3+Pkuca3KB4YwKEdG7GVNvAR8w+X1I=";
+  xdg.configFile = {
+    "nvim" = {
+      source = pkgs.fetchFromGitHub {
+        # 为fetcher提供4个参数，用非shell脚本的方式，自动把配置文件从github配置文件拉到本地
+        owner = "Ic-arbon";
+        repo = "AstroNvim";
+        # commit hash or tag
+        rev = "";
+        # nix flake prefetch github:Ic-arbon/AstroNvim
+        sha256 = "sha256-P6AC1L5wWybju3+Pkuca3KB4YwKEdG7GVNvAR8w+X1I=";
+      };
+      executable = true;
+      recursive = true;
+    };
   };
-  executable = true;
-  recursive = true;
-};
-
-};
 }
 ```
 
