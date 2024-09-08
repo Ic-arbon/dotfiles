@@ -43,7 +43,7 @@ sudo systemctl restart nix-daemon
 ### 用[standalone方式](https://nix-community.github.io/home-manager/index.xhtml#ch-nix-flakes)安装home-manager
 
 ```shell
-nix run home-manager \
+nix run home-manager/release-24.05 \
 --        \
 switch    \
 -b backup \
