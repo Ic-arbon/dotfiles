@@ -12,8 +12,7 @@
     gdu
     python3
     nodejs
-    gcc
-    # rustup
+    clang-tools
   ];
 
   programs = {
