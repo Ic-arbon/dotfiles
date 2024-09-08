@@ -87,12 +87,14 @@ in {
     waylyrics
     screenkey
     btdu
+    axel
     # GNU/Linux packages
     bind
     nload
     bluetuith
     qq
     onlyoffice-bin_latest
+    solaar
     avidemux
     obexd
     (config.lib.nixGL.wrap pkgs.qcm)
