@@ -8,6 +8,7 @@
     package = config.lib.nixGL.wrap pkgs.obs-studio;
     plugins = with pkgs; [
       obs-studio-plugins.wlrobs
+      obs-studio-plugins.obs-vkcapture
       obs-studio-plugins.input-overlay
     ];
   };
