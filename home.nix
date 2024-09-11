@@ -88,6 +88,8 @@ in {
     screenkey
     btdu
     axel
+    obsidian
+    wireshark
     # GNU/Linux packages
     bind
     nload
@@ -99,6 +101,7 @@ in {
     obexd
     (config.lib.nixGL.wrap pkgs.qcm)
     (config.lib.nixGL.wrap pkgs.octaveFull)
+    (config.lib.nixGL.wrap pkgs.freecad)
     (config.lib.nixGL.wrap pkgs.kdePackages.kdenlive)
     # glibc
     libsForQt5.krdc

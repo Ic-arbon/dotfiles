@@ -1,7 +1,7 @@
-{pkgs, ...}: {
+{ pkgs, ...}: {
   home.packages = with pkgs; [
     # TODO: You should manually download the pkg
-    (config.lib.nixGL.wrap pkgs.nur.repos.lschuermann.vivado-2020_1)
+    nur.repos.lschuermann.vivado-2020_1
   ];
 
   home.sessionVariables = {
