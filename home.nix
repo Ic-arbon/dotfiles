@@ -21,8 +21,8 @@
 in {
   # TODO: Set your username
   home = {
-    username = "deck";
-    homeDirectory = "/home/deck";
+    username = "tyd";
+    homeDirectory = "/home/tyd";
     # if isLinux then "/home/deck" else
     # if isDarwin then "/Users/deck" else unsupported;
   };
@@ -86,6 +86,8 @@ in {
     go-musicfox
     waylyrics
     screenkey
+    tig
+    commitizen
     btdu
     axel
     obsidian
