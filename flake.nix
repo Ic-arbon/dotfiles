@@ -48,6 +48,7 @@
   # the nixConfig here only affects the flake itself, not the system configuration!
   # for more information, see:
   #     https://nixos-and-flakes.thiscute.world/nix-store/add-binary-cache-servers
+  # TODO: add "trusted-users = user_name" to /etc/nix/nix.conf
   nixConfig = {
     # substituers will be appended to the default substituters when fetching packages
     extra-substituters = [
