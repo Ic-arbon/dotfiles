@@ -1,3 +1,6 @@
+let
+  dotfileDir = "$HOME/dotfiles";
+in 
 {
   programs.bash = {
     #enable = true;	# 导致Steamdeck切换桌面模式时ksplashqml崩溃
@@ -8,6 +11,7 @@
 
   programs.zsh = {
     enable = true;
+
     enableCompletion = true;
     autosuggestion = {
       enable = true;
@@ -15,6 +19,7 @@
     syntaxHighlighting = {
       enable = true;
     };
+
     oh-my-zsh = {
       enable = true;
       plugins = [
@@ -24,6 +29,15 @@
       ];
       theme = "robbyrussell";
     };
+
+    shellAliases = {
+      ls = "ls --color=auto";
+      ll = "ls -lah";
+      ra = "ranger";
+      bui = "bluetuith";
+      update = "home-manager switch -b backup --impure --flake ${dotfileDir}";
+    };
+
     initExtra = ''
       register-python-argcomplete cz
       bindkey '^f' autosuggest-accept

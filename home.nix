@@ -152,15 +152,6 @@ in {
     LANGUAGE = "zh_CN:en_US";
   };
 
-  home.shellAliases = {
-    ls = "ls --color=auto";
-    ll = "ls -lah";
-    ra = "ranger";
-    lg = "lazygit";
-    bui = "bluetuith";
-    update = "home-manager switch -b backup --impure --flake ${dotfileDir}";
-  };
-
   # Misc
   # xdg.enable=true;
   # xdg.mime.enable=true;
