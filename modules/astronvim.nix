@@ -12,7 +12,7 @@
     gdu
     python3
     nodejs
-    clang-tools
+    gcc
   ];
 
   programs = {
