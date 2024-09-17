@@ -8,7 +8,7 @@ dotfile_dir="$HOME/dotfiles"
 flag_file="$dotfile_dir/modules/rename_git.lock"
 # 设定要修改的配置文件
 home_nix="$dotfile_dir/home.nix"
-flake_nix="$dotfile_dir/flake.nix"
+flake_nix="$dotfile_dir/outputs/default.nix"
 git_nix="$dotfile_dir/modules/git.nix"
 
 # home.nix
