@@ -39,7 +39,6 @@ in
     };
 
     initExtra = ''
-      register-python-argcomplete cz
       bindkey '^f' autosuggest-accept
       export XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS"
       export LC_ALL=en_US.UTF-8

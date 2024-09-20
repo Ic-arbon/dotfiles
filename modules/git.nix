@@ -27,6 +27,9 @@
       gc = "git commit";
       gsw = "git switch";
     };
+    initExtra = ''
+      register-python-argcomplete cz
+    '';
   };
 
   home.file = {
