@@ -104,6 +104,7 @@ in {
     protonplus
     (config.lib.nixGL.wrap pkgs.qcm)
     (config.lib.nixGL.wrap pkgs.octaveFull)
+    (config.lib.nixGL.wrap pkgs.bambu-studio)
     (config.lib.nixGL.wrap pkgs.freecad)
     (config.lib.nixGL.wrap pkgs.kdePackages.kdenlive)
     # glibc
