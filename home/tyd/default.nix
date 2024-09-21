@@ -21,8 +21,8 @@
 in {
   # TODO: Set your username
   home = {
-    username = "deck";
-    homeDirectory = "/home/deck";
+    username = "tyd";
+    homeDirectory = "/home/tyd";
     # if isLinux then "/home/deck" else
     # if isDarwin then "/Users/deck" else unsupported;
   };
@@ -142,9 +142,10 @@ in {
   };
 
   home.activation = {
-    rename = lib.hm.dag.entryBefore ["writeBoundary"] ''
-      $DRY_RUN_CMD $HOME/dotfiles/modules/rename_user.sh
-    '';
+    # OUT OF DATE
+    # rename = lib.hm.dag.entryBefore ["writeBoundary"] ''
+    #   $DRY_RUN_CMD $HOME/dotfiles/modules/rename_user.sh
+    # '';
   };
 
   home.sessionVariables = {
