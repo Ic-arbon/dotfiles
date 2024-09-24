@@ -94,6 +94,7 @@ in {
     wireshark
     # GNU/Linux packages
     bind
+    traceroute
     nload
     bluetuith
     qq
