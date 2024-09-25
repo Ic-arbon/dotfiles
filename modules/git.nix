@@ -17,6 +17,10 @@
     enable = true;
   };
 
+  home.packages = with pkgs; [
+    python312Packages.argcomplete
+  ];
+
   programs.zsh = {
     enable = true;
     shellAliases = {
