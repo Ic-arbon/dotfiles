@@ -43,6 +43,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    daeuniverse.url = "github:daeuniverse/flake.nix";
   };
 
   # the nixConfig here only affects the flake itself, not the system configuration!
@@ -55,11 +56,17 @@
       "https://anyrun.cachix.org"
       "https://nix-gaming.cachix.org"
       # "https://nixpkgs-wayland.cachix.org"
+
+      # dae for linux
+      "https://cache.garnix.io"
     ];
     extra-trusted-public-keys = [
       "anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s="
       "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
       # "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
+
+      # dae
+      "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
     ];
   };
 }

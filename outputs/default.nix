@@ -67,4 +67,14 @@ in
       ];
     }
   );
+
+  nixosConfigurations.tydsG16 = nixpkgs.lib.nixosSystem {
+    system = "x86_64-linux";
+    specialArgs = { inherit inputs; }; 
+    modules = [
+      ../hosts/tydsG16/configuration.nix
+      inputs.daeuniverse.nixosModules.dae
+      inputs.daeuniverse.nixosModules.daed
+    ];
+  };
 }
