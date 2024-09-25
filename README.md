@@ -25,10 +25,16 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 ```shell
 git clone --recursive https://github.com/Ic-arbon/dotfiles ~/dotfiles
 ```
-##### 修改文件内用户为当前用户
+##### 修改git用户信息
 ```shell
-~/dotfiles/modules/rename_user.sh
+~/dotfiles/modules/rename_git.sh
 ```
+##### 在users目录下创建你自己的用户，并加入outputs
+```
+# outputs/default.nix
+users = [ "your_username" ];
+```
+> TODO: Simplize
 ### 设置代理
 ```shell
 sudo mkdir /etc/systemd/system/nix-daemon.service.d/
