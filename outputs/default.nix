@@ -72,7 +72,7 @@ in
     system = "x86_64-linux";
     specialArgs = { inherit inputs; }; 
     modules = [
-      ../hosts/tydsG16/configuration.nix
+      ../hosts/tydsG16
       inputs.daeuniverse.nixosModules.dae
       inputs.daeuniverse.nixosModules.daed
     ];

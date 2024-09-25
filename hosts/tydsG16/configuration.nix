@@ -2,154 +2,19 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ inputs, config, lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
-
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # logind
-  services.logind.extraConfig = ''
-    HandlePowerKey=ignore
-    HandleLidSwitch=suspend
-    HandleLidSwitchExternalPower=ignore
-  '';
-
-  networking.hostName = "tydsG16"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
-
-  # Set your time zone.
-  time.timeZone = "Asia/Shanghai";
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-  # services.v2raya.enable = true;
-  # services.v2ray.enable = true;
-  # services.v2ray.configFile = "/etc/v2ray/config.json";
-
-  # dae
-  # services.dae = {
-  #     enable = true;
-  #
-  #     openFirewall = {
-  #       enable = true;
-  #       port = 12345;
-  #     };
-  #
-  #     configFile = "/home/tyd/config.dae";
-  #
-  #     /* default options */
-  #
-  #     package = inputs.daeuniverse.packages.x86_64-linux.dae;
-  #     # disableTxChecksumIpGeneric = false;
-  #     #
-  #     # configFile = "/etc/dae/config.dae";
-  #     # assets = with pkgs; [ v2ray-geoip v2ray-domain-list-community ];
-  #
-  #     # alternative of `assets`, a dir contains geo database.
-  #     # assetsPath = "/etc/dae";
-  # };
-  # daed - dae with a web dashboard
-  services.daed = {
-      enable = true;
-
-      openFirewall = {
-        enable = true;
-        port = 12345;
-      };
-
-      listen = "0.0.0.0:2023";
-      /* default options */
-
-      # package = inputs.daeuniverse.packages.x86_64-linux.daed;
-      # configDir = "/etc/daed";
-      # listen = "127.0.0.1:2023";
-  };
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  #   useXkbConfig = true; # use xkb.options in tty.
-  # };
-  
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.trusted-users = [ "root" "@wheel"];
   nixpkgs.config.allowUnfree = true;
   
-  specialisation = {
-    on-the-go.configuration = {
-      system.nixos.tags = [ "on-the-go" ];
-      hardware.nvidia = {
-        prime.offload.enable = lib.mkForce true;
-        prime.offload.enableOffloadCmd = lib.mkForce true;
-        prime.sync.enable = lib.mkForce false;
-      };
-    };
-  };  
 
-  # Enable OpenGL
-  hardware.opengl = {
-    enable = true;
-  };
-
-  # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"];
-
-  hardware.nvidia = {
-
-    # Modesetting is required.
-    modesetting.enable = true;
-
-    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-    # Enable this if you have graphical corruption issues or application crashes after waking
-    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead 
-    # of just the bare essentials.
-    powerManagement.enable = false;
-
-    # Fine-grained power management. Turns off GPU when not in use.
-    # Experimental and only works on modern Nvidia GPUs (Turing or newer).
-    powerManagement.finegrained = false;
-
-    # Use the NVidia open source kernel module (not to be confused with the
-    # independent third-party "nouveau" open source driver).
-    # Support is limited to the Turing and later architectures. Full list of 
-    # supported GPUs is at: 
-    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
-    # Only available from driver 515.43.04+
-    # Currently alpha-quality/buggy, so false is currently the recommended setting.
-    open = false;
-
-    # Enable the Nvidia settings menu,
-	# accessible via `nvidia-settings`.
-    nvidiaSettings = true;
-
-    # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.production;
-    
-    prime = {
-	# CANNOT ENABLE OFFLOAD AND SYNC AT THE SAME TIME
-	# offload = {
-	#   enable = true;
-	#   enableOffloadCmd = true;
-	# };
-	sync.enable = true;
-	# Make sure to use the correct Bus ID values for your system!
-	nvidiaBusId = "PCI:0:1:0";
-	intelBusId = "PCI:0:2:0";
-        # amdgpuBusId = "PCI:54:0:0"; For AMD GPU
-    };
-  };  
+  networking.hostName = "tydsG16"; # Define your hostname.
 
   programs = {
     zsh.enable = true;
@@ -170,22 +35,12 @@
   # services.xserver.enable = true;
 
 
-  
-
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
-
-  # Enable sound.
-  # hardware.pulseaudio.enable = true;
-  # OR
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
-  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
