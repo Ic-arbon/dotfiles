@@ -63,17 +63,8 @@ in
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
       extraSpecialArgs = specialArgs // { inherit inputs outputs; };
       modules = [
-        ../home/${user}
+        ../users/${user}
       ];
     }
   );
-  # homeConfigurations = {
-  #   "tyd" = home-manager.lib.homeManagerConfiguration {
-  #     pkgs = nixpkgs.legacyPackages.x86_64-linux;
-  #     extraSpecialArgs = specialArgs // { inherit inputs outputs; };
-  #     modules = [
-  #       ../home/tyd
-  #     ];
-  #   };
-  # };
 }
