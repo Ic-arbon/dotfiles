@@ -1,24 +1,24 @@
 #!/bin/sh
 
-# 获取当前用户名
-current_user=$(whoami)
+# # 获取当前用户名
+# current_user=$(whoami)
 
 # TODO: 可替换的 dotfile 路径
 dotfile_dir="$HOME/dotfiles"
 flag_file="$dotfile_dir/modules/rename_git.lock"
 # 设定要修改的配置文件
-home_nix="$dotfile_dir/home.nix"
-flake_nix="$dotfile_dir/outputs/default.nix"
+# home_nix="$dotfile_dir/home.nix"
+# flake_nix="$dotfile_dir/outputs/default.nix"
 git_nix="$dotfile_dir/modules/git.nix"
 
-# home.nix
-# 使用 sed 命令替换 username 和 homeDirectory 的值
-sed -i "s/username = .*/username = \"$current_user\"\;/" "$home_nix"
-sed -i "s/homeDirectory = .*/homeDirectory = \"\/home\/$current_user\"\;/" "$home_nix"
-
-# flake.nix
-# 使用 sed 命令替换 username@hostname 的值
-sed -i "s/\"[^\"]*\" = home-manager.lib.homeManagerConfiguration {/\"$current_user\" = home-manager.lib.homeManagerConfiguration {/" "$flake_nix"
+# # home.nix
+# # 使用 sed 命令替换 username 和 homeDirectory 的值
+# sed -i "s/username = .*/username = \"$current_user\"\;/" "$home_nix"
+# sed -i "s/homeDirectory = .*/homeDirectory = \"\/home\/$current_user\"\;/" "$home_nix"
+#
+# # flake.nix
+# # 使用 sed 命令替换 username@hostname 的值
+# sed -i "s/\"[^\"]*\" = home-manager.lib.homeManagerConfiguration {/\"$current_user\" = home-manager.lib.homeManagerConfiguration {/" "$flake_nix"
 
 # modules/git.nix
 if [ ! -f "$flag_file" ]; then
@@ -37,4 +37,4 @@ if [ ! -f "$flag_file" ]; then
     echo "该文件阻止rename_user.sh重复要求输入git用户信息，可删除" > "$flag_file" 
 fi
 
-echo "用户名配置已更新。"
+echo "git用户名配置已更新。"

@@ -102,6 +102,7 @@ in {
     avidemux
     obexd
     protonplus
+    steam
     (config.lib.nixGL.wrap pkgs.qcm)
     (config.lib.nixGL.wrap pkgs.octaveFull)
     (config.lib.nixGL.wrap pkgs.bambu-studio)
@@ -143,9 +144,9 @@ in {
 
   home.activation = {
     # OUT OF DATE
-    # rename = lib.hm.dag.entryBefore ["writeBoundary"] ''
-    #   $DRY_RUN_CMD $HOME/dotfiles/modules/rename_user.sh
-    # '';
+    rename = lib.hm.dag.entryBefore ["writeBoundary"] ''
+      $DRY_RUN_CMD $HOME/dotfiles/modules/rename_git.sh
+    '';
   };
 
   home.sessionVariables = {
