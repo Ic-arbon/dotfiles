@@ -50,10 +50,10 @@ in {
     # You can add overlays here
     overlays = [
       # Add overlays your own flake exports (from overlays and pkgs dir):
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.unstable-packages
-      outputs.overlays.nur-packages
+      # outputs.overlays.additions
+      # outputs.overlays.modifications
+      # outputs.overlays.unstable-packages
+      # outputs.overlays.nur-packages
 
       # You can also add overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default
@@ -83,11 +83,11 @@ in {
     v2ray
     ffmpeg
     vlc
+    pavucontrol
     go-musicfox
     waylyrics
     screenkey
     tig
-    commitizen
     btdu
     axel
     obsidian
