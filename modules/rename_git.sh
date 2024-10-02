@@ -22,9 +22,9 @@ git_nix="$dotfile_dir/modules/git.nix"
 
 # modules/git.nix
 if [ ! -f "$flag_file" ]; then
-    echo "请输入新的用户名（git）："
+    echo "请输入新的用户名 Enter your userName（git）："
     read new_userName
-    echo "请输入新的用户邮箱（git）："
+    echo "请输入新的用户邮箱 Enter your userEmail（git）："
     read new_userEmail
     
     # 使用 sed 命令替换 userName 和 userEmail 的值
@@ -37,4 +37,4 @@ if [ ! -f "$flag_file" ]; then
     echo "该文件阻止rename_user.sh重复要求输入git用户信息，可删除" > "$flag_file" 
 fi
 
-echo "git用户名配置已更新。"
+echo "git用户名配置已更新 git user configuration is updated"

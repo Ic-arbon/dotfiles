@@ -7,7 +7,9 @@
   # asus = import ./asus.nix;
   fcitx5 = import ./fcitx5.nix;
   firefox = import ./firefox.nix;
+  font = import ./font.nix;
   git = import ./git.nix;
+  hyprland = import ./hyprland.nix;
   ranger = import ./ranger.nix;
   shell = import ./shell.nix;
   ssh = import ./ssh.nix; # 不能全自动化部署，需要ssh-keygen -t ed25519，并上传公钥

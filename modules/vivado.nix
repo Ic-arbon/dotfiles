@@ -1,5 +1,5 @@
-{ pkgs, ...}: {
-  home.packages = with pkgs; [
+{ pkgs, nur, ...}: {
+  home.packages = [
     # TODO: You should manually download the pkg
     nur.repos.lschuermann.vivado-2020_1
   ];

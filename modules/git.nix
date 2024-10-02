@@ -18,7 +18,8 @@
   };
 
   home.packages = with pkgs; [
-    python312Packages.argcomplete
+    commitizen
+    # python312Packages.argcomplete
   ];
 
   programs.zsh = {
@@ -31,9 +32,9 @@
       gc = "git commit";
       gsw = "git switch";
     };
-    initExtra = ''
-      register-python-argcomplete cz
-    '';
+    # initExtra = ''
+    #   register-python-argcomplete cz
+    # '';
   };
 
   home.file = {
