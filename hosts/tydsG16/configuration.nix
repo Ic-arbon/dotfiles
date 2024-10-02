@@ -8,6 +8,7 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.trusted-users = [ "root" "@wheel"];
@@ -16,23 +17,11 @@
 
   networking.hostName = "tydsG16"; # Define your hostname.
 
-  programs = {
-    zsh.enable = true;
-    # Enable Hyprland
-    # kitty.enable = true;    # required for the default Hyprland config
-    hyprland = {
-      enable = true; # enable Hyprland
-      xwayland.enable = true;
-    };
-  };
-
-  environment.sessionVariables = {
-    # Optional, hint Electron apps to use Wayland:
-    NIXOS_OZONE_WL = "1";
-  };
-
   # Enable the X11 windowing system.
-  # services.xserver.enable = true;
+  services.xserver = {
+    enable = true;
+    displayManager.startx.enable = true;
+  };
 
 
   # Configure keymap in X11
@@ -43,7 +32,9 @@
   # services.printing.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
-  services.libinput.enable = true;
+  # services.libinput.enable = true;
+
+  programs.zsh.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
