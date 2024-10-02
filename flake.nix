@@ -5,16 +5,18 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
-    # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Home manager
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # home-manager-unstable.url = "github:nix-community/home-manager/master";
+    # home-manager-stable = {
+    #   url = "github:nix-community/home-manager/release-24.05";
+    #   inputs.nixpkgs.follows = "nixpkgs-stable";
+    # };
 
     # NUR
     nur.url = "github:nix-community/NUR";
@@ -23,6 +25,13 @@
     nixGL = {
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    hyprland.url = "github:hyprwm/Hyprland";
+    # hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&rev=9a09eac79b85c846e3a865a9078a3f8ff65a9259";
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
     };
 
     # community wayland nixpkgs

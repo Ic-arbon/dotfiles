@@ -26,17 +26,15 @@
   forAllSystems = nixpkgs.lib.genAttrs systems;
 
   genSpecialArgs = system: {
-    pkgs-unstable = import inputs.nixpkgs-unstable {
+    pkgs-stable = import inputs.nixpkgs-stable {
       inherit system;
       config.allowUnfree = true;
     };
 
     nur = import inputs.nur {
-      inherit system;
-      config.allowUnfree = true;
     };
   };
-  specialArgs = forAllSystems (system: genSpecialArgs system);
+  pkgArgs = forAllSystems (system: genSpecialArgs system);
 
 in 
 {
@@ -49,19 +47,18 @@ in
   formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 
   # Your custom packages and modifications, exported as overlays
-  # TODO: move to submodules
-  overlays = import ../overlays {inherit inputs;};
+  # overlays = import ../overlays {inherit inputs;};
+
   # Reusable home-manager modules you might want to export
   # These are usually stuff you would upstream into home-manager
   homeManagerModules = import ../modules;
 
   # Standalone home-manager configuration entrypoint
   # Available through 'home-manager --flake .#your-username@your-hostname'
-  # TODO: mutable system var
   homeConfigurations = nixpkgs.lib.genAttrs users (user:
     home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
-      extraSpecialArgs = specialArgs // { inherit inputs outputs; };
+      extraSpecialArgs = pkgArgs.x86_64-linux // { inherit inputs outputs; };
       modules = [
         ../users/${user}
       ];
@@ -70,7 +67,7 @@ in
 
   nixosConfigurations.tydsG16 = nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
-    specialArgs = { inherit inputs; }; 
+    specialArgs = pkgArgs.x86_64-linux // { inherit inputs; }; 
     modules = [
       ../hosts/tydsG16
       inputs.daeuniverse.nixosModules.dae
