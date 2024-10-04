@@ -1,10 +1,5 @@
 { inputs, config, lib, pkgs, ... }:
 {
-  hardware.bluetooth = {
-    enable = true;
-    package = pkgs.bluez;
-    powerOnBoot = true;
-  };
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
@@ -12,9 +7,8 @@
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-  services.v2raya.enable = true;
-  # services.v2ray.enable = true;
-  services.v2ray.configFile = "/etc/v2ray/config.json";
+  # services.v2raya.enable = true;
+  # services.v2ray.configFile = "/etc/v2ray/config.json";
 
   # dae
   # services.dae = {
@@ -39,20 +33,20 @@
   # };
 
   # daed - dae with a web dashboard
-  # services.daed = {
-  #     enable = true;
-  #
-  #     openFirewall = {
-  #       enable = true;
-  #       port = 12345;
-  #     };
-  #
-  #     listen = "0.0.0.0:2023";
-  #     /* default options */
-  #
-  #     # package = inputs.daeuniverse.packages.x86_64-linux.daed;
-  #     # configDir = "/etc/daed";
-  #     # listen = "127.0.0.1:2023";
-  # };
+  services.daed = {
+      enable = true;
+
+      openFirewall = {
+        enable = true;
+        port = 12345;
+      };
+
+      listen = "0.0.0.0:2023";
+      /* default options */
+
+      # package = inputs.daeuniverse.packages.x86_64-linux.daed;
+      # configDir = "/etc/daed";
+      # listen = "127.0.0.1:2023";
+  };
 
 }
