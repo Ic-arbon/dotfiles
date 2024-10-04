@@ -31,8 +31,9 @@
       config.allowUnfree = true;
     };
 
-    nur = import inputs.nur {
-    };
+    # nur = import inputs.nur {
+    #   nurpkgs = import nixpkgs { inherit system; };
+    # };
   };
   pkgArgs = forAllSystems (system: genSpecialArgs system);
 
@@ -47,7 +48,7 @@ in
   formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 
   # Your custom packages and modifications, exported as overlays
-  # overlays = import ../overlays {inherit inputs;};
+  overlays = import ../overlays {inherit inputs;};
 
   # Reusable home-manager modules you might want to export
   # These are usually stuff you would upstream into home-manager
