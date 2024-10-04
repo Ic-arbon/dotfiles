@@ -6,7 +6,11 @@
     ./configuration.nix
     ./laptop.nix
     ./locale.nix
+    # ./gamemode.nix
     ./graphics.nix
     ./networking.nix
+    ./peripherals.nix
+    ./steam.nix
+
   ];
 }
