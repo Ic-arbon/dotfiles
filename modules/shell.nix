@@ -41,6 +41,7 @@ in
     initExtra = ''
       bindkey '^f' autosuggest-accept
       export XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS"
+      export XDG_DATA_HOME="$HOME/.local/share"
       export LC_ALL=en_US.UTF-8
       export LANG=en_US.UTF-8
     '';

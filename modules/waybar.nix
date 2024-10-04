@@ -114,7 +114,8 @@
       };
       scroll-step = 1;
       # on-click = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
-      on-click = "amixer set Master toggle";
+      # on-click = "amixer set Master toggle";
+      on-click = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
       on-click-right = "pavucontrol";
       ignored-sinks = [ "Easy Effects Sink" ];
     };

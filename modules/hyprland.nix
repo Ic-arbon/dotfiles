@@ -106,7 +106,7 @@ in
 
       # toolkit-specific scale
       "GDK_SCALE,2"
-      "XCURSOR_SIZE,32"
+      "XCURSOR_SIZE,16"
     ];
 
     cursor = {
@@ -118,6 +118,57 @@ in
     #####################
     
     # Refer to https://wiki.hyprland.org/Configuring/Variables/
+
+    #-- General ----------------------------------------------------
+    # General settings like MOD key, Gaps, Colors, etc.
+    general = {
+        "gaps_in"="5";
+        "gaps_out"="10";
+    
+        "border_size"="3";
+        "col.active_border"="0xAA83A589";
+        "col.inactive_border"="0xFF343A40";
+    };
+    
+    #-- Decoration ----------------------------------------------------
+    # Decoration settings like Rounded Corners, Opacity, Blur, etc.
+    decoration = {
+        "rounding"="8";       # Original: rounding=-1
+        "drop_shadow"="false";
+    
+        "active_opacity"="0.98";
+        "inactive_opacity"="0.9";
+        "fullscreen_opacity"="1.0";
+    
+        blur = {
+            "enabled"="true";
+            "size"="3";                	# minimum 1
+            "passes"="1";               # minimum 1, more passes = more resource intensive.
+            "ignore_opacity"="false";
+        };
+    
+        # Your blur "amount" is blur_size * blur_passes, but high blur_size (over around 5-ish) will produce artifacts.
+        # if you want heavy blur, you need to up the blur_passes.
+        # the more passes, the more you can up the blur_size without noticing artifacts.
+    };
+    
+    #-- Animations ----------------------------------------------------
+    animations = {
+      "enabled"="1";
+      # "animation"="NAME,ONOFF,SPEED,CURVE,STYLE";
+      animation= [
+        "windows,1,8,default,popin 80%"
+        "fadeOut,1,8,default"
+        "fadeIn,1,8,default"
+        "workspaces,1,8,default"
+        #"animation"="workspaces,1,6,overshot"
+      ];
+    };
+    
+    #-- Dwindle ----------------------------------------------------
+    dwindle = {
+        "pseudotile"="0"; 			# enable pseudotiling on dwindle
+    };
     
     # https://wiki.hyprland.org/Configuring/Variables/#misc
     misc = {
@@ -164,6 +215,13 @@ in
         "$mainMod, mouse:272, movewindow"
         "$mainMod, mouse:273, resizewindow" 
     ];
+    # bindel = [
+    #   "XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+    #   "XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+    # ];
+    # bindl = [
+    #   "XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+    # ];
 
     ##############################
     ### WINDOWS AND WORKSPACES ###
@@ -222,6 +280,14 @@ in
       xdg-desktop-portal-gtk
       xdg-desktop-portal-hyprland
     ];
+  };
+
+  programs.kitty = {
+    enable = true;
+    themeFile = "GruvboxMaterialDarkHard";
+    # themeFile = "gruvbox-dark-hard";
+    font.name = "FiraCode Nerd Font";
+    font.size = 16;
   };
 
   programs.waybar = {
