@@ -15,6 +15,9 @@
     # Modesetting is required.
     modesetting.enable = true;
 
+    # Fix XID:119
+    gsp.enable = false;
+
     # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
     # Enable this if you have graphical corruption issues or application crashes after waking
     # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead 
@@ -44,11 +47,11 @@
     
     prime = {
       # CANNOT ENABLE OFFLOAD AND SYNC AT THE SAME TIME
-      offload = {
-        enable = true;
-        enableOffloadCmd = true;
-      };
-      # sync.enable = true;
+      # offload = {
+      #   enable = true;
+      #   enableOffloadCmd = true;
+      # };
+      sync.enable = true;
 
 	    # Make sure to use the correct Bus ID values for your system!
 	    # sudo lshw -c display => start from first ":" => hex to dec
