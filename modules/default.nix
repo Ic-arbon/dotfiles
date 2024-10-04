@@ -10,10 +10,10 @@
   font = import ./font.nix;
   git = import ./git.nix;
   hyprland = import ./hyprland.nix;
+  obs = import ./obs.nix;
   ranger = import ./ranger.nix;
   shell = import ./shell.nix;
   ssh = import ./ssh.nix; # 不能全自动化部署，需要ssh-keygen -t ed25519，并上传公钥
-  obs = import ./obs.nix;
   # vivado = import ./vivado.nix;
   # lang = import ./lang.nix;
 }
