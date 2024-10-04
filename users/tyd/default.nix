@@ -53,7 +53,7 @@ in {
       # outputs.overlays.additions
       # outputs.overlays.modifications
       # outputs.overlays.unstable-packages
-      # outputs.overlays.nur-packages
+      outputs.overlays.nur-packages
 
       # You can also add overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default
@@ -78,6 +78,7 @@ in {
   home.packages = with pkgs; [
     # Common packages
     bat
+    htop
     neofetch
     v2raya
     v2ray
@@ -103,6 +104,7 @@ in {
     obexd
     protonplus
     steam
+    mangohud
     (config.lib.nixGL.wrap pkgs.qcm)
     (config.lib.nixGL.wrap pkgs.octaveFull)
     (config.lib.nixGL.wrap pkgs.bambu-studio)
