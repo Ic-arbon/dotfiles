@@ -31,9 +31,6 @@
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.libinput.enable = true;
-
   programs.zsh.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -56,7 +53,7 @@
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
-    kitty
+    # kitty
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
