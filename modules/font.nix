@@ -10,6 +10,6 @@
   ];
   home.activation.refreshFontCache = lib.hm.dag.entryAfter [ "installPackages" ] ''
     echo "构建字体缓存 Refreshing font cache..."
-    ${pkgs.fontconfig}/bin/fc-cache -f
+    ${pkgs.fontconfig}/bin/fc-cache 
   '';
 }
