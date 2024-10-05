@@ -113,6 +113,12 @@ in
       "no_hardware_cursors" = "true";
     };
 
+    input = {
+      touchpad = {
+        # "disable_while_typing" = "false";
+      };
+    };
+
     #####################
     ### LOOK AND FEEL ###
     #####################
@@ -304,7 +310,7 @@ in
 
   home.sessionVariables = {
     # Optional, hint Electron apps to use Wayland:
-    NIXOS_OZONE_WL = "1";
+    # NIXOS_OZONE_WL = "1";
   };
 
   # audio visualizer for waybar
