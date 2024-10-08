@@ -8,6 +8,9 @@
   ...
 } @ inputs: let
   inherit (self) outputs;
+  inherit (inputs.nixpkgs) lib;
+  mylib = import ../lib {inherit lib;};
+  # myvars = import ../vars {inherit lib;};
 
   users = [ "tyd" "deck" ];
 
@@ -25,16 +28,21 @@
   # pass to it, with each system as an argument
   forAllSystems = nixpkgs.lib.genAttrs systems;
 
-  genSpecialArgs = system: {
-    pkgs-stable = import inputs.nixpkgs-stable {
-      inherit system;
-      config.allowUnfree = true;
-    };
+  genSpecialArgs = system: 
+    {
+      inherit mylib;
 
-    # nur = import inputs.nur {
-    #   nurpkgs = import nixpkgs { inherit system; };
-    # };
-  };
+      pkgs-stable = import inputs.nixpkgs-stable {
+        inherit system;
+        config.allowUnfree = true;
+      };
+
+      nix-gaming = import inputs.nix-gaming;
+
+      # nur = import inputs.nur {
+      #   nurpkgs = import nixpkgs { inherit system; };
+      # };
+    };
   pkgArgs = forAllSystems (system: genSpecialArgs system);
 
 in 
@@ -59,7 +67,7 @@ in
   homeConfigurations = nixpkgs.lib.genAttrs users (user:
     home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
-      extraSpecialArgs = pkgArgs.x86_64-linux // { inherit inputs outputs; };
+      extraSpecialArgs = pkgArgs.x86_64-linux // {inherit inputs outputs;};
       modules = [
         ../users/${user}
       ];
@@ -68,7 +76,7 @@ in
 
   nixosConfigurations.tydsG16 = nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
-    specialArgs = pkgArgs.x86_64-linux // { inherit inputs; }; 
+    specialArgs = pkgArgs.x86_64-linux // {inherit inputs outputs;}; 
     modules = [
       ../hosts/tydsG16
       inputs.daeuniverse.nixosModules.dae
