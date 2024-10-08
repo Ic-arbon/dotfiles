@@ -8,10 +8,30 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
+  # Use the systemd-boot EFI boot loader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "vmd" "nvme" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
+  boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
+  boot.extraModprobeConfig = "options kvm_intel nested=1"; # for intel cpu
+
+  boot.kernelParams = [ 
+    # fix suspend and hibernate
+    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+    # fix intel gpu hang
+    # "module_blacklist=i915" 
+
+    # "resume=/dev/disk/by-label/swap"
+  ];
+
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="pci", DRIVER=="pcieport", ATTR{power/wakeup}="disabled"
+  '';
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/76b8ac56-1c53-4f1c-afb9-84ee48f725d9";
@@ -25,6 +45,11 @@
     };
 
   swapDevices = [ ];
+  # boot.resumeDevice = "/dev/disk/by-label/swap";
+  # systemd.sleep.extraConfig = ''
+  #   HibernateDelaySec=30s # very low value to test suspend-then-hibernate
+  #   SuspendState=mem # suspend2idle is buggy :(
+  # '';
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
