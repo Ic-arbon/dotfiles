@@ -28,6 +28,7 @@
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
           adblocker-ultimate
           darkreader
+          vimium
           tampermonkey
           translate-web-pages
           gruvbox-dark-theme

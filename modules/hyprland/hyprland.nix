@@ -1,15 +1,9 @@
 { inputs, config, lib, pkgs, ...}:
-let
-  starupScript = pkgs.writeShellScriptBin "initWallpaper" ''
-    swww-daemon &
-    sleep 1
-    swww img $HOME/dotfiles/wallpapers/default.jpg &
-  '';
-in
 {
   wayland.windowManager.hyprland = {
     enable = true;
     # package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    package = config.lib.nixGL.wrap pkgs.hyprland;  # fix non-nixos crash
     xwayland.enable = true;
     systemd.variables = ["--all"];
   };
@@ -19,32 +13,16 @@ in
     # "/absolute/path/to/plugin.so"
   ];
 
-  home.pointerCursor = {
-    gtk.enable = true;
-    # x11.enable = true;
-    package = pkgs.bibata-cursors;
-    name = "Bibata-Modern-Classic";
-    size = 16;
-  };
-
-  gtk = {
-    enable = true;
-
-    theme = {
-      package = pkgs.flat-remix-gtk;
-      name = "Flat-Remix-GTK-Grey-Darkest";
+  # hyprland configs, based on https://github.com/notwidow/hyprland
+  xdg.configFile = {
+    "hypr/scripts" = {
+      source = ./conf/scripts;
+      recursive = true;
     };
-
-    iconTheme = {
-      # package = pkgs.gnome.adwaita-icon-theme;
-      package = pkgs.adwaita-icon-theme;
-      name = "Adwaita";
-    };
-
-    font = {
-      name = "Sans";
-      size = 11;
-    };
+    # "hypr/waybar" = {
+    #   source = ../conf/waybar;
+    #   recursive = true;
+    # };
   };
 
   wayland.windowManager.hyprland.settings = {
@@ -65,7 +43,9 @@ in
       # ",preferred,auto,auto"
 
       # change monitor to high resolution
-      "eDP-1,highres,auto,auto"
+      # "eDP-1,highres,auto,auto"
+      "eDP-1,disable"
+      "HDMI-A-1,preferred,auto,auto"
     ];
 
     ###################
@@ -87,7 +67,7 @@ in
     # Or execute your favorite apps at launch like this:
     
     exec-once = [
-      "${starupScript}/bin/initWallpaper"
+      "~/.config/hypr/scripts/startup"
       # "waybar &"
     ];
 
@@ -102,7 +82,9 @@ in
       "GBM_BACKEND,nvidia-drm"
       "__GLX_VENDOR_LIBRARY_NAME,nvidia"
 
-      # "WLR_DRM_DEVICES,/dev/dri/card0"
+      # MultiGPU, priority: nvidia > intel
+      # TODO: Replace with ones own card
+      # "AQ_DRM_DEVICES,/dev/dri/by-path/pci-0000:01:00.0-card:/dev/dri/by-path/pci-0000:00:02.0-card"
 
       # toolkit-specific scale
       "GDK_SCALE,2"
@@ -202,7 +184,10 @@ in
       "$mainMod, right, movefocus, l"
       "$mainMod, up, movefocus, k"
       "$mainMod, down, movefocus, j"
-      ", Print, exec, grimblast copy area"
+
+      # Screenshots
+      # ", Print, exec, grimblast copy area"
+      ",Print,exec,XDG_CURRENT_DESKTOP=sway flameshot gui --raw -p ~/Pictures/Screenshots | wl-copy"
     ]
     ++ (
       # workspaces
@@ -257,6 +242,9 @@ in
     dunst
     libnotify
 
+    # utils for monitor listening script
+    socat
+
     # wallpaper
     swww
 
@@ -296,15 +284,6 @@ in
     font.size = 16;
   };
 
-  programs.waybar = {
-    enable = true;
-    package = pkgs.waybar;
-    systemd.enable = true;
-    systemd.target = "hyprland-session.target";
-    settings = import ./waybar.nix;
-    style = ./style-waybar.css;
-  };
-
   ## Optional ##
   systemd.user.enable = true;
 
@@ -323,5 +302,32 @@ in
     enable = true;
     package = pkgs.rofi-wayland;
   };
+  
+  home.pointerCursor = {
+    gtk.enable = true;
+    # x11.enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Classic";
+    size = 16;
+  };
 
+  gtk = {
+    enable = true;
+
+    theme = {
+      package = pkgs.flat-remix-gtk;
+      name = "Flat-Remix-GTK-Grey-Darkest";
+    };
+
+    iconTheme = {
+      # package = pkgs.gnome.adwaita-icon-theme;
+      package = pkgs.adwaita-icon-theme;
+      name = "Adwaita";
+    };
+
+    font = {
+      name = "Sans";
+      size = 11;
+    };
+  };
 }

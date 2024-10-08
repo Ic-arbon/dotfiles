@@ -1,7 +1,7 @@
 [
   {
     # output = [ "DP-1" "eDP-2" ];
-    output = [ "eDP-1" ];
+    # output = [ "eDP-1" "HDMI-A-1" ];
     height = 34;
     spacing = 4;
     modules-left = [
