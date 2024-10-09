@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-stable, ... }:
 {
   programs.waybar = {
     enable = true;
@@ -7,5 +7,8 @@
     systemd.target = "hyprland-session.target";
     settings = import ./config.nix;
     style = ./style.css;
-  };
+  }; 
+
+  home.packages = [
+  ];
 }

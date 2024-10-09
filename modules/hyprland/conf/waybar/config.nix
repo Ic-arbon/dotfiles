@@ -18,8 +18,8 @@
       # "cpu"
       # "memory"
       # "bluetooth"
-      "pulseaudio"
-      # "wireplumber"
+      # "pulseaudio"
+      "wireplumber"
       "backlight"
       "clock"
       "battery"
@@ -96,52 +96,54 @@
       format = "{temperatureC}°C {icon}";
       format-icons = [ "" "" "" ];
     };
-    pulseaudio = {
-      format = "{icon} {volume}%";
-      format-bluetooth = " {icon} {volume}%";
-      format-muted = "";
-      format-icons = {
-        # "alsa_output.pci-0000_00_1f.3.analog-stereo" = "";
-        # "alsa_output.pci-0000_00_1f.3.analog-stereo-muted" = "";
-        headphone = "";
-        hands-free = "";
-        headset = "";
-        phone = "";
-        phone-muted = "";
-        portable = "";
-        car = "";
-        default = [ "" "" "" ];
-      };
-      scroll-step = 1;
-      # on-click = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
-      # on-click = "amixer set Master toggle";
-      on-click = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-      on-click-right = "pavucontrol";
-      ignored-sinks = [ "Easy Effects Sink" ];
-    };
-    # wireplumber = {
-    #   scroll-step = 1;
+    # pulseaudio = {
     #   format = "{icon} {volume}%";
-    #   format-bluetooth = "{icon} {volume}% ";
-    #   format-bluetooth-muted = " {icon}";
+    #   format-bluetooth = " {icon} {volume}%";
     #   format-muted = "";
     #   format-icons = {
+    #     # "alsa_output.pci-0000_00_1f.3.analog-stereo" = "";
+    #     # "alsa_output.pci-0000_00_1f.3.analog-stereo-muted" = "";
     #     headphone = "";
     #     hands-free = "";
     #     headset = "";
     #     phone = "";
+    #     phone-muted = "";
     #     portable = "";
     #     car = "";
     #     default = [ "" "" "" ];
     #   };
+    #   scroll-step = 1;
+    #   # on-click = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
+    #   # on-click = "amixer set Master toggle";
     #   on-click = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+    #   on-click-right = "pavucontrol";
+    #   ignored-sinks = [ "Easy Effects Sink" ];
     # };
+    wireplumber = {
+      scroll-step = 1;
+      format = "{icon} {volume}%";
+      # format-bluetooth = "{icon} {volume}% ";
+      # format-bluetooth-muted = " {icon}";
+      format-muted = "";
+      format-icons = {
+        headphone = "";
+        hands-free = "";
+        headset = "";
+        phone = "";
+        portable = "";
+        car = "";
+        default = [ "" "" "" ];
+      };
+      on-click = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+      on-click-right = "pavucontrol";
+    };
     backlight = {
       format = "{icon} {percent}%";
       format-icons = [ "" "" "" "" "" "" "" "" "" ];
     };
     clock = {
       interval = 1;
+      timezone = "Asia/Shanghai";
       format = "{:%H:%M:%S}";
       tooltip-format = ''
         <big>{:%Y %B}</big>

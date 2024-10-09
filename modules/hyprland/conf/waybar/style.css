@@ -94,8 +94,8 @@ button:hover {
 #clock,
 #battery,
 #backlight,
-#pulseaudio,
-/* #wireplumber, */
+/* #pulseaudio, */
+#wireplumber,
 #tray,
 #mpris,
 #load {
