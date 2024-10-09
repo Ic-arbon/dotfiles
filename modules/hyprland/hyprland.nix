@@ -238,6 +238,8 @@
 
     # backlight
     brightnessctl
+    # wpctl
+    wireplumber
 
     # notification daemon
     dunst
