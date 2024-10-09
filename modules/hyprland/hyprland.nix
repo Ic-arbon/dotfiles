@@ -43,8 +43,8 @@
       # ",preferred,auto,auto"
 
       # change monitor to high resolution
-      # "eDP-1,highres,auto,auto"
-      "eDP-1,disable"
+      "eDP-1,highres,auto,auto"
+      # "eDP-1,disable"
       "HDMI-A-1,preferred,auto,auto"
     ];
 
@@ -207,13 +207,22 @@
       "$mainMod, mouse:273, resizewindow" 
     ];
     bindel = [
-      ",XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-      ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+      # backlight
       ",XF86MonBrightnessUp,exec,brightnessctl set +5% "
       ",XF86MonBrightnessDown,exec,brightnessctl set 5%- "
+
+      # volume
+      ",XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+      ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
     ];
     bindl = [
+      # volume mute
       ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+
+      # trigger when the switch is turning on
+      ", switch:on:[switch name], exec, hyprctl keyword monitor "eDP-1, disable""
+      # trigger when the switch is turning off
+      ", switch:off:[switch name], exec, hyprctl keyword monitor "eDP-1, highres, auto, auto""
     ];
 
     ##############################
