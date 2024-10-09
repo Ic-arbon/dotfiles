@@ -96,6 +96,7 @@
     };
 
     input = {
+      "repeat_rate" = "0";
       touchpad = {
         # "disable_while_typing" = "false";
       };
@@ -220,9 +221,9 @@
       ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
 
       # trigger when the switch is turning on
-      ", switch:on:[switch name], exec, hyprctl keyword monitor "eDP-1, disable""
+      ", switch:on:[switch name], exec, hyprctl keyword monitor 'eDP-1, disable'"
       # trigger when the switch is turning off
-      ", switch:off:[switch name], exec, hyprctl keyword monitor "eDP-1, highres, auto, auto""
+      ", switch:off:[switch name], exec, hyprctl keyword monitor 'eDP-1, highres, auto, auto'"
     ];
 
     ##############################
