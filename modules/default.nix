@@ -4,6 +4,7 @@
   # List your module files here
   # my-module = import ./my-module.nix;
   astronvim = import ./astronvim.nix;
+  bluetooth = import ./bluetooth.nix;
   # asus = import ./asus.nix;
   capture = import ./capture.nix;
   electron = import ./electron.nix;
