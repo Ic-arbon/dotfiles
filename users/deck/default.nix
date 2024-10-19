@@ -101,7 +101,6 @@ in {
     onlyoffice-bin_latest
     solaar
     avidemux
-    obexd
     protonplus
     (config.lib.nixGL.wrap pkgs.qcm)
     (config.lib.nixGL.wrap pkgs.octaveFull)

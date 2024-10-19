@@ -17,7 +17,8 @@
   #   if isLinux then "/stuff" else
   #   if isDarwin then "${homeDir}/stuff" else unsupported;
   # hmDir = "${stuffDir}/nix/home-manager";
-  nixGLIntel = inputs.nixGL.packages."${pkgs.system}".nixGLIntel;
+  nixGL = inputs.nixGL.packages."${pkgs.system}".nixGLIntel;
+  # nixGL = inputs.nixGL.packages."${pkgs.system}".nixGLDefault;
 in {
   # TODO: Set your username
   home = {
@@ -91,17 +92,14 @@ in {
     tig
     btdu
     axel
-    obsidian
     wireshark
     # GNU/Linux packages
     bind
     nload
-    bluetuith
     qq
     onlyoffice-bin_latest
     solaar
     avidemux
-    obexd
     protonplus
     steam
     mangohud
@@ -120,7 +118,8 @@ in {
     gnused
   ];
 
-  nixGL.prefix = "${nixGLIntel}/bin/nixGLIntel";
+  nixGL.prefix = "${nixGL}/bin/nixGLIntel";
+  # nixGL.prefix = "${nixGL}/bin/nixGL";
 
   # Enable home-manager, git, and direnv
   programs.home-manager.enable = true;

@@ -6,6 +6,7 @@
   astronvim = import ./astronvim.nix;
   # asus = import ./asus.nix;
   capture = import ./capture.nix;
+  electron = import ./electron.nix;
   fcitx5 = import ./fcitx5.nix;
   filemanager = import ./filemanager.nix;
   firefox = import ./firefox.nix;
