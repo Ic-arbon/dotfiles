@@ -1,4 +1,6 @@
 { config, pkgs, ... }:
+# fix fcitx5 in electron apps for wayland 
+# https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#Chromium_.2F_Electron
 {
   home.packages = with pkgs; [
     (pkgs.symlinkJoin {
