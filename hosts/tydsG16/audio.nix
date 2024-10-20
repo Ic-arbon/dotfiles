@@ -1,9 +1,13 @@
+{ pkgs, ... }:
 {
   # Audio
   # sound.enable = true;  # 24.05
   security.rtkit.enable = true;
 
-  # hardware.pulseaudio.enable = false;
+  # hardware.pulseaudio = {
+  #   enable = true;
+  #   package = pkgs.pulseaudioFull;
+  # };
 
   services.pipewire = {
     enable = true;
