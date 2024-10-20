@@ -2,8 +2,6 @@
   self,
   nixpkgs,
   home-manager,
-  nur,
-  nixGL,
   pre-commit-hooks,
   ...
 } @ inputs: let
