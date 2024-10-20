@@ -20,7 +20,7 @@ ln -s $XDG_RUNTIME_DIR/hypr /tmp/hypr
 ~/.config/hypr/scripts/wallpaper &
 
 # Listen to external monitor
-~/.config/hypr/scripts/monitor &
+external-monitor-detector &
 
 # Launch notification daemon (mako)
 # ~/.config/hypr/scripts/notifications &

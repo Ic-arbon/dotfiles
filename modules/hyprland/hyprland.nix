@@ -3,7 +3,7 @@
   wayland.windowManager.hyprland = {
     enable = true;
     # package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    package = config.lib.nixGL.wrap pkgs.hyprland;  # fix non-nixos crash
+    # package = (config.lib.nixGL.wrap pkgs.hyprland);  # fix non-nixos crash
     xwayland.enable = true;
     systemd.variables = ["--all"];
   };
@@ -43,9 +43,9 @@
       # ",preferred,auto,auto"
 
       # change monitor to high resolution
-      "eDP-1,highres,auto,auto"
-      # "eDP-1,disable"
-      "HDMI-A-1,preferred,auto,auto"
+      "HDMI-A-1,preferred,0x0,1"
+      "eDP-1,disable"
+      # "eDP-1,highres,1920x0,auto"
     ];
 
     ###################
@@ -77,10 +77,13 @@
 
     # See https://wiki.hyprland.org/Configuring/Environment-variables/
     env = [
+      # for hyprland with nvidia gpu, ref https://wiki.hyprland.org/Nvidia/
       "LIBVA_DRIVER_NAME,nvidia"
       "XDG_SESSION_TYPE,wayland"
       "GBM_BACKEND,nvidia-drm"
       "__GLX_VENDOR_LIBRARY_NAME,nvidia"
+      # fix https://github.com/hyprwm/Hyprland/issues/1520
+      "WLR_NO_HARDWARE_CURSORS,1"
 
       # MultiGPU, priority: nvidia > intel
       # TODO: Replace with ones own card
@@ -96,7 +99,7 @@
     };
 
     input = {
-      "repeat_rate" = "0";
+      # "repeat_rate" = "0";
       touchpad = {
         # "disable_while_typing" = "false";
       };
@@ -221,9 +224,9 @@
       ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
 
       # trigger when the switch is turning on
-      ", switch:on:[switch name], exec, hyprctl keyword monitor 'eDP-1, disable'"
+      # ", switch:on:Lid Switch, exec, hyprctl keyword monitor 'eDP-1, highres, auto, auto'"
       # trigger when the switch is turning off
-      ", switch:off:[switch name], exec, hyprctl keyword monitor 'eDP-1, highres, auto, auto'"
+      # ", switch:off:Lid Switch, exec, hyprctl keyword monitor 'eDP-1, disable'"
     ];
 
     ##############################
@@ -239,6 +242,9 @@
   ### Utilities ###
 
   home.packages = with pkgs; [
+    # scripts
+    (import ./conf/scripts/monitor.nix {inherit pkgs;})
+
     # for gtk apps
     dconf
 

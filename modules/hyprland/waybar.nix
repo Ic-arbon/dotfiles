@@ -5,8 +5,9 @@
     package = pkgs.waybar;
     systemd.enable = true;
     systemd.target = "hyprland-session.target";
-    settings = import ./config.nix;
-    style = ./style.css;
+    # systemd.target = "";
+    settings = import ./conf/waybar/config.nix;
+    style = ./conf/waybar/style.css;
   }; 
 
   home.packages = [
