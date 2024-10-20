@@ -6,6 +6,7 @@
   lib,
   config,
   pkgs,
+  pkgs-stable,
   ...
 }: let
   # isLinux = pkgs.stdenv.hostPlatform.isLinux;
@@ -99,14 +100,15 @@ in {
     qq
     onlyoffice-bin_latest
     solaar
-    avidemux
+    losslesscut-bin
+    gimp-with-plugins
     protonplus
     steam
     mangohud
     (config.lib.nixGL.wrap pkgs.qcm)
     (config.lib.nixGL.wrap pkgs.octaveFull)
-    (config.lib.nixGL.wrap pkgs.bambu-studio)
-    (config.lib.nixGL.wrap pkgs.freecad)
+    # (config.lib.nixGL.wrap pkgs.bambu-studio)
+    # (config.lib.nixGL.wrap pkgs.freecad)
     (config.lib.nixGL.wrap pkgs.kdePackages.kdenlive)
     # glibc
     libsForQt5.krdc
