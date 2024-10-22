@@ -97,6 +97,7 @@ in {
     # GNU/Linux packages
     bind
     nload
+    bluetuith
     qq
     onlyoffice-bin_latest
     solaar
