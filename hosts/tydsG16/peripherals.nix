@@ -19,6 +19,11 @@
   #     ];
   #   };
   # };
+  services.pipewire.wireplumber.extraConfig."11-bluetooth-policy" = {
+    "wireplumber.settings" = {
+      "bluetooth.autoswitch-to-headset-profile" = false;
+    };
+  };
 
   services.blueman.enable = true;
   
