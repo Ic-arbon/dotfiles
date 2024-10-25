@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs, pkgs-stable, ...}: {
   programs.git = {
     enable = true;
     #  TODO: REPLACE with your username and email
@@ -15,6 +15,7 @@
 
   programs.git-credential-oauth = {
     enable = true;
+    package = pkgs-stable.git-credential-oauth;
   };
 
   home.packages = with pkgs; [
