@@ -2,7 +2,7 @@
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    # package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    package = config.lib.nixGL.wrap inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     # package = (config.lib.nixGL.wrap pkgs.hyprland);  # fix non-nixos crash
     xwayland.enable = true;
     systemd.variables = ["--all"];
@@ -43,8 +43,8 @@
       # ",preferred,auto,auto"
 
       # change monitor to high resolution
-      "HDMI-A-1,preferred,0x0,1"
-      "eDP-1,disable"
+      # "HDMI-A-1,preferred,0x0,1"
+      # "eDP-1,disable"
       # "eDP-1,highres,1920x0,auto"
     ];
 
