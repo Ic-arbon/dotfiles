@@ -37,6 +37,11 @@
 
       nix-gaming = import inputs.nix-gaming;
 
+      nixgl = {
+        packages = inputs.nixGL.packages.${system}; 
+        config.allowUnfree = true;
+      };
+
       # nur = import inputs.nur {
       #   nurpkgs = import nixpkgs { inherit system; };
       # };
