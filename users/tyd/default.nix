@@ -7,26 +7,15 @@
   config,
   pkgs,
   pkgs-stable,
+  nixgl,
   ...
 }: let
-  # isLinux = pkgs.stdenv.hostPlatform.isLinux;
-  # isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
-  # unsupported = builtins.abort "Unsupported platform";
   homeDir = "${config.home.homeDirectory}";
   dotfileDir = "$HOME/dotfiles";
-  # stuffDir =
-  #   if isLinux then "/stuff" else
-  #   if isDarwin then "${homeDir}/stuff" else unsupported;
-  # hmDir = "${stuffDir}/nix/home-manager";
-  nixGL = inputs.nixGL.packages."${pkgs.system}".nixGLIntel;
-  # nixGL = inputs.nixGL.packages."${pkgs.system}".nixGLDefault;
 in {
-  # TODO: Set your username
   home = {
     username = "tyd";
     homeDirectory = "/home/tyd";
-    # if isLinux then "/home/deck" else
-    # if isDarwin then "/Users/deck" else unsupported;
   };
 
   # You can import other home-manager modules here
@@ -34,7 +23,8 @@ in {
     [
       (builtins.fetchurl {
         url = "https://raw.githubusercontent.com/Smona/home-manager/nixgl-compat/modules/misc/nixgl.nix";
-        sha256 = "01dkfr9wq3ib5hlyq9zq662mp0jl42fw3f6gd2qgdf8l8ia78j7i";
+        # sha256 = "01dkfr9wq3ib5hlyq9zq662mp0jl42fw3f6gd2qgdf8l8ia78j7i";
+        sha256 = "1krclaga358k3swz2n5wbni1b2r7mcxdzr6d7im6b66w3sbpvnb3";
       })
       # If you want to use modules your own flake exports (from modules/home-manager):
       # outputs.homeManagerModules.example
@@ -47,6 +37,11 @@ in {
     ]
     # 导入所有模块
     ++ (builtins.attrValues outputs.homeManagerModules);
+
+  nixGL.packages = nixgl.packages;
+  nixGL.defaultWrapper = "mesa";
+  nixGL.offloadWrapper = "nvidiaPrime";
+  nixGL.installScripts = [ "mesa" "nvidiaPrime" ];
 
   nixpkgs = {
     # You can add overlays here
@@ -117,12 +112,7 @@ in {
     libsForQt5.qtstyleplugins
     libsForQt5.qt5ct
     lxappearance
-    # macOS packages
-    gnused
   ];
-
-  nixGL.prefix = "${nixGL}/bin/nixGLIntel";
-  # nixGL.prefix = "${nixGL}/bin/nixGL";
 
   # Enable home-manager, git, and direnv
   programs.home-manager.enable = true;
