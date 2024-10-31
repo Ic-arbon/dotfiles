@@ -303,9 +303,6 @@
     font.size = 16;
   };
 
-  ## Optional ##
-  systemd.user.enable = true;
-
   home.sessionVariables = {
     # Optional, hint Electron apps to use Wayland:
     # NIXOS_OZONE_WL = "1";
