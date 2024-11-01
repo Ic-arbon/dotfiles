@@ -7,6 +7,7 @@
   bluetooth = import ./bluetooth.nix;
   # asus = import ./asus.nix;
   capture = import ./capture.nix;
+  dae = import ./dae;
   electron = import ./electron.nix;
   fcitx5 = import ./fcitx5.nix;
   filemanager = import ./filemanager.nix;

@@ -35,7 +35,7 @@ git clone --recursive https://github.com/Ic-arbon/dotfiles ~/dotfiles
 users = [ "your_username" ];
 ```
 > TODO: Simplize
-### 设置代理
+### 设置代理(暂时弃用)
 ```shell
 sudo mkdir /etc/systemd/system/nix-daemon.service.d/
 sudo cat << EOF >/etc/systemd/system/nix-daemon.service.d/override.conf

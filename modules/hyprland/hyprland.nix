@@ -297,8 +297,11 @@
 
   programs.kitty = {
     enable = true;
+    package = (config.lib.nixGL.wrap pkgs.kitty);
+    settings = {
+      background_opacity = "0.9";
+    };
     themeFile = "GruvboxMaterialDarkHard";
-    # themeFile = "gruvbox-dark-hard";
     font.name = "FiraCode Nerd Font";
     font.size = 16;
   };

@@ -74,13 +74,11 @@ in {
   # home.packages = with pkgs; [ steam ];
   home.packages = with pkgs; [
     # Common packages
+    v2ray
+    v2raya
     bat
     htop
     neofetch
-    dae
-    geoip
-    v2raya
-    v2ray
     ffmpeg
     vlc
     pavucontrol
@@ -91,6 +89,12 @@ in {
     btdu
     axel
     wireshark
+    gns3-gui
+    gns3-server
+    dynamips
+    ubridge
+    vpcs
+    (config.lib.nixGL.wrap pkgs.nur.repos.nltch.ciscoPacketTracer8)
     # GNU/Linux packages
     bind
     nload
@@ -114,6 +118,8 @@ in {
     libsForQt5.qtstyleplugins
     libsForQt5.qt5ct
     lxappearance
+    (config.lib.nixGL.wrap pkgs.nur.repos.linyinfeng.wemeet)
+    
   ];
 
   # Enable home-manager, git, and direnv
