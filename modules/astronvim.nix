@@ -14,6 +14,7 @@
     nodejs
     gcc
     gzip
+    unzip
     cargo
   ];
 
