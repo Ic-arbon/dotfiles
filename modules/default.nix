@@ -8,6 +8,7 @@
   # asus = import ./asus.nix;
   capture = import ./capture.nix;
   dae = import ./dae;
+  embedded = import ./dev-tools/embedded.nix;
   electron = import ./electron.nix;
   fcitx5 = import ./fcitx5.nix;
   filemanager = import ./filemanager.nix;
