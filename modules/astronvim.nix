@@ -13,6 +13,8 @@
     python3
     nodejs
     gcc
+    gzip
+    cargo
   ];
 
   programs = {
