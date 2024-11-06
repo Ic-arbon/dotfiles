@@ -10,6 +10,6 @@
     style = ./conf/waybar/style.css;
   }; 
 
-  home.packages = [
-  ];
+  # home.packages = [
+  # ];
 }

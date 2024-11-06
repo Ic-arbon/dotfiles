@@ -1,11 +1,21 @@
 { inputs, config, lib, pkgs, ...}:
+let
+  isNixOS = builtins.pathExists /etc/nixos;
+in
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    package = config.lib.nixGL.wrap inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    # package = (config.lib.nixGL.wrap pkgs.hyprland);  # fix non-nixos crash
+    # package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    package = lib.mkDefault (
+      if isNixOS
+      then inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland
+      else (config.lib.nixGL.wrap inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland)
+    );  # fix non-nixos crash
     xwayland.enable = true;
-    systemd.variables = ["--all"];
+    systemd = {
+      enable = true;
+      variables = ["--all"];
+    };
   };
 
   wayland.windowManager.hyprland.plugins = [
@@ -43,8 +53,8 @@
       # ",preferred,auto,auto"
 
       # change monitor to high resolution
-      # "HDMI-A-1,preferred,0x0,1"
-      # "eDP-1,disable"
+      "HDMI-A-1,preferred,0x0,1"
+      "eDP-1,disable"
       # "eDP-1,highres,1920x0,auto"
     ];
 
