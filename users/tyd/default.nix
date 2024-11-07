@@ -73,45 +73,11 @@ in {
   # programs.neovim.enable = true;
   # home.packages = with pkgs; [ steam ];
   home.packages = with pkgs; [
-    # Common packages
-    bat
-    htop
-    neofetch
-    v2raya
-    v2ray
-    ffmpeg
-    vlc
-    pavucontrol
-    go-musicfox
-    waylyrics
-    screenkey
-    tig
-    btdu
-    axel
-    wireshark
-    # GNU/Linux packages
-    bind
-    nload
-    bluetuith
-    qq
-    onlyoffice-bin_latest
-    solaar
-    losslesscut-bin
-    gimp-with-plugins
-    protonplus
-    steam
-    mangohud
-    (config.lib.nixGL.wrap pkgs.qcm)
     (config.lib.nixGL.wrap pkgs.octaveFull)
     # (config.lib.nixGL.wrap pkgs.bambu-studio)
     # (config.lib.nixGL.wrap pkgs.freecad)
-    (config.lib.nixGL.wrap pkgs.kdePackages.kdenlive)
-    # glibc
-    libsForQt5.krdc
-    libsForQt5.krfb
-    libsForQt5.qtstyleplugins
-    libsForQt5.qt5ct
-    lxappearance
+    # libsForQt5.krdc
+    # libsForQt5.krfb
   ];
 
   # Enable home-manager, git, and direnv
