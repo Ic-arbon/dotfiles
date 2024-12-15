@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  pkgs-stable,
   ...
 }: {
   # Dependencies
@@ -8,10 +9,11 @@
 
   home.packages = with pkgs; [
     (nerdfonts.override {fonts = ["FiraCode"];})
+    # nerd-fonts.fira-code
     tree-sitter
     gdu
     python3
-    nodejs
+    nodejs_22
     gcc
     gzip
     unzip

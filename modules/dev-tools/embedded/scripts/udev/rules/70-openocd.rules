@@ -1,0 +1,13 @@
+# CMSIS-DAP 调试器
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="c251", ATTRS{idProduct}=="f001", MODE="0660", TAG+="uaccess"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0d28", ATTRS{idProduct}=="0204", MODE="0660", TAG+="uaccess"
+
+# FTDI 设备
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6010", MODE="0660", TAG+="uaccess"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6014", MODE="0660", TAG+="uaccess"
+
+# STLink V2
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="3748", MODE="0660", TAG+="uaccess"
+
+# JLink
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="1366", ATTRS{idProduct}=="0105", MODE="0660", TAG+="uaccess"

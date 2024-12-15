@@ -2,6 +2,7 @@
   home.packages = with pkgs; [
     bat
     htop
+    tree
     neofetch
     git
     tig
@@ -16,8 +17,8 @@
     bind
     nload
     wireshark
-    v2raya
-    v2ray
+    # v2raya
+    # v2ray
 
     # peripheral controller
     bluetuith
@@ -38,7 +39,6 @@
 
     # office
     qq
-    onlyoffice-bin_latest
     (config.lib.nixGL.wrap pkgs.nur.repos.linyinfeng.wemeet)
 
     # gaming
@@ -54,5 +54,6 @@
     # misc
     screenkey
     axel
+    qemu
   ];
 }

@@ -5,11 +5,11 @@ in
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    # package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     package = lib.mkDefault (
       if isNixOS
       then inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland
-      else (config.lib.nixGL.wrap inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland)
+      else (config.lib.nixGL.wrap pkgs.hyprland)
+      # else (config.lib.nixGL.wrap inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland)
     );  # fix non-nixos crash
     xwayland.enable = true;
     systemd = {
@@ -54,7 +54,9 @@ in
 
       # change monitor to high resolution
       "HDMI-A-1,preferred,0x0,1"
-      "eDP-1,disable"
+      (if isNixOS
+      then "eDP-1,disable"
+      else "eDP-1,highres,auto,auto")
       # "eDP-1,highres,1920x0,auto"
     ];
 
@@ -136,7 +138,6 @@ in
     # Decoration settings like Rounded Corners, Opacity, Blur, etc.
     decoration = {
         "rounding"="8";       # Original: rounding=-1
-        "drop_shadow"="false";
     
         "active_opacity"="0.98";
         "inactive_opacity"="0.9";
@@ -147,6 +148,10 @@ in
             "size"="3";                	# minimum 1
             "passes"="1";               # minimum 1, more passes = more resource intensive.
             "ignore_opacity"="false";
+        };
+
+        shadow = {
+          "enabled" = "false";
         };
     
         # Your blur "amount" is blur_size * blur_passes, but high blur_size (over around 5-ish) will produce artifacts.
@@ -279,6 +284,8 @@ in
 
     # fileManager
     xfce.thunar
+
+    slurp
   ];
 
   ## MUST HAVE ##
