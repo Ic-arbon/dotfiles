@@ -34,7 +34,7 @@
     users.tyd = {
       isNormalUser = true;
       shell = pkgs.zsh;
-      extraGroups = [ "networkmanager" "wheel" "video" "input" "uinput" "libvirtd" ];
+      extraGroups = [ "networkmanager" "wheel" "video" "input" "uinput" "libvirtd" "wireshark" ];
       packages = with pkgs; [
 	      git
         # firefox
@@ -50,6 +50,12 @@
     wget
     # kitty
   ];
+
+  programs.wireshark = {
+    enable = true;
+    package = pkgs.wireshark;
+  };
+
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
