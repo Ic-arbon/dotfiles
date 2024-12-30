@@ -86,4 +86,15 @@ in
       inputs.daeuniverse.nixosModules.daed
     ];
   };
+
+  nixosConfigurations.gs-palworld = nixpkgs.lib.nixosSystem {
+    system = "x86_64-linux";
+    specialArgs = pkgArgs.x86_64-linux // {inherit inputs outputs;}; 
+    modules = [
+      ../hosts/gs-palworld
+      inputs.daeuniverse.nixosModules.dae
+      inputs.daeuniverse.nixosModules.daed
+    ];
+  };
+
 }
