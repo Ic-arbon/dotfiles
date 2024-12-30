@@ -44,6 +44,9 @@ in
       export XDG_DATA_HOME="$HOME/.local/share"
       export LC_ALL=en_US.UTF-8
       export LANG=en_US.UTF-8
+      if [[ "$TERM" == "xterm-kitty" ]]; then
+        alias ssh="TERM=xterm-256color ssh"
+      fi
     '';
   };
 
