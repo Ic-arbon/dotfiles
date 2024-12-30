@@ -20,6 +20,7 @@
   shell = import ./shell.nix;
   ssh = import ./ssh.nix; # 不能全自动化部署，需要ssh-keygen -t ed25519，并上传公钥
   systemd = import ./systemd;
+  theme = import ./hyprland/theme.nix;
   # vivado = import ./vivado.nix;
   waybar = import ./hyprland/waybar.nix;
 }

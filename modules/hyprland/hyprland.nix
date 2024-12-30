@@ -7,7 +7,8 @@ in
     enable = true;
     package = lib.mkDefault (
       if isNixOS
-      then inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland
+      then pkgs.hyprland
+      # then inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland
       else (config.lib.nixGL.wrap pkgs.hyprland)
       # else (config.lib.nixGL.wrap inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland)
     );  # fix non-nixos crash
@@ -82,6 +83,12 @@ in
       "~/.config/hypr/scripts/startup"
       # "waybar &"
     ];
+
+    # exec = [
+    #   "gsettings set org.gnome.desktop.interface gtk-theme 'catppuccin-macchiato-mauve-compact'"   # for GTK3 apps
+    #   "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'"   # for GTK4 apps
+    # ];
+
 
     #############################
     ### ENVIRONMENT VARIABLES ###
@@ -299,6 +306,7 @@ in
       common.default = "*";
       # common = {
       #   default = [
+      #     "hyprland"
       #     "gtk"
       #   ];
       # };
@@ -325,7 +333,7 @@ in
 
   home.sessionVariables = {
     # Optional, hint Electron apps to use Wayland:
-    # NIXOS_OZONE_WL = "1";
+    NIXOS_OZONE_WL = "1";
   };
 
   # audio visualizer for waybar
@@ -339,31 +347,4 @@ in
     package = pkgs.rofi-wayland;
   };
   
-  home.pointerCursor = {
-    gtk.enable = true;
-    # x11.enable = true;
-    package = pkgs.bibata-cursors;
-    name = "Bibata-Modern-Classic";
-    size = 16;
-  };
-
-  gtk = {
-    enable = true;
-
-    theme = {
-      package = pkgs.flat-remix-gtk;
-      name = "Flat-Remix-GTK-Grey-Darkest";
-    };
-
-    iconTheme = {
-      # package = pkgs.gnome.adwaita-icon-theme;
-      package = pkgs.adwaita-icon-theme;
-      name = "Adwaita";
-    };
-
-    font = {
-      name = "Sans";
-      size = 11;
-    };
-  };
 }

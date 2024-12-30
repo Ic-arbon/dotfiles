@@ -106,7 +106,7 @@ in {
 
   home.sessionVariables = {
     EDITOR = "nvim";
-    QT_QPA_PLATFORMTHEME = "qt5ct";
+    # QT_QPA_PLATFORMTHEME = "qt5ct";
     LANG = "zh_CN.UTF-8";
     LANGUAGE = "zh_CN:en_US";
   };
