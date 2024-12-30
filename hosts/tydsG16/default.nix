@@ -12,6 +12,7 @@
     ./networking.nix
     ./peripherals.nix
     ./steam.nix
+    ./umu.nix
     ./zram.nix
   ];
 }
