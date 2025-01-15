@@ -1,16 +1,30 @@
 {
   config,
+  lib,
   pkgs,
+  pkgs-stable,
   ...
-}: {
+}:
+let
+  isNixOS = builtins.pathExists /etc/nixos;
+in
+
+{
   home.packages = with pkgs; [
     ffmpeg # 播放html5视频
+    google-chrome # planB
   ];
 
   programs.firefox = {
     enable = true;
     # package = config.lib.nixGL.wrap pkgs.firefox-devedition-bin;
-    package = config.lib.nixGL.wrap pkgs.firefox;
+
+    package = lib.mkDefault (
+      if isNixOS
+      then pkgs.firefox
+      else (config.lib.nixGL.wrap pkgs.firefox)
+    );
+
     languagePacks = [ "en-US" "zh-CN"];
     policies = {
       DisableTelemetry = true;
