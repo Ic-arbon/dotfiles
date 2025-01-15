@@ -28,9 +28,12 @@
 
     # "resume=/dev/disk/by-label/swap"
   ];
-
+  
+  powerManagement.enable = true;
+  
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="pci", DRIVER=="pcieport", ATTR{power/wakeup}="disabled"
+    ACTION=="add", SUBSYSTEM=="net", NAME=="en*", RUN+="${pkgs.ethtool}/sbin/ethtool -s $name wol g"
   '';
 
   fileSystems."/" =

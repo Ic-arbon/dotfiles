@@ -7,6 +7,8 @@
     HandleLidSwitchExternalPower=ignore
   '';
 
+  services.power-profiles-daemon.enable = true;
+
   specialisation = {
     on-the-go.configuration = {
       system.nixos.tags = [ "on-the-go" ];
@@ -17,5 +19,6 @@
       };
     };
   };  
+
 }
 

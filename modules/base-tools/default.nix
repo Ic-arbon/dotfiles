@@ -16,6 +16,7 @@
 
     # network tools
     bind
+    ethtool
     nload
     # wireshark
     # v2raya
@@ -47,11 +48,6 @@
     # nur.repos.novel2430.wpsoffice-365
     (config.lib.nixGL.wrap pkgs.nur.repos.linyinfeng.wemeet)
 
-    # gaming
-    steam
-    protonplus
-    mangohud
-
     # theme
     libsForQt5.qtstyleplugins
     libsForQt5.qt5ct
@@ -61,6 +57,7 @@
     screenkey
     axel
     qemu
+    rustdesk
 
     # ebook reader
     bk

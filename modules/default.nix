@@ -15,6 +15,7 @@
   filemanager = import ./filemanager.nix;
   firefox = import ./firefox.nix;
   font = import ./font.nix;
+  gaming = import ./gaming.nix;
   git = import ./git.nix;
   hyprland = import ./hyprland/hyprland.nix;
   shell = import ./shell.nix;
