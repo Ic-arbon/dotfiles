@@ -54,11 +54,17 @@ in
       # ",preferred,auto,auto"
 
       # change monitor to high resolution
+      # TODO: dynamic monitor expand
       "HDMI-A-1,preferred,0x0,1"
-      (if isNixOS
-      then "eDP-1,disable"
-      else "eDP-1,highres,auto,auto")
+      (
+      if isNixOS then 
+        # "eDP-1,disable"
+        # "eDP-2,disable"
+        "eDP-2,highres,auto,auto"
+      else 
+        "eDP-1,highres,auto,auto"
       # "eDP-1,highres,1920x0,auto"
+      )
     ];
 
     ###################
@@ -334,6 +340,8 @@ in
   home.sessionVariables = {
     # Optional, hint Electron apps to use Wayland:
     NIXOS_OZONE_WL = "1";
+    # Optional, hint fcitx to use waylandFrontend:
+    GTK_IM_MODULE = lib.mkForce "";
   };
 
   # audio visualizer for waybar

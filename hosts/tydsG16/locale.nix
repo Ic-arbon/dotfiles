@@ -12,5 +12,7 @@
   #   keyMap = "us";
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
+
+  # i18n.inputMethod.fcitx5.waylandFrontend = true;
   
 }
