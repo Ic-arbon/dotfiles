@@ -7,7 +7,6 @@
 
     steamtinkerlaunch
     ### steamtinkerlaunch dependencies:
-    busybox
     bash 	# Only shell tested.
     git 	
     gnumake 	# Required for manual root installation with make only.
