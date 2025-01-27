@@ -28,9 +28,13 @@
 
   programs.zsh.enable = true;
 
+  # Don't allow mutation of users outside the config.
+  # users.mutableUsers = false;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
     defaultUserShell = pkgs.zsh;
+    users.root = {};
     users.tyd = {
       isNormalUser = true;
       shell = pkgs.zsh;
@@ -56,6 +60,31 @@
     package = pkgs.wireshark;
   };
 
+  # security.sudo = {
+  #   enable = true;
+  #   extraRules = [{
+  #     commands = [
+  #       {
+  #         command = "${pkgs.systemd}/bin/systemctl suspend";
+  #         options = [ "NOPASSWD" ];
+  #       }
+  #       {
+  #         command = "${pkgs.systemd}/bin/reboot";
+  #         options = [ "NOPASSWD" ];
+  #       }
+  #       {
+  #         command = "${pkgs.systemd}/bin/poweroff";
+  #         options = [ "NOPASSWD" ];
+  #       }
+  #     ];
+  #     groups = [ "wheel" ];
+  #   }];
+  #   extraConfig = with pkgs; ''
+  #     Defaults:picloud secure_path="${lib.makeBinPath [
+  #       systemd
+  #     ]}:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin"
+  #   '';
+  # };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
