@@ -23,7 +23,8 @@
     export PATH=$PATH:${programs}
     export HYPRLAND_INSTANCE_SIGNATURE=$(ls -1 /tmp/hypr | tail -1)
     hyprctl --batch 'keyword decoration:blur 1 ; keyword animations:enabled 1 ; keyword misc:vfr 1'
-    powerprofilesctl set power-saver
+    powerprofilesctl set balanced
+    # powerprofilesctl set power-saver
   '';
 in {
   # Optimise Linux system performance on demand

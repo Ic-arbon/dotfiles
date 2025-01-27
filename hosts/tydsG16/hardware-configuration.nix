@@ -12,24 +12,21 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "vmd" "nvme" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
-  boot.kernelModules = [ "kvm-intel" ];
+  # boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "nvidia" ];
   boot.extraModulePackages = [ ];
   boot.extraModprobeConfig = "options kvm_intel nested=1"; # for intel cpu
 
   boot.kernelParams = [ 
-    # fix suspend and hibernate
-    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
     # fix intel gpu hang
     # "module_blacklist=i915" 
 
-    # "resume=/dev/disk/by-label/swap"
+    "mem_sleep_default=deep"
+    "resume=/dev/disk/by-label/swap"
   ];
-  
-  powerManagement.enable = true;
   
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="pci", DRIVER=="pcieport", ATTR{power/wakeup}="disabled"
@@ -48,7 +45,8 @@
     };
 
   swapDevices = [ ];
-  # boot.resumeDevice = "/dev/disk/by-label/swap";
+  powerManagement.enable = true;
+  boot.resumeDevice = "/dev/disk/by-label/swap";
   # systemd.sleep.extraConfig = ''
   #   HibernateDelaySec=30s # very low value to test suspend-then-hibernate
   #   SuspendState=mem # suspend2idle is buggy :(
