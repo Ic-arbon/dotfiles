@@ -10,11 +10,6 @@ let
 in
 
 {
-  home.packages = with pkgs; [
-    ffmpeg # 播放html5视频
-    google-chrome # planB
-  ];
-
   programs.firefox = {
     enable = true;
     # package = config.lib.nixGL.wrap pkgs.firefox-devedition-bin;
@@ -55,4 +50,22 @@ in
 
     };
   };
+
+  home.packages = with pkgs; [
+    ffmpeg # 播放html5视频
+
+    # planB
+    (pkgs.symlinkJoin {
+      name = "google-chrome";
+      paths = [ pkgs.google-chrome ];
+      buildInputs = [ pkgs.makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/google-chrome-stable \
+        --add-flags --ozone-platform=wayland \
+        --add-flags --enable-wayland-ime  \
+      '';
+    })
+
+  ];
+
 }

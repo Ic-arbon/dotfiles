@@ -13,7 +13,7 @@
   electron = import ./electron.nix;
   fcitx5 = import ./fcitx5.nix;
   filemanager = import ./filemanager.nix;
-  firefox = import ./firefox.nix;
+  browsers = import ./browsers.nix;
   font = import ./font.nix;
   gaming = import ./gaming.nix;
   git = import ./git.nix;
