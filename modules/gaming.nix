@@ -1,8 +1,11 @@
-{ pkgs, ... }:
+{ pkgs, umu-launcher, ... }:
 {
   home.packages = with pkgs; [
     steam
     protonplus
+    protontricks
+    winetricks
+    umu-launcher.default
     mangohud
 
     steamtinkerlaunch

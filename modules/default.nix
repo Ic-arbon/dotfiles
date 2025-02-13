@@ -18,6 +18,7 @@
   gaming = import ./gaming.nix;
   git = import ./git.nix;
   hyprland = import ./hyprland/hyprland.nix;
+  maa = import ./maa.nix;
   shell = import ./shell.nix;
   ssh = import ./ssh.nix; # 不能全自动化部署，需要ssh-keygen -t ed25519，并上传公钥
   systemd = import ./systemd;

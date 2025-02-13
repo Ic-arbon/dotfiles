@@ -34,8 +34,14 @@
         inherit system;
         config.allowUnfree = true;
       };
+      pkgs-unstable = import inputs.nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
 
       nix-gaming = import inputs.nix-gaming;
+
+      umu-launcher = inputs.umu.packages.${system};
 
       nixgl = {
         packages = inputs.nixGL.packages.${system}; 

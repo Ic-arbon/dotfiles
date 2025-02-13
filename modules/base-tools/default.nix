@@ -58,7 +58,7 @@
     axel
     qemu
     rustdesk
-    betaflight-configurator
+    # betaflight-configurator
 
     # ebook reader
     bk
