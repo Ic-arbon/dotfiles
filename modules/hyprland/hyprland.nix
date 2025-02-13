@@ -1,4 +1,4 @@
-{ inputs, config, lib, pkgs, ...}:
+{ inputs, config, lib, pkgs, pkgs-stable, ...}:
 let
   isNixOS = builtins.pathExists /etc/nixos;
 in
@@ -207,6 +207,7 @@ in
       "$mainMod, P, exec, $menu"
       "$mainMod, E, exec, $fileManager"
       "$mainMod, F, togglefloating"
+      "$mainMod SHIFT, F, fullscreen"
       "$mainMod, S, togglesplit"
       "$mainMod SHIFT, RETURN, exec, $terminal"
       "$mainMod SHIFT, C, killactive"
@@ -263,8 +264,12 @@ in
     
     # See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
     # See https://wiki.hyprland.org/Configuring/Workspace-Rules/ for workspace rules
-
-    "windowrulev2" = "suppressevent maximize, class:.*"; # You'll probably like this.
+    
+    windowrulev2 = [
+      "fullscreen, class:Waydroid"
+      "suppressevent maximize, class:.*"
+    ];
+    # "windowrulev2" = "suppressevent maximize, class:.*"; # You'll probably like this.
   };
 
   ### Utilities ###
