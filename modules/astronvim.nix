@@ -12,9 +12,11 @@
     # nerd-fonts.fira-code
     tree-sitter
     gdu
-    python3
+    # python3
+    python312Packages.stdenv
     nodejs_22
-    gcc
+    # gcc14
+    gccStdenv
     gzip
     unzip
     cargo
