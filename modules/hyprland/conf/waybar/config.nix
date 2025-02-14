@@ -72,7 +72,7 @@
         stopped = "";
       };
       dynamic-order = [ "title" "artist" ];
-      ignored-players = [ "firefox" ];
+      ignored-players = [ "firefox" "chromium" ];
     };
     idle_inhibitor = {
       format = "{icon}";

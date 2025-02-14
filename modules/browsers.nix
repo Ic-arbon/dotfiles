@@ -7,6 +7,40 @@
 }:
 let
   isNixOS = builtins.pathExists /etc/nixos;
+
+  # 原始chrome包
+  chromeOriginal = pkgs.google-chrome;
+  
+  # 自定义桌面文件
+  chromeDesktop = pkgs.makeDesktopItem {
+    name = "google-chrome";
+    desktopName = "Google Chrome (Wayland)";
+    exec = "${chromeOriginal}/bin/google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime %U";
+    # exec = "${chromeOriginal}/bin/google-chrome-stable %U";
+    icon = "google-chrome";
+    terminal = false;
+    categories = ["Network" "WebBrowser"];
+    mimeTypes = [];
+  };
+
+  # 修改后的chrome包
+  chromeWithCustomDesktop = pkgs.symlinkJoin {
+    name = "google-chrome-wayland";
+    paths = [ chromeOriginal ];
+    buildInputs = [ pkgs.makeWrapper ];
+
+    postBuild = ''
+      # 删除原版desktop文件
+      rm -f $out/share/applications/google-chrome.desktop
+      # 安装自定义desktop文件
+      cp ${chromeDesktop}/share/applications/*.desktop $out/share/applications/
+      wrapProgram $out/bin/google-chrome-stable \
+        --add-flags --enable-features=UseOzonePlatform \
+        --add-flags --ozone-platform=wayland \
+        --add-flags --enable-wayland-ime \
+        --add-flags --gtk-version=4
+    '';
+  };
 in
 
 {
@@ -55,17 +89,7 @@ in
     ffmpeg # 播放html5视频
 
     # planB
-    (pkgs.symlinkJoin {
-      name = "google-chrome";
-      paths = [ pkgs.google-chrome ];
-      buildInputs = [ pkgs.makeWrapper ];
-      postBuild = ''
-        wrapProgram $out/bin/google-chrome-stable \
-        --add-flags --ozone-platform=wayland \
-        --add-flags --enable-wayland-ime  \
-      '';
-    })
-
+    chromeWithCustomDesktop
   ];
 
 }
