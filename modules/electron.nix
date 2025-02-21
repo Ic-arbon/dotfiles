@@ -9,8 +9,8 @@ let
   obsidianDesktop = pkgs.makeDesktopItem {
     name = "obsidian";
     desktopName = "Obsidian (Wayland)";
-    # exec = "${obsidianOriginal}/bin/obsidian --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime %U";
-    exec = "${obsidianOriginal}/bin/obsidian %U";
+    exec = "${obsidianOriginal}/bin/obsidian --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime %U";
+    # exec = "${obsidianOriginal}/bin/obsidian %U";
     icon = "obsidian";
     terminal = false;
     categories = ["Office"];

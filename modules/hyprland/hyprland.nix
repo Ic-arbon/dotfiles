@@ -7,11 +7,12 @@ in
     enable = true;
     package = lib.mkDefault (
       if isNixOS
-      then pkgs.hyprland
-      # then inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland
+      # then pkgs.hyprland
+      then inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland
       else (config.lib.nixGL.wrap pkgs.hyprland)
       # else (config.lib.nixGL.wrap inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland)
     );  # fix non-nixos crash
+    # portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
     systemd = {
       enable = true;
@@ -59,8 +60,8 @@ in
       (
       if isNixOS then 
         # "eDP-1,disable"
-        # "eDP-2,disable"
-        "eDP-2,highres,auto,auto"
+        "eDP-2,disable"
+        # "eDP-2,highres,auto,auto"
       else 
         "eDP-1,highres,auto,auto"
       # "eDP-1,highres,1920x0,auto"

@@ -41,8 +41,6 @@
 
       nix-gaming = import inputs.nix-gaming;
 
-      umu-launcher = inputs.umu.packages.${system};
-
       nixgl = {
         packages = inputs.nixGL.packages.${system}; 
         config.allowUnfree = true;

@@ -1,11 +1,13 @@
-{ pkgs, umu-launcher, ... }:
+{ pkgs, pkgs-unstable, ... }:
 {
   home.packages = with pkgs; [
     steam
     protonplus
     protontricks
-    winetricks
-    umu-launcher.default
+    # wineWowPackages.waylandFull
+    # winetricks
+    bottles
+    pkgs-unstable.umu-launcher
     mangohud
 
     steamtinkerlaunch
