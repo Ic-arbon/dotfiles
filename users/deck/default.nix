@@ -21,11 +21,6 @@ in {
   # You can import other home-manager modules here
   imports =
     [
-      (builtins.fetchurl {
-        url = "https://raw.githubusercontent.com/Smona/home-manager/nixgl-compat/modules/misc/nixgl.nix";
-        # sha256 = "01dkfr9wq3ib5hlyq9zq662mp0jl42fw3f6gd2qgdf8l8ia78j7i";
-        sha256 = "1krclaga358k3swz2n5wbni1b2r7mcxdzr6d7im6b66w3sbpvnb3";
-      })
       # If you want to use modules your own flake exports (from modules/home-manager):
       # outputs.homeManagerModules.example
 
@@ -37,11 +32,6 @@ in {
     ]
     # 导入所有模块
     ++ (builtins.attrValues outputs.homeManagerModules);
-
-  nixGL.packages = nixgl.packages;
-  nixGL.defaultWrapper = "mesa";
-  nixGL.offloadWrapper = "nvidiaPrime";
-  nixGL.installScripts = [ "mesa" "nvidiaPrime" ];
 
   nixpkgs = {
     # You can add overlays here
@@ -69,16 +59,15 @@ in {
     };
   };
 
+  nixGL = {
+    packages = nixgl.packages;
+    defaultWrapper = "mesa";
+  };
+
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
   # home.packages = with pkgs; [ steam ];
   home.packages = with pkgs; [
-    gns3-gui
-    gns3-server
-    dynamips
-    ubridge
-    vpcs
-    (config.lib.nixGL.wrap pkgs.nur.repos.nltch.ciscoPacketTracer8)
     (config.lib.nixGL.wrap pkgs.octaveFull)
     # (config.lib.nixGL.wrap pkgs.bambu-studio)
     # (config.lib.nixGL.wrap pkgs.freecad)
@@ -117,7 +106,7 @@ in {
 
   home.sessionVariables = {
     EDITOR = "nvim";
-    QT_QPA_PLATFORMTHEME = "qt5ct";
+    # QT_QPA_PLATFORMTHEME = "qt5ct";
     LANG = "zh_CN.UTF-8";
     LANGUAGE = "zh_CN:en_US";
   };
@@ -138,5 +127,5 @@ in {
   systemd.user.startServices = "sd-switch";
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  home.stateVersion = "24.05";
+  home.stateVersion = "24.11";
 }
