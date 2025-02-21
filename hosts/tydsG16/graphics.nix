@@ -6,14 +6,16 @@
     "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
     # Since NVIDIA does not load kernel mode setting by default,
     # enabling it is required to make Wayland compositors function properly.
-    "nvidia-drm.fbdev=1"
+    # "nvidia-drm.fbdev=1"
   ];
+  
+  hardware.brillo.enable = true;
   services.xserver.videoDrivers = ["nvidia"]; # will install nvidia-vaapi-driver by default
   hardware.nvidia = {
     open = false;
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/os-specific/linux/nvidia-x11/default.nix
-    # package = config.boot.kernelPackages.nvidiaPackages.stable;
+    # package = config.boot.kernelPackages.nvidiaPackages.latest;
     # package = config.boot.kernelPackages.nvidiaPackages.production;
     package = config.boot.kernelPackages.nvidiaPackages.beta;
 

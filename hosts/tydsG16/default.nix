@@ -13,7 +13,7 @@
     ./peripherals.nix
     ./steam.nix
     ./udev.nix
-    ./umu.nix
+    # ./umu.nix
     ./zram.nix
   ];
 }
