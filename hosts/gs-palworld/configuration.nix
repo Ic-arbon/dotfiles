@@ -4,6 +4,10 @@
 
 { inputs, config, lib, pkgs, ... }:
 
+let 
+  homeDir = "/home/tyd";
+in
+
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -23,6 +27,18 @@
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
+  services.daed = {
+      enable = true;
+
+      openFirewall = {
+        enable = true;
+        port = 12345;
+      };
+
+      listen = "0.0.0.0:2023";
+      configDir = "${homeDir}/.config/daed";
+  };
+
   # Set your time zone.
   time.timeZone = "Asia/Shanghai";
 
@@ -38,7 +54,11 @@
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
 
+  programs.zsh.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.defaultUserShell = pkgs.zsh;
+
   users.users.tyd = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
@@ -58,8 +78,8 @@
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
-    kitty
     git
+    #kitty
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -76,8 +96,8 @@
   services.openssh.enable = true;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 22 ];
-  networking.firewall.allowedUDPPorts = [ 8211 ];
+  networking.firewall.allowedTCPPorts = [ 22 2023 ];
+  networking.firewall.allowedUDPPorts = [ 2023 8211 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
