@@ -4,47 +4,14 @@
 
 { inputs, config, lib, pkgs, ... }:
 
-let 
-  homeDir = "/home/tyd";
-in
-
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
-
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.trusted-users = [ "root" "@wheel"];
   nixpkgs.config.allowUnfree = true;
 
   networking.hostName = "gs-palworld"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
-
-  services.daed = {
-      enable = true;
-
-      openFirewall = {
-        enable = true;
-        port = 12345;
-      };
-
-      listen = "0.0.0.0:2023";
-      configDir = "${homeDir}/.config/daed";
-  };
-
   # Set your time zone.
   time.timeZone = "Asia/Shanghai";
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "socks5://192.168.1.207:20170";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -94,12 +61,6 @@ in
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 22 2023 ];
-  networking.firewall.allowedUDPPorts = [ 2023 8211 ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
