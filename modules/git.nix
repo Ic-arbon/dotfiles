@@ -15,7 +15,8 @@
 
   programs.git-credential-oauth = {
     enable = true;
-    package = pkgs-stable.git-credential-oauth;
+    package = pkgs.git-credential-oauth;
+    extraFlags = [ "-device" ];
   };
 
   home.packages = with pkgs; [
