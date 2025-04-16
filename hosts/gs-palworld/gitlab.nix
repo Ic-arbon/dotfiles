@@ -32,11 +32,10 @@
     #   passwordFile = "/var/keys/gitlab/smtp_password";
     # };
     
-    # 备份配置
-    backup = {
-      enable = true;
-      path = "/var/gitlab/backups";
-      interval = "40 22 * * *"; # 每天22点40分备份
+    extraConfig = {
+      backup = {
+        path = "/var/gitlab/backups";
+      };
     };
   };
 
@@ -111,4 +110,27 @@
       chmod 600 /var/keys/gitlab/jws_key
     fi
   '';
+
+  systemd.services.gitlab-backup = {
+    description = "GitLab Backup";
+    after = [ "gitlab.service" ];
+    requires = [ "gitlab.service" ];
+    environment = {
+      BACKUP = "dump";
+    };
+    serviceConfig = {
+      Type = "oneshot";
+      User = "gitlab";
+      ExecStart = "${pkgs.gitlab-rake}/bin/gitlab-rake gitlab:backup:create";
+    };
+  };
+
+  systemd.timers.gitlab-backup = {
+    description = "GitLab Backup Timer";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "40 22 * * *"; 
+      Unit = "gitlab-backup.service";
+    };
+  };
 } 
