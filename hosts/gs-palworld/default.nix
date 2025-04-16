@@ -5,6 +5,7 @@
     ./configuration.nix
     ./fhs.nix
     ./networking.nix
+    ./gitlab.nix
     # ./seafile.nix
   ];
 }
