@@ -6,18 +6,14 @@
     clang-tools
     gcc-arm-embedded-10
     glibc_multi
-    cmake
-    gnumake
     # code generator
-    stm32cubemx
     # debug
     gdb
     openocd
     minicom
     (import ./scripts/udev {inherit pkgs;})
-    segger-ozone
     # platformio
-    vscode
+    # vscode
   ];
 
   xdg.configFile = {

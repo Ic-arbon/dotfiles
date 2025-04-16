@@ -23,41 +23,41 @@
     # v2ray
 
     # peripheral controller
-    bluetuith
-    pavucontrol
-    solaar
+    # bluetuith
+    # pavucontrol
+    # solaar
 
     # multimedia tools
     ffmpeg
-    losslesscut-bin
-    (config.lib.nixGL.wrap pkgs.kdePackages.kdenlive)
-    gimp-with-plugins
+    # losslesscut-bin
+    # (config.lib.nixGL.wrap pkgs.kdePackages.kdenlive)
+    # gimp-with-plugins
 
     # multimdia player
     go-musicfox
     (config.lib.nixGL.wrap pkgs.qcm)
-    waylyrics
+    # waylyrics
     vlc
 
     # office
-    qq
-    libreoffice-qt
+    # qq
+    # libreoffice-qt
     # wpsoffice
     # nur.repos.rewine.ttf-wps-fonts
     # nur.repos.novel2430.wpsoffice
     # nur.repos.novel2430.wpsoffice-365
-    (config.lib.nixGL.wrap pkgs.nur.repos.linyinfeng.wemeet)
+    # (config.lib.nixGL.wrap pkgs.nur.repos.linyinfeng.wemeet)
 
     # theme
-    libsForQt5.qtstyleplugins
-    libsForQt5.qt5ct
-    lxappearance
+    # libsForQt5.qtstyleplugins
+    # libsForQt5.qt5ct
+    # lxappearance
 
     # misc
     screenkey
     axel
     qemu
-    rustdesk
+    # rustdesk
     # betaflight-configurator
 
     # ebook reader
