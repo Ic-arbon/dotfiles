@@ -35,9 +35,9 @@
 
     # multimdia player
     go-musicfox
-    (config.lib.nixGL.wrap pkgs.qcm)
+    # (config.lib.nixGL.wrap pkgs.qcm)
     # waylyrics
-    vlc
+    # vlc
 
     # office
     # qq
@@ -54,9 +54,9 @@
     # lxappearance
 
     # misc
-    screenkey
+    # screenkey
     axel
-    qemu
+    # qemu
     # rustdesk
     # betaflight-configurator
 

@@ -11,7 +11,7 @@
   dae = import ./dae;
   embedded = import ./dev-tools/embedded;
   # electron = import ./electron.nix;
-  fcitx5 = import ./fcitx5.nix;
+  # fcitx5 = import ./fcitx5.nix;
   filemanager = import ./filemanager.nix;
   # browsers = import ./browsers.nix;
   # font = import ./font.nix;
