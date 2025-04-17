@@ -9,7 +9,7 @@
   nix.settings.trusted-users = [ "root" "@wheel"];
   nixpkgs.config.allowUnfree = true;
 
-  networking.hostName = "gs-palworld"; # Define your hostname.
+  networking.hostName = "proxy"; # Define your hostname.
   # Set your time zone.
   time.timeZone = "Asia/Shanghai";
 
@@ -32,13 +32,13 @@
       packages = with pkgs; [
       ];
   };
-  users.users.steam = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-      packages = with pkgs; [
-	      steamcmd
-      ];
-  };
+  # users.users.steam = {
+  #   isNormalUser = true;
+  #   extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+  #     packages = with pkgs; [
+	 #      steamcmd
+  #     ];
+  # };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
