@@ -91,12 +91,12 @@ in
     ];
   };
 
-  nixosConfigurations.gs-palworld = nixpkgs.lib.nixosSystem {
+  nixosConfigurations.proxy = nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = pkgArgs.x86_64-linux // {inherit inputs outputs;}; 
     modules = [
-      ../hosts/gs-palworld
-      inputs.daeuniverse.nixosModules.dae
+      ../hosts/proxy
+      # inputs.daeuniverse.nixosModules.dae
       inputs.daeuniverse.nixosModules.daed
     ];
   };
