@@ -39,6 +39,15 @@
     };
   };
 
+  # 配置 GitLab 备份定时器（使用内置服务）
+  systemd.services.gitlab-backup.environment = {
+    BACKUP = "dump";
+    CRON = "1";
+  };
+
+  # 设置备份时间为每天晚上10点40分
+  systemd.timers.gitlab-backup.timerConfig.OnCalendar = "40 22 * * *";
+
   # 配置 Nginx 作为反向代理
   services.nginx = {
     enable = true;
@@ -110,27 +119,4 @@
       chmod 600 /var/keys/gitlab/jws_key
     fi
   '';
-
-  systemd.services.gitlab-backup = {
-    description = "GitLab Backup";
-    after = [ "gitlab.service" ];
-    requires = [ "gitlab.service" ];
-    environment = {
-      BACKUP = "dump";
-    };
-    serviceConfig = {
-      Type = "oneshot";
-      User = "gitlab";
-      ExecStart = "${config.services.gitlab.packages.gitlab}/bin/gitlab-rake gitlab:backup:create";
-    };
-  };
-
-  systemd.timers.gitlab-backup = {
-    description = "GitLab Backup Timer";
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnCalendar = "40 22 * * *"; 
-      Unit = "gitlab-backup.service";
-    };
-  };
 } 
