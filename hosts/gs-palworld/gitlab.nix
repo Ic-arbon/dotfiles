@@ -121,7 +121,7 @@
     serviceConfig = {
       Type = "oneshot";
       User = "gitlab";
-      ExecStart = "${pkgs.gitlab-rake}/bin/gitlab-rake gitlab:backup:create";
+      ExecStart = "${config.services.gitlab.packages.gitlab}/bin/gitlab-rake gitlab:backup:create";
     };
   };
 
