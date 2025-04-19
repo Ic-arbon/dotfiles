@@ -39,12 +39,12 @@
         config.allowUnfree = true;
       };
 
-      nix-gaming = import inputs.nix-gaming;
+      # nix-gaming = import inputs.nix-gaming;
 
-      nixgl = {
-        packages = inputs.nixGL.packages.${system}; 
-        config.allowUnfree = true;
-      };
+      # nixgl = {
+      #   packages = inputs.nixGL.packages.${system}; 
+      #   config.allowUnfree = true;
+      # };
 
       # nur = import inputs.nur {
       #   nurpkgs = import nixpkgs { inherit system; };

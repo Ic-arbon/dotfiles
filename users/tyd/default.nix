@@ -59,16 +59,16 @@ in {
     };
   };
 
-  nixGL = {
-    packages = nixgl.packages;
-    defaultWrapper = "mesa";
-  };
+  # nixGL = {
+  #   packages = nixgl.packages;
+  #   defaultWrapper = "mesa";
+  # };
 
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
   # home.packages = with pkgs; [ steam ];
   home.packages = with pkgs; [
-    (config.lib.nixGL.wrap pkgs.octaveFull)
+    # (config.lib.nixGL.wrap pkgs.octaveFull)
     # (config.lib.nixGL.wrap pkgs.bambu-studio)
     # (config.lib.nixGL.wrap pkgs.freecad)
     # libsForQt5.krdc
@@ -117,11 +117,11 @@ in {
 
   #让home-manager在非NixOS下更好地工作，能让kde集成桌面应用
   targets.genericLinux.enable = true;
-  home.file.".local/share/applications" = {
-    # enable = false;
-    source = ~/.nix-profile/share/applications;
-    recursive = true;
-  };
+  # home.file.".local/share/applications" = {
+  #   # enable = false;
+  #   source = ~/.nix-profile/share/applications;
+  #   recursive = true;
+  # };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
