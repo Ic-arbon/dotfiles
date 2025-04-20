@@ -5,10 +5,10 @@
   ...
 }: {
   # Dependencies
-  fonts.fontconfig.enable = true;
+  # fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
-    (nerdfonts.override {fonts = ["FiraCode"];})
+    # (nerdfonts.override {fonts = ["FiraCode"];})
     # nerd-fonts.fira-code
     tree-sitter
     gdu

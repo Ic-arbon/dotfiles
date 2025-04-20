@@ -67,13 +67,13 @@ in {
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
   # home.packages = with pkgs; [ steam ];
-  home.packages = with pkgs; [
+  # home.packages = with pkgs; [
     # (config.lib.nixGL.wrap pkgs.octaveFull)
     # (config.lib.nixGL.wrap pkgs.bambu-studio)
     # (config.lib.nixGL.wrap pkgs.freecad)
     # libsForQt5.krdc
     # libsForQt5.krfb
-  ];
+  # ];
 
   # Enable home-manager, git, and direnv
   programs.home-manager.enable = true;
@@ -93,9 +93,9 @@ in {
   #   base = "zh_CN.UTF-8";
   # };
 
-  xresources.properties = {
+  # xresources.properties = {
     # "Xft.dpi" = 144;
-  };
+  # };
 
   home.activation = {
     # OUT OF DATE
@@ -116,7 +116,7 @@ in {
   # xdg.mime.enable=true;
 
   #让home-manager在非NixOS下更好地工作，能让kde集成桌面应用
-  targets.genericLinux.enable = true;
+  # targets.genericLinux.enable = true;
   # home.file.".local/share/applications" = {
   #   # enable = false;
   #   source = ~/.nix-profile/share/applications;

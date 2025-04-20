@@ -8,8 +8,8 @@
   # bluetooth = import ./bluetooth.nix;
   # asus = import ./asus.nix;
   # capture = import ./capture.nix;
-  dae = import ./dae;
-  embedded = import ./dev-tools/embedded;
+  # dae = import ./dae;
+  # embedded = import ./dev-tools/embedded;
   # electron = import ./electron.nix;
   # fcitx5 = import ./fcitx5.nix;
   filemanager = import ./filemanager.nix;
