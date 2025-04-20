@@ -101,4 +101,12 @@ in
     ];
   };
 
+  nixosConfigurations.repo = nixpkgs.lib.nixosSystem {
+    system = "x86_64-linux";
+    specialArgs = pkgArgs.x86_64-linux // {inherit inputs outputs;}; 
+    modules = [
+      ../hosts/repo
+      # sops-nix.nixosModules.sops
+    ];
+  };
 }

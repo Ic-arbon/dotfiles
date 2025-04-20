@@ -1,0 +1,14 @@
+# Also see https://github.com/Mic92/dotfiles/blob/d6114726d859df36ccaa32891c4963ae5717ef7f/nixos/.sops.yaml
+# for a more complex example.
+keys:
+  # - &admin_alice 2504791468b153b8a3963cc97ba53d1919c5dfd4
+  - &server_forgejo age1lnagsrzphmym8sfwyfal6xtu2z5j2qu6l40uwwe4etnxrk27spxqreyq7v
+  - &admin_tyd age13mtr9hqpm66tmy8t0pt8w3er5qxljn2yahd73fh93dev2ycjnc0scsev69
+creation_rules:
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+    - pgp:
+    #   - *admin_alice
+      age:
+      - *server_forgejo
+      - *admin_tyd

@@ -20,6 +20,10 @@
     #   inputs.nixpkgs.follows = "nixpkgs-stable";
     # };
 
+    sops-nix.url = "github:Mic92/sops-nix";
+    # optional, not necessary for the module
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+
     # NUR
     nur.url = "github:nix-community/NUR";
 
