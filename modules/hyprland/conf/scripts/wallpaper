@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
 swww-daemon &
-sleep 1
-swww img $HOME/dotfiles/wallpapers/default.jpg &
+sleep 5
+swww img $HOME/dotfiles/wallpapers/bs.gif &
+# swww img $HOME/dotfiles/wallpapers/default.jpg &

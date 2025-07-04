@@ -15,7 +15,7 @@
     python3
     # python312Packages.stdenv
     nodejs_22
-    gcc14
+    gcc
     # gccStdenv
     gzip
     unzip

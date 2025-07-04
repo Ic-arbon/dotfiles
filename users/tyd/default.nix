@@ -59,10 +59,10 @@ in {
     };
   };
 
-  # nixGL = {
-  #   packages = nixgl.packages;
-  #   defaultWrapper = "mesa";
-  # };
+  nixGL = {
+    packages = nixgl.packages;
+    defaultWrapper = "mesa";
+  };
 
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
@@ -112,8 +112,7 @@ in {
   };
 
   # Misc
-  # xdg.enable=true;
-  # xdg.mime.enable=true;
+  xdg.enable=true;
 
   #让home-manager在非NixOS下更好地工作，能让kde集成桌面应用
   targets.genericLinux.enable = true;
@@ -127,5 +126,5 @@ in {
   systemd.user.startServices = "sd-switch";
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  home.stateVersion = "24.11";
+  home.stateVersion = "25.05";
 }

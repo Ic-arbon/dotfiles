@@ -2,7 +2,7 @@
 
 ## Fix anyrun
 ## https://github.com/anyrun-org/anyrun/issues/153
-ln -s $XDG_RUNTIME_DIR/hypr /tmp/hypr
+# ln -s $XDG_RUNTIME_DIR/hypr /tmp/hypr
 
 ## Autostart Programs
 
@@ -17,7 +17,7 @@ ln -s $XDG_RUNTIME_DIR/hypr /tmp/hypr
 # Set wallpaper via a wallpaper.service
 # it will by start by home-manager automatically, do not need to restart it here.
 # systemctl --user restart wallpaper.service
-~/.config/hypr/scripts/wallpaper &
+# ~/.config/hypr/scripts/wallpaper &
 
 # Listen to external monitor
 external-monitor-detector &

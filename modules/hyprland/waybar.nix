@@ -1,13 +1,13 @@
-{ pkgs, pkgs-stable, ... }:
+{ lib, pkgs, pkgs-unstable, ... }:
 {
   programs.waybar = {
     enable = true;
-    package = pkgs.waybar;
-    systemd.enable = true;
-    systemd.target = "hyprland-session.target";
+    package = pkgs-unstable.waybar;
+    # systemd.enable = true;
+    # systemd.target = "hyprland-session.target";
     # systemd.target = "";
     settings = import ./conf/waybar/config.nix;
-    style = ./conf/waybar/style.css;
+    style = lib.mkForce (./conf/waybar/style.css);
   }; 
 
   # home.packages = [

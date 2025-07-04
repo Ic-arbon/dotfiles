@@ -13,6 +13,7 @@ in
       # else (config.lib.nixGL.wrap inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland)
     );  # fix non-nixos crash
     # portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+    # portalPackage = pkgs-stable.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
     systemd = {
       enable = true;
@@ -39,7 +40,7 @@ in
 
   wayland.windowManager.hyprland.settings = {
     debug = {
-      "disable_logs" = "false";
+      # "disable_logs" = "false";
     };
     # unscale XWayland
     xwayland = {
@@ -88,7 +89,11 @@ in
     
     exec-once = [
       "~/.config/hypr/scripts/startup"
-      # "waybar &"
+      "waybar &"
+      "fcitx5 -d &"
+      # "fcitx5-remote -r"
+      # "fcitx5 -d --replace &"
+      # "fcitx5-remote -r"
     ];
 
     # exec = [
@@ -104,19 +109,23 @@ in
     # See https://wiki.hyprland.org/Configuring/Environment-variables/
     env = [
       # for hyprland with nvidia gpu, ref https://wiki.hyprland.org/Nvidia/
-      "LIBVA_DRIVER_NAME,nvidia"
+      # "LIBVA_DRIVER_NAME,nvidia"
+      # "__GLX_VENDOR_LIBRARY_NAME,nvidia"
+
+      # "GBM_BACKEND,nvidia-drm"
+
       "XDG_SESSION_TYPE,wayland"
-      "GBM_BACKEND,nvidia-drm"
-      "__GLX_VENDOR_LIBRARY_NAME,nvidia"
+
       # fix https://github.com/hyprwm/Hyprland/issues/1520
       "WLR_NO_HARDWARE_CURSORS,1"
 
       # MultiGPU, priority: nvidia > intel
       # TODO: Replace with ones own card
       # "AQ_DRM_DEVICES,/dev/dri/by-path/pci-0000:01:00.0-card:/dev/dri/by-path/pci-0000:00:02.0-card"
+      # "AQ_DRM_DEVICES,/dev/dri/card1"
 
       # toolkit-specific scale
-      "GDK_SCALE,2"
+      # "GDK_SCALE,2"
       "XCURSOR_SIZE,16"
     ];
 
@@ -127,7 +136,7 @@ in
     input = {
       # "repeat_rate" = "0";
       touchpad = {
-        # "disable_while_typing" = "false";
+        "disable_while_typing" = "false";
       };
     };
 
@@ -139,14 +148,14 @@ in
 
     #-- General ----------------------------------------------------
     # General settings like MOD key, Gaps, Colors, etc.
-    general = {
-        "gaps_in"="5";
-        "gaps_out"="10";
+    general = lib.mkForce({
+      "gaps_in"="5";
+      "gaps_out"="10";
     
-        "border_size"="3";
-        "col.active_border"="0xAA83A589";
-        "col.inactive_border"="0xFF343A40";
-    };
+      "border_size"="3";
+      "col.active_border"="0xAA83A589";
+      "col.inactive_border"="0xFF343A40";
+    });
     
     #-- Decoration ----------------------------------------------------
     # Decoration settings like Rounded Corners, Opacity, Blur, etc.
@@ -192,10 +201,10 @@ in
     };
     
     # https://wiki.hyprland.org/Configuring/Variables/#misc
-    misc = {
+    misc = lib.mkDefault({
       "force_default_wallpaper" = "0"; # Set to 0 or 1 to disable the anime mascot wallpapers
       "disable_hyprland_logo" = "true"; # If true disables the random hyprland logo / anime girl background. :(
-    };
+    });
 
 
     ###################
@@ -218,6 +227,8 @@ in
       "$mainMod, right, movefocus, l"
       "$mainMod, up, movefocus, k"
       "$mainMod, down, movefocus, j"
+
+      "$mainMod, space, execr, fcitx5-remote -t"
 
       # Screenshots
       # ", Print, exec, grimblast copy area"
@@ -325,29 +336,33 @@ in
 
     };
 
-    # 添加 xdg-desktop-portal-wlr 作为额外的 portal 后端
-    extraPortals = with pkgs; [
+    # 添加额外的 portal 后端
+    extraPortals = with pkgs-stable; [
       xdg-desktop-portal-gtk
-      xdg-desktop-portal-hyprland
+      # xdg-desktop-portal-hyprland
     ];
   };
 
   programs.kitty = {
     enable = true;
-    package = (config.lib.nixGL.wrap pkgs.kitty);
-    settings = {
-      background_opacity = "0.9";
-    };
+    package = (config.lib.nixGL.wrap pkgs-stable.kitty);
+    # settings = {
+    #   background_opacity = "0.9";
+    # };
     themeFile = "GruvboxMaterialDarkHard";
-    font.name = "FiraCode Nerd Font";
-    font.size = 16;
+    # font.name = "FiraCode Nerd Font";
+    # font.size = 16;
   };
 
   home.sessionVariables = {
     # Optional, hint Electron apps to use Wayland:
     NIXOS_OZONE_WL = "1";
+
     # Optional, hint fcitx to use waylandFrontend:
     GTK_IM_MODULE = lib.mkForce "";
+
+    # GTK_IM_MODULE= "fcitx";
+    # QT_IM_MODULES= "wayland;fcitx;ibus";
   };
 
   # audio visualizer for waybar

@@ -5,10 +5,15 @@
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-emoji 
-    nerdfonts
+    # nerdfonts
+    (nerdfonts.override {fonts = ["FiraCode" "SourceCodePro"];})
+    # nerd-fonts.dejavu-sans-mono
+    # nerd-fonts.fira-code
+    # nerd-fonts.sauce-code-pro
     source-han-serif
     font-awesome      # otf-font-awesome
   ];
+  # ] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
   home.file = {
     ".local/share/fonts" = {
       source = ~/.nix-profile/share/fonts; 

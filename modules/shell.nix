@@ -33,11 +33,12 @@ in
     shellAliases = {
       ls = "ls --color=auto";
       ll = "ls -lah";
-      ra = "ranger";
+      ra = "y";
       bui = "bluetuith";
       update = "home-manager switch -b backup --impure --flake ${dotfileDir}";
     };
 
+    # initContent = ''
     initExtra = ''
       bindkey '^f' autosuggest-accept
       export XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS"

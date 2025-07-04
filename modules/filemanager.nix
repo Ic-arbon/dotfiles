@@ -1,11 +1,71 @@
+{ inputs, pkgs, pkgs-unstable, ... }:
 {
-  programs.ranger = {
-    enable = true;
-  };
+  # programs.ranger = {
+  #   enable = true;
+  # };
+  # xdg.configFile."ranger/rifle.conf".source = ./rifle.conf;
 
   programs.lf = {
     enable = true;
   };
 
-  xdg.configFile."ranger/rifle.conf".source = ./rifle.conf;
+  programs.yazi = {
+    enable = true;
+    package = pkgs-unstable.yazi;
+    enableZshIntegration = true;
+    shellWrapperName = "y";
+    
+    plugins = {
+       smart-enter = "${inputs.yazi-plugins}/smart-enter.yazi";
+       chmod = "${inputs.yazi-plugins}/chmod.yazi";
+       git = "${inputs.yazi-plugins}/git.yazi";
+    };
+
+    settings = {
+      # plugin.prepend_fetchers = {
+      #   id   = "git";
+      #   name = "*";
+      #   run  = "git";
+      # };
+    };
+    
+    keymap = {
+      mgr.prepend_keymap = [
+        {
+          on = "l";
+          run = "plugin smart-enter";
+          desc = "Enter directory or open file";
+        }
+        {
+          on = "<Right>";
+          run = "plugin smart-enter";
+          desc = "Enter directory or open file";
+        }
+        {
+          on = [ "c" "m" ];
+          run = "plugin chmod";
+          desc = "Chmod on selected files";
+        }
+      ];
+    };
+    
+    initLua = ''
+      require("git"):setup()
+    '';
+  };
+
+  xdg.mime.enable = true;
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+
+    };
+    associations.added = {
+      "video/*" = [ "vlc.desktop" ];
+    };
+    associations.removed = {
+      "image/webp" = [ "gimp.desktop" ];
+    };
+  };
+
 }

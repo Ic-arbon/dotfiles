@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-stable, ... }:{
+{ config, pkgs, pkgs-stable, pkgs-unstable, ... }:{
   home.packages = with pkgs; [
     bat
     htop
@@ -7,6 +7,7 @@
     git
     tig
     btdu
+    # (config.lib.nixGL.wrap pkgs.kitty)
 
     # unarchiver
     gzip
@@ -35,19 +36,20 @@
 
     # multimdia player
     go-musicfox
-    # (config.lib.nixGL.wrap pkgs.qcm)
+    (config.lib.nixGL.wrap pkgs.qcm)
     # waylyrics
     # vlc
 
     # office
-    # qq
+    qq
     # libreoffice-qt
     # wpsoffice
     # nur.repos.rewine.ttf-wps-fonts
     # nur.repos.novel2430.wpsoffice
     # nur.repos.novel2430.wpsoffice-365
     # (config.lib.nixGL.wrap pkgs.nur.repos.linyinfeng.wemeet)
-
+    (config.lib.nixGL.wrap pkgs-unstable.wemeet)
+    
     # theme
     # libsForQt5.qtstyleplugins
     # libsForQt5.qt5ct
@@ -56,7 +58,7 @@
     # misc
     # screenkey
     axel
-    # qemu
+    qemu
     # rustdesk
     # betaflight-configurator
 

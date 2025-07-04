@@ -15,7 +15,7 @@ let
   chromeDesktop = pkgs.makeDesktopItem {
     name = "google-chrome";
     desktopName = "Google Chrome (Wayland)";
-    exec = "${chromeOriginal}/bin/google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime %U";
+    exec = "${chromeOriginal}/bin/google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=x11 --enable-wayland-ime %U";
     # exec = "${chromeOriginal}/bin/google-chrome-stable %U";
     icon = "google-chrome";
     terminal = false;
@@ -36,9 +36,9 @@ let
       cp ${chromeDesktop}/share/applications/*.desktop $out/share/applications/
       wrapProgram $out/bin/google-chrome-stable \
         --add-flags --enable-features=UseOzonePlatform \
-        --add-flags --ozone-platform=wayland \
+        --add-flags --ozone-platform=x11 \
         --add-flags --enable-wayland-ime \
-        --add-flags --gtk-version=4
+        # --add-flags --gtk-version=4
     '';
   };
 in
@@ -69,13 +69,12 @@ in
         name = "profile_0";
         isDefault = true;
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-          adblocker-ultimate
+        # extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
+          # adblocker-ultimate
           darkreader
           vimium
           tampermonkey
-          translate-web-pages
-          gruvbox-dark-theme
-          kristofferhagen-nord-theme
+          immersive-translate
         ];
         settings = {
           "extensions.autoDisableScopes" = 0;
@@ -89,7 +88,7 @@ in
     ffmpeg # 播放html5视频
 
     # planB
-    chromeWithCustomDesktop
+    # chromeWithCustomDesktop
   ];
 
 }

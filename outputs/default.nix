@@ -41,10 +41,10 @@
 
       # nix-gaming = import inputs.nix-gaming;
 
-      # nixgl = {
-      #   packages = inputs.nixGL.packages.${system}; 
-      #   config.allowUnfree = true;
-      # };
+      nixgl = {
+        packages = inputs.nixGL.packages.${system}; 
+        config.allowUnfree = true;
+      };
 
       # nur = import inputs.nur {
       #   nurpkgs = import nixpkgs { inherit system; };
@@ -77,6 +77,8 @@ in
       extraSpecialArgs = pkgArgs.x86_64-linux // {inherit inputs outputs;};
       modules = [
         ../users/${user}
+        inputs.stylix.homeManagerModules.stylix
+        # inputs.stylix.homeModules.stylix
       ];
     }
   );
