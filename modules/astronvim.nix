@@ -8,8 +8,8 @@
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
-    (nerdfonts.override {fonts = ["FiraCode"];})
-    # nerd-fonts.fira-code
+    # (nerdfonts.override {fonts = ["FiraCode"];})
+    nerd-fonts.fira-code
     tree-sitter
     gdu
     python3

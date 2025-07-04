@@ -9,11 +9,11 @@ in
       if isNixOS
       # then pkgs.hyprland
       then inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland
-      else (config.lib.nixGL.wrap pkgs.hyprland)
+      else (config.lib.nixGL.wrap pkgs-stable.hyprland)
       # else (config.lib.nixGL.wrap inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland)
     );  # fix non-nixos crash
     # portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-    # portalPackage = pkgs-stable.xdg-desktop-portal-hyprland;
+    portalPackage = pkgs-stable.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
     systemd = {
       enable = true;

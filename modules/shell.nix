@@ -38,8 +38,7 @@ in
       update = "home-manager switch -b backup --impure --flake ${dotfileDir}";
     };
 
-    # initContent = ''
-    initExtra = ''
+    initContent = ''
       bindkey '^f' autosuggest-accept
       export XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS"
       export XDG_DATA_HOME="$HOME/.local/share"

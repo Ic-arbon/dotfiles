@@ -6,14 +6,14 @@
   inputs = {
     # Nixpkgs
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Home manager
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      # url = "github:nix-community/home-manager/release-24.11";
       # url = "github:nix-community/home-manager/release-25.05";
-      # url = "github:nix-community/home-manager/master";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # home-manager-stable = {
@@ -27,7 +27,7 @@
     # nixGL
     nixGL = {
       url = "github:nix-community/nixGL";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
     hyprland.url = "github:hyprwm/Hyprland";
@@ -37,9 +37,9 @@
     # };
 
     stylix = {
-      url = "github:nix-community/stylix/release-24.11";
+      # url = "github:nix-community/stylix/release-24.11";
       # url = "github:nix-community/stylix/release-25.05";
-      # url = "github:nix-community/stylix";
+      url = "github:nix-community/stylix";
     };
 
     # community wayland nixpkgs

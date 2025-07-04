@@ -1,4 +1,4 @@
-{ inputs, pkgs, pkgs-unstable, ... }:
+{ inputs, config, pkgs, pkgs-unstable, ... }:
 {
   # programs.ranger = {
   #   enable = true;
@@ -18,15 +18,24 @@
     plugins = {
        smart-enter = "${inputs.yazi-plugins}/smart-enter.yazi";
        chmod = "${inputs.yazi-plugins}/chmod.yazi";
+       full-border = "${inputs.yazi-plugins}/full-border.yazi";
        git = "${inputs.yazi-plugins}/git.yazi";
+       mount = "${inputs.yazi-plugins}/mount.yazi";
     };
 
     settings = {
-      # plugin.prepend_fetchers = {
-      #   id   = "git";
-      #   name = "*";
-      #   run  = "git";
-      # };
+      plugin.prepend_fetchers = [
+        {
+          id   = "git";
+          name = "*";
+          run  = "git";
+        }
+        {
+          id   = "git";
+          name = "*/";
+          run  = "git";
+        }
+      ];
     };
     
     keymap = {
@@ -46,13 +55,22 @@
           run = "plugin chmod";
           desc = "Chmod on selected files";
         }
+        {
+          on  = "M";
+          run = "plugin mount";
+        }
       ];
     };
     
     initLua = ''
+      require("full-border"):setup()
       require("git"):setup()
     '';
   };
+
+  home.packages = with pkgs; [
+    udisks
+  ];
 
   xdg.mime.enable = true;
   xdg.mimeApps = {

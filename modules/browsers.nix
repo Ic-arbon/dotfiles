@@ -68,8 +68,8 @@ in
         id = 0;
         name = "profile_0";
         isDefault = true;
-        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-        # extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
+        # extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
           # adblocker-ultimate
           darkreader
           vimium

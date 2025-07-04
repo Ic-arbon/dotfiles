@@ -77,8 +77,8 @@ in
       extraSpecialArgs = pkgArgs.x86_64-linux // {inherit inputs outputs;};
       modules = [
         ../users/${user}
-        inputs.stylix.homeManagerModules.stylix
-        # inputs.stylix.homeModules.stylix
+        # inputs.stylix.homeManagerModules.stylix
+        inputs.stylix.homeModules.stylix
       ];
     }
   );
