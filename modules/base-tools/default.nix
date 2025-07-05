@@ -33,7 +33,6 @@
 
     # misc
     axel
-    qemu
 
     # ebook reader
     bk

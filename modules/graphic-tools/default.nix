@@ -31,6 +31,7 @@
     # lxappearance
 
     # misc
+    qemu
     # screenkey
     # rustdesk
     # betaflight-configurator
