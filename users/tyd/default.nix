@@ -31,6 +31,7 @@
   serverModules = with outputs.homeManagerModules; [
     environment-detection
     base-tools
+    filemanager
     shell
     git
     ssh
@@ -49,9 +50,10 @@
     browsers
     filemanager
     electron
-    bluetooth
+    # bluetooth
     capture
-    gaming
+    dae
+    # gaming
     graphic-tools
     hyprland
     waybar
@@ -75,7 +77,21 @@ in {
   nixpkgs = {
     # You can add overlays here
     overlays = [
+      # Add overlays your own flake exports (from overlays and pkgs dir):
+      # outputs.overlays.additions
+      # outputs.overlays.modifications
+      # outputs.overlays.unstable-packages
       outputs.overlays.nur-packages
+
+      # You can also add overlays exported from other flakes:
+      # neovim-nightly-overlay.overlays.default
+
+      # Or define it inline, for example:
+      # (final: prev: {
+      #   hi = final.hello.overrideAttrs (oldAttrs: {
+      #     patches = [ ./change-hello-to-hi.patch ];
+      #   });
+      # })
     ];
     # Configure your nixpkgs instance
     config = {
@@ -104,8 +120,8 @@ in {
     zsh.enable = true;
   };
 
-  # 条件化的home activation
-  home.activation = lib.mkIf (envProfile != "server") {
+  home.activation = {
+    # OUT OF DATE
     rename = lib.hm.dag.entryBefore ["writeBoundary"] ''
       $DRY_RUN_CMD $HOME/dotfiles/modules/rename_git.sh
     '';
@@ -127,8 +143,8 @@ in {
   # 只在非NixOS系统上启用 genericLinux
   targets.genericLinux.enable = lib.mkIf (!isNixOS) true;
 
-  # 只在笔记本上启用 systemd 用户服务
-  systemd.user.startServices = lib.mkIf isLaptop "sd-switch";
+  # Nicely reload system units when changing configs
+  systemd.user.startServices = "sd-switch";
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "25.05";
