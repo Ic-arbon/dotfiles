@@ -55,7 +55,7 @@
 
   xdg.configFile = {
     "nvim" = {
-      source = ~/dotfiles/AstroNvim;
+      source = ~/dotfiles/modules/AstroNvim;
       executable = true;
       recursive = true;
     };

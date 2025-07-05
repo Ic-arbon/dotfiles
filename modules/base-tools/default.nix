@@ -1,5 +1,6 @@
 { config, pkgs, pkgs-stable, pkgs-unstable, ... }:{
   home.packages = with pkgs; [
+    # basic CLI tools
     bat
     htop
     tree
@@ -7,7 +8,6 @@
     git
     tig
     btdu
-    # (config.lib.nixGL.wrap pkgs.kitty)
 
     # unarchiver
     gzip
@@ -19,48 +19,21 @@
     bind
     ethtool
     nload
-    # wireshark
-    # v2raya
-    # v2ray
-
-    # peripheral controller
-    # bluetuith
-    # pavucontrol
-    # solaar
 
     # multimedia tools
     ffmpeg
-    # losslesscut-bin
-    # (config.lib.nixGL.wrap pkgs.kdePackages.kdenlive)
-    # gimp-with-plugins
 
-    # multimdia player
+    # CLI multimedia player
     go-musicfox
-    (config.lib.nixGL.wrap pkgs.qcm)
-    # waylyrics
-    # vlc
 
-    # office
-    qq
-    # libreoffice-qt
-    # wpsoffice
-    # nur.repos.rewine.ttf-wps-fonts
-    # nur.repos.novel2430.wpsoffice
-    # nur.repos.novel2430.wpsoffice-365
-    # (config.lib.nixGL.wrap pkgs.nur.repos.linyinfeng.wemeet)
-    (config.lib.nixGL.wrap pkgs-unstable.wemeet)
-    
-    # theme
-    # libsForQt5.qtstyleplugins
-    # libsForQt5.qt5ct
-    # lxappearance
+    # file manager
+    ranger
+    # or yazi for better file management
+    # yazi
 
     # misc
-    # screenkey
     axel
     qemu
-    # rustdesk
-    # betaflight-configurator
 
     # ebook reader
     bk

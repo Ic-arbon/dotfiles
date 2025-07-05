@@ -1,19 +1,27 @@
 { inputs, config, lib, pkgs, pkgs-stable, ...}:
 let
+  # 直接进行环境检测，避免循环依赖
   isNixOS = builtins.pathExists /etc/nixos;
+  isArchLinux = builtins.pathExists /etc/arch-release;
+  isLaptop = builtins.pathExists "/sys/class/power_supply/BAT0" ||
+             builtins.pathExists "/sys/class/power_supply/BAT1";
+  hasNvidia = builtins.pathExists "/dev/nvidia0" ||
+              builtins.pathExists "/proc/driver/nvidia";
 in
 {
   wayland.windowManager.hyprland = {
     enable = true;
     package = lib.mkDefault (
       if isNixOS
-      # then pkgs.hyprland
+      # 在NixOS上使用来自inputs的hyprland
       then inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland
+      # 在非NixOS（如ArchLinux）上使用nixGL包装的hyprland
       else (config.lib.nixGL.wrap pkgs-stable.hyprland)
-      # else (config.lib.nixGL.wrap inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland)
-    );  # fix non-nixos crash
-    # portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-    portalPackage = pkgs-stable.xdg-desktop-portal-hyprland;
+    );
+    # 根据环境选择portal包
+    portalPackage = if isNixOS 
+      then inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland
+      else pkgs-stable.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
     systemd = {
       enable = true;
@@ -53,19 +61,19 @@ in
 
     # See https://wiki.hyprland.org/Configuring/Monitors/
     monitor = [
-      # ",preferred,auto,auto"
-
-      # change monitor to high resolution
-      # TODO: dynamic monitor expand
+      # 外接显示器配置
       "HDMI-A-1,preferred,0x0,1"
+      # 根据环境和设备类型配置内置显示器
       (
-      if isNixOS then 
-        # "eDP-1,disable"
-        "eDP-2,disable"
-        # "eDP-2,highres,auto,auto"
-      else 
-        "eDP-1,highres,auto,auto"
-      # "eDP-1,highres,1920x0,auto"
+        if !isLaptop then
+          # 服务器通常不需要显示器配置
+          ",preferred,auto,auto"
+        else if isNixOS then
+          # NixOS笔记本（通常是eDP-2）
+          "eDP-2,disable"  # 当有外接显示器时禁用内置显示器
+        else
+          # ArchLinux笔记本（通常是eDP-1）
+          "eDP-1,highres,auto,auto"
       )
     ];
 
@@ -108,25 +116,17 @@ in
 
     # See https://wiki.hyprland.org/Configuring/Environment-variables/
     env = [
-      # for hyprland with nvidia gpu, ref https://wiki.hyprland.org/Nvidia/
-      # "LIBVA_DRIVER_NAME,nvidia"
-      # "__GLX_VENDOR_LIBRARY_NAME,nvidia"
-
-      # "GBM_BACKEND,nvidia-drm"
-
       "XDG_SESSION_TYPE,wayland"
-
+      "XCURSOR_SIZE,16"
       # fix https://github.com/hyprwm/Hyprland/issues/1520
       "WLR_NO_HARDWARE_CURSORS,1"
-
-      # MultiGPU, priority: nvidia > intel
-      # TODO: Replace with ones own card
-      # "AQ_DRM_DEVICES,/dev/dri/by-path/pci-0000:01:00.0-card:/dev/dri/by-path/pci-0000:00:02.0-card"
-      # "AQ_DRM_DEVICES,/dev/dri/card1"
-
-      # toolkit-specific scale
-      # "GDK_SCALE,2"
-      "XCURSOR_SIZE,16"
+      # 启用Ozone Wayland支持，在任何hyprland启用的情况下都设置
+      "NIXOS_OZONE_WL,1"
+    ] ++ lib.optionals hasNvidia [
+      # NVIDIA相关环境变量
+      "LIBVA_DRIVER_NAME,nvidia"
+      "__GLX_VENDOR_LIBRARY_NAME,nvidia"
+      "GBM_BACKEND,nvidia-drm"
     ];
 
     cursor = {

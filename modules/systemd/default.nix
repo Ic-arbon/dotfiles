@@ -1,3 +1,0 @@
-{
-  systemd.user.enable = true;
-}

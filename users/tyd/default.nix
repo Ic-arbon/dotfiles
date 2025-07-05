@@ -12,45 +12,70 @@
 }: let
   homeDir = "${config.home.homeDirectory}";
   dotfileDir = "$HOME/dotfiles";
+  
+  # 直接在这里进行环境检测，避免循环依赖
+  isNixOS = builtins.pathExists /etc/nixos;
+  isArchLinux = builtins.pathExists /etc/arch-release;
+  isLaptop = builtins.pathExists "/sys/class/power_supply/BAT0" ||
+             builtins.pathExists "/sys/class/power_supply/BAT1";
+  hasNvidia = builtins.pathExists "/dev/nvidia0" ||
+              builtins.pathExists "/proc/driver/nvidia";
+  
+  # 根据检测结果确定环境类型
+  envProfile = 
+    if !isLaptop then "server"
+    else if isNixOS then "nixos-laptop"
+    else "archlinux-laptop";
+  
+  # 定义不同环境的模块集合
+  serverModules = with outputs.homeManagerModules; [
+    environment-detection
+    base-tools
+    shell
+    git
+    ssh
+    astronvim
+  ];
+  
+  laptopModules = with outputs.homeManagerModules; [
+    environment-detection
+    base-tools
+    shell
+    git
+    ssh
+    astronvim
+    font
+    fcitx5
+    browsers
+    filemanager
+    electron
+    bluetooth
+    capture
+    gaming
+    graphic-tools
+    hyprland
+    waybar
+    theme
+  ];
+  
+  # 根据环境选择模块
+  selectedModules = 
+    if envProfile == "server" then serverModules
+    else laptopModules; # nixos-laptop 或 archlinux-laptop
+    
 in {
   home = {
     username = "tyd";
     homeDirectory = "/home/tyd";
   };
 
-  # You can import other home-manager modules here
-  imports =
-    [
-      # If you want to use modules your own flake exports (from modules/home-manager):
-      # outputs.homeManagerModules.example
-
-      # Or modules exported from other flakes (such as nix-colors):
-      # inputs.nix-colors.homeManagerModules.default
-
-      # You can also split up your configuration and import pieces of it here:
-      # ./nvim.nix
-    ]
-    # 导入所有模块
-    ++ (builtins.attrValues outputs.homeManagerModules);
+  # 根据环境动态导入模块
+  imports = selectedModules;
 
   nixpkgs = {
     # You can add overlays here
     overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
-      # outputs.overlays.additions
-      # outputs.overlays.modifications
-      # outputs.overlays.unstable-packages
       outputs.overlays.nur-packages
-
-      # You can also add overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
     ];
     # Configure your nixpkgs instance
     config = {
@@ -59,46 +84,28 @@ in {
     };
   };
 
-  nixGL = {
+  # 只在非NixOS系统上启用nixGL
+  nixGL = lib.mkIf (!isNixOS) {
     packages = nixgl.packages;
     defaultWrapper = "mesa";
   };
 
-  # Add stuff for your user as you see fit:
-  # programs.neovim.enable = true;
-  # home.packages = with pkgs; [ steam ];
-  home.packages = with pkgs; [
-    # (config.lib.nixGL.wrap pkgs.octaveFull)
-    # (config.lib.nixGL.wrap pkgs.bambu-studio)
-    # (config.lib.nixGL.wrap pkgs.freecad)
-    # libsForQt5.krdc
-    # libsForQt5.krfb
-  ];
-
   # Enable home-manager, git, and direnv
   programs.home-manager.enable = true;
   programs.git.enable = true;
-  # ...other config, other config...
+  
   programs = {
     direnv = {
       enable = true;
-      enableZshIntegration = true; # see note on other shells below
+      enableZshIntegration = true;
       nix-direnv.enable = true;
     };
 
-    zsh.enable = true; # see note on other shells below
+    zsh.enable = true;
   };
 
-  # home.language = {
-  #   base = "zh_CN.UTF-8";
-  # };
-
-  xresources.properties = {
-    # "Xft.dpi" = 144;
-  };
-
-  home.activation = {
-    # OUT OF DATE
+  # 条件化的home activation
+  home.activation = lib.mkIf (envProfile != "server") {
     rename = lib.hm.dag.entryBefore ["writeBoundary"] ''
       $DRY_RUN_CMD $HOME/dotfiles/modules/rename_git.sh
     '';
@@ -106,24 +113,22 @@ in {
 
   home.sessionVariables = {
     EDITOR = "nvim";
-    # QT_QPA_PLATFORMTHEME = "qt5ct";
     LANG = "zh_CN.UTF-8";
     LANGUAGE = "zh_CN:en_US";
+  } // lib.optionalAttrs hasNvidia {
+    # NVIDIA相关环境变量
+    LIBVA_DRIVER_NAME = "nvidia";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
   };
 
   # Misc
-  xdg.enable=true;
+  xdg.enable = true;
 
-  #让home-manager在非NixOS下更好地工作，能让kde集成桌面应用
-  targets.genericLinux.enable = true;
-  # home.file.".local/share/applications" = {
-  #   # enable = false;
-  #   source = ~/.nix-profile/share/applications;
-  #   recursive = true;
-  # };
+  # 只在非NixOS系统上启用 genericLinux
+  targets.genericLinux.enable = lib.mkIf (!isNixOS) true;
 
-  # Nicely reload system units when changing configs
-  systemd.user.startServices = "sd-switch";
+  # 只在笔记本上启用 systemd 用户服务
+  systemd.user.startServices = lib.mkIf isLaptop "sd-switch";
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "25.05";
