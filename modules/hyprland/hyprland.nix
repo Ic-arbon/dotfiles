@@ -98,9 +98,9 @@ in
     exec-once = [
       "~/.config/hypr/scripts/startup"
       "waybar &"
-      "fcitx5 -d &"
-      # "fcitx5-remote -r"
-      # "fcitx5 -d --replace &"
+      # "fcitx5 -d &"
+      "fcitx5-remote -r"
+      "fcitx5 -d --replace &"
       # "fcitx5-remote -r"
     ];
 
@@ -117,7 +117,7 @@ in
     # See https://wiki.hyprland.org/Configuring/Environment-variables/
     env = [
       "XDG_SESSION_TYPE,wayland"
-      "XCURSOR_SIZE,16"
+
       # fix https://github.com/hyprwm/Hyprland/issues/1520
       "WLR_NO_HARDWARE_CURSORS,1"
       # 启用Ozone Wayland支持，在任何hyprland启用的情况下都设置
