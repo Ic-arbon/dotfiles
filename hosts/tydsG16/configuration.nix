@@ -60,6 +60,10 @@
     package = pkgs.wireshark;
   };
 
+  programs.pulseview = {
+    enable = true;
+  };
+
   # security.sudo = {
   #   enable = true;
   #   extraRules = [{

@@ -70,7 +70,8 @@ in
           ",preferred,auto,auto"
         else if isNixOS then
           # NixOS笔记本（通常是eDP-2）
-          "eDP-2,disable"  # 当有外接显示器时禁用内置显示器
+          "eDP-2,preferred,auto,auto"
+          # "eDP-2,disable"  # 当有外接显示器时禁用内置显示器
         else
           # ArchLinux笔记本（通常是eDP-1）
           "eDP-1,highres,auto,auto"

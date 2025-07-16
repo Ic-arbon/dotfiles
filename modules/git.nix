@@ -7,6 +7,10 @@
     # aliases = {
     #   st = "status";
     # };
+
+    lfs = {
+      enable = true;
+    };
   };
 
   programs.lazygit = {

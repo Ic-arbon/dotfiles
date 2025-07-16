@@ -8,6 +8,7 @@
     # winetricks
     bottles
     pkgs-unstable.umu-launcher
+    pkgs-unstable.lutris
     mangohud
 
     steamtinkerlaunch

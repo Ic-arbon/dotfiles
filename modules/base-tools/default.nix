@@ -28,8 +28,15 @@
 
     # file manager
     ranger
-    # or yazi for better file management
-    # yazi
+
+    # office
+    qq
+    libreoffice-qt
+    # wpsoffice
+    # nur.repos.rewine.ttf-wps-fonts
+    # nur.repos.novel2430.wpsoffice
+    # nur.repos.novel2430.wpsoffice-365
+    # (config.lib.nixGL.wrap pkgs.nur.repos.linyinfeng.wemeet)
 
     # misc
     axel

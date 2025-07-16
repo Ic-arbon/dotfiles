@@ -10,10 +10,23 @@
     # debug
     # gdb
     openocd
+    # gcc-arm-embedded-10
+    # glibc_multi
+    cmake
+    # gnumake
+
+    # code generator
+    # stm32cubemx
+
+    # debug
+    gdb
+    # openocd
     minicom
     (config.lib.nixGL.wrap pkgs.pulseview)
     libsigrok
     (import ./scripts/udev {inherit pkgs;})
+    # segger-ozone
+    # gtkwave
     # platformio
     # vscode
   ];
