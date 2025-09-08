@@ -38,7 +38,7 @@
     users.tyd = {
       isNormalUser = true;
       shell = pkgs.zsh;
-      extraGroups = [ "networkmanager" "wheel" "video" "input" "uinput" "libvirtd" "wireshark" ];
+      extraGroups = [ "networkmanager" "wheel" "video" "input" "uinput" "libvirtd" "wireshark" "uucp" "dialout"];
       packages = with pkgs; [
 	      git
         # firefox

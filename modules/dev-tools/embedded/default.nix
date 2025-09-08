@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 {
   home.packages = with pkgs; [
+    # HARDWARE DESIGN
+    (config.lib.nixGL.wrap pkgs.kicad)
+    easyeda2kicad
+
     # toolchain
     # fix https://github.com/NixOS/nixpkgs/issues/303651
     clang-tools
@@ -19,7 +23,7 @@
     # stm32cubemx
 
     # debug
-    gdb
+    # gdb
     # openocd
     minicom
     (config.lib.nixGL.wrap pkgs.pulseview)
@@ -27,6 +31,7 @@
     (import ./scripts/udev {inherit pkgs;})
     # segger-ozone
     # gtkwave
+
     # platformio
     # vscode
   ];

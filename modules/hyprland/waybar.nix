@@ -1,10 +1,13 @@
-{ lib, pkgs, pkgs-unstable, ... }:
+{ lib, pkgs, pkgs-unstable, pkgs-stable, ... }:
+let
+  isNixOS = builtins.pathExists /etc/nixos;
+in
 {
   programs.waybar = {
     enable = true;
-    package = pkgs-unstable.waybar;
-    # systemd.enable = true;
-    # systemd.target = "hyprland-session.target";
+    package = if isNixOS then pkgs.waybar else pkgs-unstable.waybar;
+    # systemd.enable = if isNixOS then true else;
+    # systemd.target = if isNixOS then "hyprland-session.target" else;
     # systemd.target = "";
     settings = import ./conf/waybar/config.nix;
     style = lib.mkForce (./conf/waybar/style.css);

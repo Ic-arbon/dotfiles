@@ -40,6 +40,7 @@
   
   laptopModules = with outputs.homeManagerModules; [
     environment-detection
+    embedded
     base-tools
     shell
     git
@@ -50,10 +51,10 @@
     browsers
     filemanager
     electron
-    # bluetooth
+    bluetooth
     capture
     dae
-    # gaming
+    gaming
     graphic-tools
     hyprland
     waybar
@@ -70,6 +71,7 @@ in {
     username = "tyd";
     homeDirectory = "/home/tyd";
   };
+
 
   # 根据环境动态导入模块
   imports = selectedModules;

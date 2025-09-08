@@ -8,6 +8,7 @@
     git
     tig
     btdu
+    pkgs-unstable.claude-code
 
     # unarchiver
     gzip
@@ -30,7 +31,8 @@
     ranger
 
     # office
-    qq
+    pkgs-stable.qq
+    discord
     libreoffice-qt
     # wpsoffice
     # nur.repos.rewine.ttf-wps-fonts
