@@ -6,14 +6,15 @@
   inputs = {
     # Nixpkgs
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Home manager
     home-manager = {
       # url = "github:nix-community/home-manager/release-24.11";
-      # url = "github:nix-community/home-manager/release-25.05";
-      url = "github:nix-community/home-manager/master";
+      url = "github:nix-community/home-manager/release-25.05";
+      # url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # home-manager-stable = {
@@ -38,8 +39,8 @@
 
     stylix = {
       # url = "github:nix-community/stylix/release-24.11";
-      # url = "github:nix-community/stylix/release-25.05";
-      url = "github:nix-community/stylix";
+      url = "github:nix-community/stylix/release-25.05";
+      # url = "github:nix-community/stylix";
     };
 
     # community wayland nixpkgs
@@ -52,7 +53,7 @@
     # };
 
     # Gaming on Nix
-    # nix-gaming.url = "github:fufexan/nix-gaming";
+    nix-gaming.url = "github:fufexan/nix-gaming";
     # umu = {
     #   url = "github:Open-Wine-Components/umu-launcher?dir=packaging/nix";
     #   inputs.nixpkgs.follows = "nixpkgs";
@@ -81,9 +82,9 @@
     # substituers will be appended to the default substituters when fetching packages
     extra-substituters = [
       # "https://anyrun.cachix.org"
-      "https://nix-gaming.cachix.org"
+      # "https://nix-gaming.cachix.org"
       # "https://nixpkgs-wayland.cachix.org"
-      "https://hyprland.cachix.org"
+      # "https://hyprland.cachix.org"
       "https://yazi.cachix.org"
       "https://mirror.sjtu.edu.cn/nix-channels/store"
       # "https://cache.nixos.org"
@@ -93,9 +94,9 @@
     ];
     extra-trusted-public-keys = [
       # "anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s="
-      "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
+      # "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
       # "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+      # "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       "yazi.cachix.org-1:Dcdz63NZKfvUCbDGngQDAZq6kOroIrFoyO064uvLh8k="
 
       # dae

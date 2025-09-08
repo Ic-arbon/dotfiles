@@ -39,7 +39,7 @@
         config.allowUnfree = true;
       };
 
-      # nix-gaming = import inputs.nix-gaming;
+      nix-gaming = import inputs.nix-gaming;
 
       nixgl = {
         packages = inputs.nixGL.packages.${system}; 
