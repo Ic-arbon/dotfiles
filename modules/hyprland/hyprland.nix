@@ -14,7 +14,8 @@ in
     package = lib.mkDefault (
       if isNixOS
       # 在NixOS上使用来自inputs的hyprland
-      then inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland
+      # then inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland
+      then pkgs.hyprland
       # 在非NixOS（如ArchLinux）上使用nixGL包装的hyprland
       else (config.lib.nixGL.wrap pkgs-stable.hyprland)
     );
@@ -62,7 +63,7 @@ in
     # See https://wiki.hyprland.org/Configuring/Monitors/
     monitor = [
       # 外接显示器配置
-      "HDMI-A-1,preferred,0x0,1"
+      # "HDMI-A-1,preferred,0x0,1"
       # 根据环境和设备类型配置内置显示器
       (
         if !isLaptop then
@@ -70,7 +71,7 @@ in
           ",preferred,auto,auto"
         else if isNixOS then
           # NixOS笔记本（通常是eDP-2）
-          "eDP-2,preferred,auto,auto"
+          "eDP-1,preferred,auto,auto"
           # "eDP-2,disable"  # 当有外接显示器时禁用内置显示器
         else
           # ArchLinux笔记本（通常是eDP-1）
@@ -99,9 +100,9 @@ in
     exec-once = [
       "~/.config/hypr/scripts/startup"
       "waybar &"
-      # "fcitx5 -d &"
-      "fcitx5-remote -r"
-      "fcitx5 -d --replace &"
+      "fcitx5 -d &"
+      # "fcitx5-remote -r"
+      # "fcitx5 -d --replace &"
       # "fcitx5-remote -r"
     ];
 
@@ -136,9 +137,9 @@ in
 
     input = {
       # "repeat_rate" = "0";
-      touchpad = {
-        "disable_while_typing" = "false";
-      };
+      # touchpad = {
+      #   "disable_while_typing" = "false";
+      # }
     };
 
     #####################
