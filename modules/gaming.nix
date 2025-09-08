@@ -6,9 +6,9 @@
     protontricks
     # wineWowPackages.waylandFull
     # winetricks
-    bottles
+    # bottles
     pkgs-unstable.umu-launcher
-    pkgs-unstable.lutris
+    pkgs.lutris
     mangohud
 
     steamtinkerlaunch

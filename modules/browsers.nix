@@ -3,6 +3,7 @@
   lib,
   pkgs,
   pkgs-stable,
+  pkgs-unstable,
   ...
 }:
 let
@@ -51,6 +52,7 @@ in
     package = lib.mkDefault (
       if isNixOS
       then pkgs.firefox
+      # then (config.lib.nixGL.wrap pkgs.firefox)
       else (config.lib.nixGL.wrap pkgs.firefox)
     );
 
@@ -70,10 +72,10 @@ in
         isDefault = true;
         # extensions = with pkgs.nur.repos.rycee.firefox-addons; [
         extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
-          # adblocker-ultimate
+          adblocker-ultimate
           darkreader
           vimium
-          tampermonkey
+          # tampermonkey
           immersive-translate
         ];
         settings = {
@@ -85,7 +87,7 @@ in
   };
 
   home.packages = with pkgs; [
-    ffmpeg # 播放html5视频
+    # ffmpeg # 播放html5视频
 
     # planB
     # chromeWithCustomDesktop

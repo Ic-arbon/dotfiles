@@ -1,19 +1,22 @@
 { config, pkgs, pkgs-stable, pkgs-unstable, ... }:{
   home.packages = with pkgs; [
     # multimedia player
-    (config.lib.nixGL.wrap pkgs.qcm)
+    (config.lib.nixGL.wrap pkgs-unstable.qcm)
     # waylyrics
-    # vlc
+    vlc
+    mpv
 
     # office
-    qq
+    zotero
     # libreoffice-qt
     # wpsoffice
     # nur.repos.rewine.ttf-wps-fonts
     # nur.repos.novel2430.wpsoffice
     # nur.repos.novel2430.wpsoffice-365
     # (config.lib.nixGL.wrap pkgs.nur.repos.linyinfeng.wemeet)
-    (config.lib.nixGL.wrap pkgs-unstable.wemeet)
+    # (config.lib.nixGL.wrap pkgs-unstable.wemeet)
+    # wemeet
+    pkgs.nur.repos.novel2430.wemeet-bin-bwrap-wayland-screenshare
     
     # multimedia tools
     # losslesscut-bin
@@ -21,8 +24,8 @@
     # gimp-with-plugins
 
     # peripheral controller
-    # bluetuith
-    # pavucontrol
+    bluetuith
+    pavucontrol
     # solaar
 
     # theme
