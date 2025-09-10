@@ -22,6 +22,12 @@
     #   inputs.nixpkgs.follows = "nixpkgs-stable";
     # };
 
+    # nix-darwin for macOS support
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # NUR
     nur.url = "github:nix-community/NUR";
 

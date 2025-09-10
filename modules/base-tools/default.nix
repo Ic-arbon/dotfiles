@@ -8,7 +8,6 @@
     git
     tig
     btdu
-    pkgs-unstable.claude-code
 
     # unarchiver
     gzip
@@ -30,14 +29,13 @@
     # file manager
     ranger
 
+    # dev tools
+    pkgs-unstable.claude-code
+
     # office
     pkgs-stable.qq
     discord
     libreoffice-qt
-    # wpsoffice
-    # nur.repos.rewine.ttf-wps-fonts
-    # nur.repos.novel2430.wpsoffice
-    # nur.repos.novel2430.wpsoffice-365
     # (config.lib.nixGL.wrap pkgs.nur.repos.linyinfeng.wemeet)
 
     # misc

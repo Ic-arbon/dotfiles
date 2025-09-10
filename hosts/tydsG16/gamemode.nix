@@ -51,11 +51,6 @@ in {
     };
   };
 
-  # see https://github.com/fufexan/nix-gaming/#pipewire-low-latency
-  services.pipewire.lowLatency.enable = true;
-  programs.steam.platformOptimizations.enable = true;
-  imports = with nix-gaming.nixosModules; [
-    pipewireLowLatency
-    platformOptimizations
-  ];
+  # Gaming-optimized PipeWire configuration
+  # For low latency, configure PipeWire manually in ~/.config/pipewire/
 }

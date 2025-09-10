@@ -1,6 +1,7 @@
 { ... }:
 {
   imports = [
+    ./android-dev.nix
     ./asus.nix
     ./audio.nix
     ./hardware-configuration.nix

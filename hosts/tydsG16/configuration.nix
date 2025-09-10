@@ -2,12 +2,13 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.trusted-users = [ "root" "@wheel"];
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.overlays = [ inputs.nur.overlays.default ];
   
 
   networking.hostName = "tydsG16"; # Define your hostname.
@@ -38,7 +39,7 @@
     users.tyd = {
       isNormalUser = true;
       shell = pkgs.zsh;
-      extraGroups = [ "networkmanager" "wheel" "video" "input" "uinput" "libvirtd" "wireshark" "uucp" "dialout"];
+      extraGroups = [ "networkmanager" "wheel" "video" "input" "uinput" "libvirtd" "wireshark" "uucp" "dialout" "plugdev"];
       packages = with pkgs; [
 	      git
         # firefox
