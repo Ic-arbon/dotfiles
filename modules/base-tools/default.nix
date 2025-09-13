@@ -7,7 +7,7 @@
     neofetch
     git
     tig
-    btdu
+    # btdu
 
     # unarchiver
     gzip
@@ -17,14 +17,14 @@
 
     # network tools
     bind
-    ethtool
+    # ethtool
     nload
 
     # multimedia tools
     ffmpeg
 
     # CLI multimedia player
-    go-musicfox
+    pkgs-unstable.go-musicfox
 
     # file manager
     ranger
@@ -33,9 +33,9 @@
     pkgs-unstable.claude-code
 
     # office
-    pkgs-stable.qq
+    # pkgs-stable.qq
     discord
-    libreoffice-qt
+    libreoffice-bin
     # (config.lib.nixGL.wrap pkgs.nur.repos.linyinfeng.wemeet)
 
     # misc
@@ -46,6 +46,17 @@
     epr
   ];
 
+  programs.kitty = {
+    enable = true;
+    package = (config.lib.nixGL.wrap pkgs-stable.kitty);
+    # settings = {
+    #   background_opacity = "0.9";
+    # };
+    themeFile = "GruvboxMaterialDarkHard";
+    # font.name = "FiraCode Nerd Font";
+    # font.size = 16;
+  };
+  
   programs.aria2 ={
     enable = true;
     # settings = {

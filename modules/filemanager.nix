@@ -20,7 +20,7 @@
        chmod = "${inputs.yazi-plugins}/chmod.yazi";
        full-border = "${inputs.yazi-plugins}/full-border.yazi";
        git = "${inputs.yazi-plugins}/git.yazi";
-       mount = "${inputs.yazi-plugins}/mount.yazi";
+       # mount = "${inputs.yazi-plugins}/mount.yazi";
     };
 
     settings = {
@@ -55,10 +55,10 @@
           run = "plugin chmod";
           desc = "Chmod on selected files";
         }
-        {
-          on  = "M";
-          run = "plugin mount";
-        }
+        # {
+        #   on  = "M";
+        #   run = "plugin mount";
+        # }
       ];
     };
     
@@ -68,22 +68,22 @@
     '';
   };
 
-  home.packages = with pkgs; [
-    udisks
-  ];
+  # home.packages = with pkgs; [
+  #   udisks
+  # ];
 
-  xdg.mime.enable = true;
-  xdg.mimeApps = {
-    enable = true;
-    defaultApplications = {
+  # xdg.mime.enable = true;
+  # xdg.mimeApps = {
+  #   enable = true;
+  #   defaultApplications = {
 
-    };
-    associations.added = {
-      "video/*" = [ "vlc.desktop" ];
-    };
-    associations.removed = {
-      "image/webp" = [ "gimp.desktop" ];
-    };
-  };
+  #   };
+  #   associations.added = {
+  #     "video/*" = [ "vlc.desktop" ];
+  #   };
+  #   associations.removed = {
+  #     "image/webp" = [ "gimp.desktop" ];
+  #   };
+  # };
 
 }

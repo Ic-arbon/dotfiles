@@ -10,18 +10,26 @@ nix-darwin.lib.darwinSystem {
   };
   modules = [
     # Darwin系统配置
-    ../hosts/macbook-m2
+    ../hosts/MACs-MacBook-Air
     
     # 集成home-manager
     home-manager.darwinModules.home-manager
     {
-      home-manager.useGlobalPkgs = true;
+      home-manager.useGlobalPkgs = false;
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = common.pkgArgs.aarch64-darwin // {
         inherit inputs;
         outputs = import ./default.nix inputs;
       };
-      home-manager.users.tyd = import ../hosts/macbook-m2/home.nix;
+      home-manager.users.tyd = import ../hosts/MACs-MacBook-Air/home.nix;    
+      home-manager.sharedModules = [
+        inputs.stylix.homeModules.stylix
+        # 配置 home-manager 的 nixpkgs
+        {
+          nixpkgs.overlays = [ inputs.nur.overlays.default ];
+          nixpkgs.config.allowUnfree = true;
+        }
+      ];
     }
   ];
 }

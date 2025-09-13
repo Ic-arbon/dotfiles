@@ -3,6 +3,7 @@
 {
   # List your module files here
   # my-module = import ./my-module.nix;
+  android-dev = import ./dev-tools/android;
   astronvim = import ./astronvim.nix;
   environment-detection = import ./environment-detection.nix;
   base-tools = import ./base-tools;

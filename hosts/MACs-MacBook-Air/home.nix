@@ -6,6 +6,8 @@
     astronvim
     base-tools
     filemanager
+    browsers
+    theme
     
     # 开发工具（macOS开发机）
     # embedded  # macOS可能不需要嵌入式开发工具
@@ -29,9 +31,6 @@
     };
     zsh.enable = true;
   };
-
-  # macOS特定配置
-  targets.darwin.enable = true;
   
   home.sessionVariables = {
     EDITOR = "nvim";
@@ -39,9 +38,6 @@
     LANGUAGE = "zh_CN:en_US";
   };
 
-  # Misc
   xdg.enable = true;
 
-  # macOS不需要systemd
-  # systemd.user.startServices = "sd-switch";
 }
