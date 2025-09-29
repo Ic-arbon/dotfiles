@@ -43,6 +43,7 @@ in
       bindkey '^f' autosuggest-accept
       export XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share"
       export XDG_DATA_HOME="$HOME/.local/share"
+      export PATH="$HOME/.local/bin:$PATH"
       export LC_ALL=en_US.UTF-8
       export LANG=en_US.UTF-8
       if [[ "$TERM" == "xterm-kitty" ]]; then

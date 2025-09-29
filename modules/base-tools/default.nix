@@ -34,12 +34,12 @@
 
     # office
     # pkgs-stable.qq
-    discord
     libreoffice-bin
     # (config.lib.nixGL.wrap pkgs.nur.repos.linyinfeng.wemeet)
 
     # misc
     axel
+    discord
 
     # ebook reader
     bk
