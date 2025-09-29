@@ -318,6 +318,8 @@ in
     xfce.thunar
 
     slurp
+    wl-clipboard 
+    hyprshot
   ];
 
   ## MUST HAVE ##

@@ -14,7 +14,7 @@ let
 in
 {
   # Screenshot
-  home.packages = with pkgs; [ wl-clipboard flameshot hyprshot ];
+  # home.packages = with pkgs; [ wl-clipboard flameshot hyprshot ];
 
   # Video Record
   programs.obs-studio = {
