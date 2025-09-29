@@ -17,7 +17,7 @@
         tree-sitter
         gdu
         python3
-        nodejs_22
+        nodejs
         gcc
         gzip
         unzip
@@ -26,13 +26,9 @@
       ];
     };
 
-    ripgrep = {
-      enable = true;
-    };
+    ripgrep.enable = true;
 
-    lazygit = {
-      enable = true;
-    };
+    lazygit.enable = true;
 
     bottom = {
       enable = true;
