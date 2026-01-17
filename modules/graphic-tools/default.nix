@@ -1,47 +1,28 @@
-{ config, pkgs, pkgs-stable, pkgs-unstable, ... }:{
-  home.packages = with pkgs; [
-    # multimedia player
-    (config.lib.nixGL.wrap pkgs-unstable.qcm)
-    # waylyrics
-    vlc
-    mpv
-
-    # office
-    zotero
-    # libreoffice-qt
-    # wpsoffice
-    # nur.repos.rewine.ttf-wps-fonts
-    # nur.repos.novel2430.wpsoffice
-    # nur.repos.novel2430.wpsoffice-365
-    # (config.lib.nixGL.wrap pkgs.nur.repos.linyinfeng.wemeet)
-    # (config.lib.nixGL.wrap pkgs-unstable.wemeet)
-    # wemeet
-    pkgs.nur.repos.novel2430.wemeet-bin-bwrap-wayland-screenshare
-    
-    # multimedia tools
-    # losslesscut-bin
-    # (config.lib.nixGL.wrap pkgs.kdePackages.kdenlive)
-    # gimp-with-plugins
-
-    # peripheral controller
-    bluetuith
-    pavucontrol
-    # solaar
-
-    # theme
-    # libsForQt5.qtstyleplugins
-    # libsForQt5.qt5ct
-    # lxappearance
-
-    # misc
-    qemu
-    # screenkey
-    # rustdesk
-    # betaflight-configurator
-
-    # network tools
-    # wireshark
-    # v2raya
-    # v2ray
-  ];
+{ config, pkgs, pkgs-stable, pkgs-unstable, ... }:
+let
+  isDarwin = pkgs.stdenv.isDarwin;
+  isLinux = pkgs.stdenv.isLinux;
+in {
+  home.packages =
+    # Cross-platform defaults
+    (with pkgs; [
+      mpv
+    ])
+    # Platform-specific additions
+    ++ (if isDarwin then (with pkgs; [
+      vlc
+      zotero
+      # Darwin: drop gtk apps (pavucontrol), nixGL-wrapped programs, and Linux-only wemeet
+      # Avoid pulling gtk+3/libcanberra on macOS
+    ]) else (with pkgs; [
+      (config.lib.nixGL.wrap pkgs-unstable.qcm)
+      vlc
+      zotero
+      pkgs.nur.repos.novel2430.wemeet-bin-bwrap-wayland-screenshare
+      libreoffice-bin
+      stirling-pdf
+      bluetuith
+      pavucontrol
+      qemu
+    ]));
 } 

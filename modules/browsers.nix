@@ -8,6 +8,8 @@
 }:
 let
   isNixOS = builtins.pathExists /etc/nixos;
+  # Detect Darwin (macOS) to avoid building Firefox from source and GTK stack
+  isDarwin = pkgs.stdenv.isDarwin;
 
   # 原始chrome包
   chromeOriginal = pkgs.google-chrome;
@@ -50,10 +52,9 @@ in
     # package = config.lib.nixGL.wrap pkgs.firefox-devedition-bin;
 
     package = lib.mkDefault (
-      if isNixOS
-      then pkgs.firefox
-      # then (config.lib.nixGL.wrap pkgs.firefox)
-      else (config.lib.nixGL.wrap pkgs.firefox)
+      if isNixOS then pkgs.firefox
+      else if isDarwin then pkgs-stable.firefox-bin
+      else (config.lib.nixGL.wrap pkgs.firefox-bin)
     );
 
     languagePacks = [ "en-US" "zh-CN"];
@@ -70,7 +71,6 @@ in
         id = 0;
         name = "profile_0";
         isDefault = true;
-        # extensions = with pkgs.nur.repos.rycee.firefox-addons; [
         extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
           adblocker-ultimate
           darkreader
@@ -85,9 +85,13 @@ in
 
     };
   };
+  nixpkgs.config.permittedInsecurePackages = [
+    "immersive-translate-1.23.9"
+  ];
 
   home.packages = with pkgs; [
-    # ffmpeg # 播放html5视频
+    # 播放html5视频
+    ffmpeg 
 
     # planB
     # chromeWithCustomDesktop
