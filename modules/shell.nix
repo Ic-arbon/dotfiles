@@ -36,7 +36,6 @@ in
       ra = "y";
       bui = "bluetuith";
       update = "home-manager switch -b backup --impure --flake ${dotfileDir}";
-      claude-sk = "ANTHROPIC_AUTH_TOKEN='sk-QvveLQ59Kl8uKTtAFwJns75knF5QOoyQT9Wr8JI5buM37tnH' ANTHROPIC_BASE_URL='https://ccg.shiwoool.com' CLAUDE_CODE_MAX_OUTPUT_TOKENS=32000 claude";
     };
 
     initContent = ''

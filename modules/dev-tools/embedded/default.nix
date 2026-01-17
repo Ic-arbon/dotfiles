@@ -2,14 +2,15 @@
 {
   home.packages = with pkgs; [
     # HARDWARE DESIGN
-    (config.lib.nixGL.wrap pkgs.kicad)
-    easyeda2kicad
+    # (config.lib.nixGL.wrap pkgs.kicad)
+    # easyeda2kicad
 
     # toolchain
     # fix https://github.com/NixOS/nixpkgs/issues/303651
     clang-tools
+    clang
     gcc-arm-embedded
-    glibc_multi
+    # glibc_multi
     # code generator
     # debug
     # gdb
@@ -25,10 +26,11 @@
     # debug
     # gdb
     # openocd
-    minicom
-    (config.lib.nixGL.wrap pkgs.pulseview)
-    libsigrok
-    (import ./scripts/udev {inherit pkgs;})
+    tio
+    # minicom
+    # (config.lib.nixGL.wrap pkgs.pulseview)
+    # libsigrok
+    # (import ./scripts/udev {inherit pkgs;})
     # segger-ozone
     # gtkwave
 

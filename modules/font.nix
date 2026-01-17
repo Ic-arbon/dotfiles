@@ -1,17 +1,17 @@
 { config, lib, pkgs, pkgs-stable, ...}:
 {
   fonts.fontconfig.enable = true;
-  home.packages = with pkgs-stable; [
+  home.packages = with pkgs; [
     noto-fonts
     noto-fonts-cjk-sans
-    noto-fonts-emoji 
+    noto-fonts-color-emoji 
     # nerdfonts
-    (nerdfonts.override {fonts = ["FiraCode" "SourceCodePro"];})
+    # (nerdfonts.override {fonts = ["FiraCode" "SourceCodePro"];})
     # nerd-fonts.dejavu-sans-mono
-    # nerd-fonts.fira-code
-    # nerd-fonts.sauce-code-pro
+    nerd-fonts.fira-code
+    nerd-fonts.sauce-code-pro
     source-han-serif
-    font-awesome      # otf-font-awesome
+    # font-awesome_6      # otf-font-awesome
   ];
   # ] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 

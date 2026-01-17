@@ -18,23 +18,23 @@
       sizes.terminal = 16;
 
       serif = {
-        package = pkgs-stable.dejavu_fonts;
+        package = pkgs.dejavu_fonts;
         name = "DejaVu Serif";
       };
 
       sansSerif = {
-        package = pkgs-stable.dejavu_fonts;
+        package = pkgs.dejavu_fonts;
         name = "DejaVu Sans";
       };
 
       monospace = {
-        package = pkgs-stable.nerdfonts.override {fonts = ["FiraCode"];};
-        # package = pkgs.nerd-fonts.fira-code;
+        # package = pkgs-stable.nerdfonts.override {fonts = ["FiraCode"];};
+        package = pkgs.nerd-fonts.fira-code;
         name = "FiraCode Nerd Font";
       };
 
       emoji = {
-        package = pkgs-stable.noto-fonts-emoji;
+        package = pkgs.noto-fonts-color-emoji;
         name = "Noto Color Emoji";
       };
     };#font end

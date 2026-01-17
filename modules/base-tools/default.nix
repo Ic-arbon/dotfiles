@@ -8,6 +8,7 @@
     git
     tig
     # btdu
+    tio
 
     # unarchiver
     gzip
@@ -30,16 +31,17 @@
     ranger
 
     # dev tools
+    # pkgs-unstable.codex
     pkgs-unstable.claude-code
+    nodejs
 
     # office
     # pkgs-stable.qq
-    libreoffice-bin
     # (config.lib.nixGL.wrap pkgs.nur.repos.linyinfeng.wemeet)
 
     # misc
     axel
-    discord
+    qemu
 
     # ebook reader
     bk
@@ -48,7 +50,7 @@
 
   programs.kitty = {
     enable = true;
-    package = (config.lib.nixGL.wrap pkgs-stable.kitty);
+    package = (config.lib.nixGL.wrap pkgs.kitty);
     # settings = {
     #   background_opacity = "0.9";
     # };
