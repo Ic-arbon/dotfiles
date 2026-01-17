@@ -19,7 +19,7 @@ in {
 
   # Darwin系统配置（包含系统+用户）
   darwinConfigurations = {
-    MACs-MacBook-Air = import ./MACs-MacBook-Air.nix inputs;
+    tydsMBA = import ./tydsMBA.nix inputs;
   };
 
   # 独立的home-manager配置（用于非NixOS/Darwin系统或测试用）

@@ -1,13 +1,15 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
   imports = with outputs.homeManagerModules; [
     # 基础工具
-    shell
-    git
     astronvim
     base-tools
-    filemanager
     browsers
+    filemanager
+    git
+    multi-media-tools
+    shell
     theme
+    xlog
     
     # 开发工具（macOS开发机）
     # embedded  # macOS可能不需要嵌入式开发工具
@@ -16,7 +18,7 @@
   home = {
     username = "tyd";
     homeDirectory = "/Users/tyd";
-    stateVersion = "25.05";
+    stateVersion = "25.11";
   };
 
   # Enable home-manager, git, and direnv

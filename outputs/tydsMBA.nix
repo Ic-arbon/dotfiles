@@ -10,7 +10,7 @@ nix-darwin.lib.darwinSystem {
   };
   modules = [
     # Darwin系统配置
-    ../hosts/MACs-MacBook-Air
+    ../hosts/tydsMBA
     
     # 集成home-manager
     home-manager.darwinModules.home-manager
@@ -21,7 +21,7 @@ nix-darwin.lib.darwinSystem {
         inherit inputs;
         outputs = import ./default.nix inputs;
       };
-      home-manager.users.tyd = import ../hosts/MACs-MacBook-Air/home.nix;    
+      home-manager.users.tyd = import ../hosts/tydsMBA/home.nix;    
       home-manager.sharedModules = [
         inputs.stylix.homeModules.stylix
         # 配置 home-manager 的 nixpkgs
