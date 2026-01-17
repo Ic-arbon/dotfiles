@@ -1,4 +1,6 @@
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 {
-  home.packages = with pkgs; [ dae ];
+  home.packages = [
+    pkgs-unstable.daed
+  ];
 }

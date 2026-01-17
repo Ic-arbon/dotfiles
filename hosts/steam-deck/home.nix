@@ -6,7 +6,8 @@
     astronvim
     base-tools
     filemanager
-    
+    dae
+
     # Steam Deck特定需求
     # 不需要完整的桌面环境（因为SteamOS有自己的桌面）
   ];
