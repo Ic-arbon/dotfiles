@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-stable, pkgs-unstable, ... }:{
+{ config, lib, pkgs, pkgs-stable, pkgs-unstable, ... }:{
   home.packages = with pkgs; [
     # basic CLI tools
     bat
@@ -7,7 +7,6 @@
     neofetch
     git
     tig
-    # btdu
     tio
 
     # unarchiver
@@ -41,11 +40,13 @@
 
     # misc
     axel
-    qemu
 
     # ebook reader
     bk
     epr
+  ] ++ lib.optionals pkgs.stdenv.isLinux [
+    btdu
+    qemu
   ];
 
   programs.kitty = {
