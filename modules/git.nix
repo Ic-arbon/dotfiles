@@ -2,8 +2,8 @@
   programs.git = {
     enable = true;
     #  TODO: REPLACE with your username and email
-    userName = "Ic-arbon";
-    userEmail = "dty2015@hotmail.com";
+    settings.user.name = "Ic-arbon";
+    settings.user.email = "dty2015@hotmail.com";
     # aliases = {
     #   st = "status";
     # };
