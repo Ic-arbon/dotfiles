@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 {
   # logind
-  services.logind.extraConfig = ''
-    HandlePowerKey=ignore
-    HandleLidSwitch=suspend
-    HandleLidSwitchExternalPower=ignore
-  '';
+  services.logind = {
+    powerKey = "ignore";
+    lidSwitch = "suspend";
+    lidSwitchExternalPower = "ignore";
+  };
 
   services.power-profiles-daemon.enable = true;
 
