@@ -6,6 +6,7 @@
     astronvim
     base-tools
     filemanager
+    font
     dae
 
     # Steam Deck特定需求
@@ -40,15 +41,15 @@
   # 为非NixOS系统启用
   targets.genericLinux.enable = true;
   
-  # Steam Deck特定的桌面集成
-  home.file.".local/share/applications" = {
-    source = ~/.nix-profile/share/applications;
+  # Steam Deck特定的桌面集成 - 让 KDE 检测到 nix 安装的应用
+  xdg.desktopEntries = {}; # 确保 xdg.dataHome 生效
+  home.file.".local/share/applications/nix-apps" = {
+    source = "${config.home.profileDirectory}/share/applications";
     recursive = true;
   };
 
   # Steam Deck特定的包
   home.packages = with pkgs; [
-    (config.lib.nixGL.wrap pkgs.octaveFull)
   ];
 
   home.sessionVariables = {
