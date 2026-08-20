@@ -1,0 +1,35 @@
+# sops 配置文件（仅含公钥，可安全提交）。
+#
+# 本文件由 scripts/setup-sops.sh 自动创建并维护：
+#   - `&hosts` 里是每台机器 SSH 公钥转换出的 age recipient；
+#   - common 密文允许所有 hosts 解密；
+#   - 机器专属密文建议单独添加 creation_rule，只授权对应机器。
+#
+# 添加新机器：
+#   1. 在新机器运行 scripts/setup-sops.sh（自动插入其 age recipient）；
+#   2. 在任一已授权机器上运行：
+#        sops updatekeys secrets/common/secrets.yaml
+#
+# 恢复密钥建议：离线生成一个 age key，把公钥也加入 &hosts。
+keys:
+  - &hosts:
+      - age1ln2z4tsujmj72dcw6e5y7jx68h0xnchsku2ds95qy4udhuhs24nskvzmjs
+      - age13qg6pjvxffunte6ry9vk9e5xewx6sys0fa4hhv9yualz5j27kdws9ecvw0
+
+  - &host_tyd_tydsMBA: [age1ln2z4tsujmj72dcw6e5y7jx68h0xnchsku2ds95qy4udhuhs24nskvzmjs, age13qg6pjvxffunte6ry9vk9e5xewx6sys0fa4hhv9yualz5j27kdws9ecvw0]
+creation_rules:
+  - path_regex: ^secrets/common/secrets\.yaml$
+    key_groups:
+      - age:
+          - *hosts
+
+  # 机器专属密文示例（把 <host> 替换成实际 hostname，并为它建独立 anchor）：
+  # - path_regex: ^secrets/hosts/[^/]+/<host>/secrets\.yaml$
+  #   key_groups:
+  #     - age:
+  #         - *host_<host>
+
+  - path_regex: ^secrets/hosts/tyd@tydsMBA/secrets\.yaml$
+    key_groups:
+      - age:
+          - *host_tyd_tydsMBA

@@ -1,2 +1,23 @@
 modules/rename_git.lock
 hosts/MACs-MacBook-Air/.DS_Store
+
+# ---- 密钥与凭据 ----
+# repo 内 secrets/ 只允许 README 与 SOPS 加密的 secrets.yaml。
+# 结构：secrets/common/secrets.yaml、secrets/hosts/<identity>/secrets.yaml。
+# 所有明文密钥、age 私钥、环境变量文件一律忽略。
+secrets/**
+!secrets/
+!secrets/README.md
+!secrets/common/
+!secrets/common/secrets.yaml
+!secrets/hosts/
+!secrets/hosts/*/
+!secrets/hosts/*/secrets.yaml
+
+.env
+.env.*
+*.pem
+*.key
+*.age
+id_rsa*
+keys.txt
