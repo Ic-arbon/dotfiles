@@ -6,10 +6,7 @@ return {
     local dap = require "dap"
     if not dap.adapters then dap.adapters = {} end
     local probe_rs = vim.fn.exepath "probe-rs"
-    if probe_rs == "" then
-      vim.notify("probe-rs 未找到", vim.log.levels.ERROR)
-      return
-    end
+    if probe_rs == "" then return end
     dap.adapters["probe-rs-debug"] = {
       type = "server",
       port = "${port}",

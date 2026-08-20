@@ -1,10 +1,15 @@
-{ config, pkgs, pkgs-unstable, ... }:
-# fix fcitx5 in electron apps for wayland 
+{
+  config,
+  pkgs,
+  pkgs-unstable,
+  ...
+}:
+# fix fcitx5 in electron apps for wayland
 # https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#Chromium_.2F_Electron
 let
   # 原始obsidian包
   obsidianOriginal = pkgs.obsidian;
-  
+
   # 自定义桌面文件
   obsidianDesktop = pkgs.makeDesktopItem {
     name = "obsidian";
@@ -20,8 +25,8 @@ let
   # 修改后的obsidian包
   obsidianWithCustomDesktop = pkgs.symlinkJoin {
     name = "obsidian-wayland";
-    paths = [ obsidianOriginal ];
-    buildInputs = [ pkgs.makeWrapper ];
+    paths = [obsidianOriginal];
+    buildInputs = [pkgs.makeWrapper];
 
     postBuild = ''
       # 删除原版desktop文件
@@ -36,7 +41,7 @@ let
   };
 
   cursorOriginal = pkgs-unstable.code-cursor;
-  
+
   cursorDesktop = pkgs.makeDesktopItem {
     name = "cursor";
     desktopName = "cursor (Wayland)";
@@ -50,8 +55,8 @@ let
 
   cursorWithCustomDesktop = pkgs.symlinkJoin {
     name = "cursor-wayland";
-    paths = [ cursorOriginal ];
-    buildInputs = [ pkgs.makeWrapper ];
+    paths = [cursorOriginal];
+    buildInputs = [pkgs.makeWrapper];
 
     postBuild = ''
       # 删除原版desktop文件
@@ -64,8 +69,7 @@ let
         --add-flags --enable-wayland-ime \
     '';
   };
-in
-{
+in {
   home.packages = [
     obsidianWithCustomDesktop
     cursorWithCustomDesktop

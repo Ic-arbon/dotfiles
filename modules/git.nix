@@ -1,4 +1,8 @@
-{pkgs, pkgs-stable, ...}: {
+{
+  pkgs,
+  pkgs-stable,
+  ...
+}: {
   programs.git = {
     enable = true;
     #  TODO: REPLACE with your username and email
@@ -35,6 +39,10 @@
       ".direnv/"
     ];
 
+    includes = [
+      {path = "~/.config/git/secrets";}
+    ];
+
     lfs = {
       enable = true;
     };
@@ -47,7 +55,7 @@
   programs.git-credential-oauth = {
     enable = true;
     package = pkgs-stable.git-credential-oauth;
-    extraFlags = [ "-device" ];
+    extraFlags = ["-device"];
   };
 
   home.packages = with pkgs; [

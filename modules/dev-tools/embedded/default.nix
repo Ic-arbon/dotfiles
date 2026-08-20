@@ -1,5 +1,8 @@
-{ config, pkgs, ... }:
 {
+  config,
+  pkgs,
+  ...
+}: {
   home.packages = with pkgs; [
     # HARDWARE DESIGN
     # (config.lib.nixGL.wrap pkgs.kicad)
@@ -27,7 +30,7 @@
     # gdb
     # openocd
     tio
-    # minicom
+    minicom
     # (config.lib.nixGL.wrap pkgs.pulseview)
     # libsigrok
     # (import ./scripts/udev {inherit pkgs;})
@@ -46,15 +49,15 @@
   #         "jedrzejboczar/nvim-dap-cortex-debug",
   #         opts = function(_, opts)
   #           local dap = require("dap")
-  #           
+  #
   #           -- 如果dap.configurations.c还不存在,初始化它为空table
   #           dap.configurations.c = dap.configurations.c or {}
-  #           
+  #
   #           -- 修改第一个配置的toolchainPath
   #           if dap.configurations.c[1] then
   #             dap.configurations.c[1].toolchainPath = "${pkgs.gcc-arm-embedded}/bin"
   #           end
-  #           
+  #
   #           -- 确保C++配置与C配置保持同步
   #           dap.configurations.cpp = dap.configurations.c
   #         end,

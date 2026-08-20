@@ -1,5 +1,9 @@
-{ config, pkgs, pkgs-unstable, ... }:
 {
+  config,
+  pkgs,
+  pkgs-unstable,
+  ...
+}: {
   home.packages = [
     pkgs-unstable.daed
   ];

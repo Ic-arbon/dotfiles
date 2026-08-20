@@ -4,7 +4,7 @@
       text = ''
         wireplumber.settings = {
           bluetooth.autoswitch-to-headset-profile = false
-        } 
+        }
       '';
     };
   };

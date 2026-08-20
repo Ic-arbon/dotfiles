@@ -1,4 +1,8 @@
-{ pkgs, nur, ...}: {
+{
+  pkgs,
+  nur,
+  ...
+}: {
   home.packages = [
     # TODO: You should manually download the pkg
     nur.repos.lschuermann.vivado-2020_1

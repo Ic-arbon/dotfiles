@@ -1,5 +1,10 @@
-{ inputs, config, pkgs, pkgs-unstable, ... }:
 {
+  inputs,
+  config,
+  pkgs,
+  pkgs-unstable,
+  ...
+}: {
   # programs.ranger = {
   #   enable = true;
   # };
@@ -14,30 +19,32 @@
     package = pkgs-unstable.yazi;
     enableZshIntegration = true;
     shellWrapperName = "y";
-    
+
     plugins = {
-       smart-enter = "${inputs.yazi-plugins}/smart-enter.yazi";
-       chmod = "${inputs.yazi-plugins}/chmod.yazi";
-       full-border = "${inputs.yazi-plugins}/full-border.yazi";
-       git = "${inputs.yazi-plugins}/git.yazi";
-       # mount = "${inputs.yazi-plugins}/mount.yazi";
+      smart-enter = "${inputs.yazi-plugins}/smart-enter.yazi";
+      chmod = "${inputs.yazi-plugins}/chmod.yazi";
+      full-border = "${inputs.yazi-plugins}/full-border.yazi";
+      git = "${inputs.yazi-plugins}/git.yazi";
+      # mount = "${inputs.yazi-plugins}/mount.yazi";
     };
 
     settings = {
       plugin.prepend_fetchers = [
         {
-          id   = "git";
-          name = "*";
-          run  = "git";
+          id = "git";
+          url = "*";
+          run = "git";
+          group = "git";
         }
         {
-          id   = "git";
-          name = "*/";
-          run  = "git";
+          id = "git";
+          url = "*/";
+          run = "git";
+          group = "git";
         }
       ];
     };
-    
+
     keymap = {
       mgr.prepend_keymap = [
         {
@@ -51,7 +58,7 @@
           desc = "Enter directory or open file";
         }
         {
-          on = [ "c" "m" ];
+          on = ["c" "m"];
           run = "plugin chmod";
           desc = "Chmod on selected files";
         }
@@ -61,7 +68,7 @@
         # }
       ];
     };
-    
+
     initLua = ''
       require("full-border"):setup()
       require("git"):setup()
@@ -85,5 +92,4 @@
   #     "image/webp" = [ "gimp.desktop" ];
   #   };
   # };
-
 }
