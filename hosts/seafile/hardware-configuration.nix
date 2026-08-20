@@ -1,9 +1,13 @@
 # 这是seafile服务器的硬件配置占位符
 # 实际部署时需要根据具体硬件生成
-{ config, lib, pkgs, modulesPath, ... }:
-
 {
-  imports = [ ];
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
+}: {
+  imports = [];
 
   # 启动配置
   boot.loader.systemd-boot.enable = true;
@@ -22,6 +26,6 @@
 
   # 网络
   networking.useDHCP = lib.mkDefault true;
-  
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }

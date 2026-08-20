@@ -1,14 +1,15 @@
-{ inputs, config, lib, pkgs, pkgs-stable, ...}:
-let
-  # 直接进行环境检测，避免循环依赖
-  isNixOS = builtins.pathExists /etc/nixos;
-  isArchLinux = builtins.pathExists /etc/arch-release;
-  isLaptop = builtins.pathExists "/sys/class/power_supply/BAT0" ||
-             builtins.pathExists "/sys/class/power_supply/BAT1";
-  hasNvidia = builtins.pathExists "/dev/nvidia0" ||
-              builtins.pathExists "/proc/driver/nvidia";
-in
 {
+  inputs,
+  config,
+  lib,
+  pkgs,
+  pkgs-stable,
+  ...
+}: let
+  # 部署形态与硬件事实由 machines 注入，不探测构建机文件系统
+  isNixOS = config.dotfiles.machine.kind == "nixos";
+  hasNvidia = config.dotfiles.hardware.nvidia;
+in {
   wayland.windowManager.hyprland = {
     enable = true;
     package = lib.mkDefault (
@@ -20,7 +21,8 @@ in
       else (config.lib.nixGL.wrap pkgs-stable.hyprland)
     );
     # 根据环境选择portal包
-    portalPackage = if isNixOS 
+    portalPackage =
+      if isNixOS
       then inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland
       else pkgs-stable.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
@@ -62,21 +64,8 @@ in
 
     # See https://wiki.hyprland.org/Configuring/Monitors/
     monitor = [
-      # 外接显示器配置
-      # "HDMI-A-1,preferred,0x0,1"
-      # 根据环境和设备类型配置内置显示器
-      (
-        if !isLaptop then
-          # 服务器通常不需要显示器配置
-          ",preferred,auto,auto"
-        else if isNixOS then
-          # NixOS笔记本（通常是eDP-2）
-          "eDP-1,preferred,auto,auto"
-          # "eDP-2,disable"  # 当有外接显示器时禁用内置显示器
-        else
-          # ArchLinux笔记本（通常是eDP-1）
-          "eDP-1,highres,auto,auto"
-      )
+      # 显示器规则由 machines/<username>@<hostname>.nix 的 facts.monitor 决定
+      config.dotfiles.desktop.monitor
     ];
 
     ###################
@@ -93,10 +82,10 @@ in
     #################
     ### AUTOSTART ###
     #################
-    
+
     # Autostart necessary processes (like notifications daemons, status bars, etc.)
     # Or execute your favorite apps at launch like this:
-    
+
     exec-once = [
       "~/.config/hypr/scripts/startup"
       "waybar &"
@@ -111,25 +100,26 @@ in
     #   "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'"   # for GTK4 apps
     # ];
 
-
     #############################
     ### ENVIRONMENT VARIABLES ###
     #############################
 
     # See https://wiki.hyprland.org/Configuring/Environment-variables/
-    env = [
-      "XDG_SESSION_TYPE,wayland"
+    env =
+      [
+        "XDG_SESSION_TYPE,wayland"
 
-      # fix https://github.com/hyprwm/Hyprland/issues/1520
-      "WLR_NO_HARDWARE_CURSORS,1"
-      # 启用Ozone Wayland支持，在任何hyprland启用的情况下都设置
-      "NIXOS_OZONE_WL,1"
-    ] ++ lib.optionals hasNvidia [
-      # NVIDIA相关环境变量
-      "LIBVA_DRIVER_NAME,nvidia"
-      "__GLX_VENDOR_LIBRARY_NAME,nvidia"
-      "GBM_BACKEND,nvidia-drm"
-    ];
+        # fix https://github.com/hyprwm/Hyprland/issues/1520
+        "WLR_NO_HARDWARE_CURSORS,1"
+        # 启用Ozone Wayland支持，在任何hyprland启用的情况下都设置
+        "NIXOS_OZONE_WL,1"
+      ]
+      ++ lib.optionals hasNvidia [
+        # NVIDIA相关环境变量
+        "LIBVA_DRIVER_NAME,nvidia"
+        "__GLX_VENDOR_LIBRARY_NAME,nvidia"
+        "GBM_BACKEND,nvidia-drm"
+      ];
 
     cursor = {
       "no_hardware_cursors" = "true";
@@ -145,50 +135,50 @@ in
     #####################
     ### LOOK AND FEEL ###
     #####################
-    
+
     # Refer to https://wiki.hyprland.org/Configuring/Variables/
 
     #-- General ----------------------------------------------------
     # General settings like MOD key, Gaps, Colors, etc.
-    general = lib.mkForce({
-      "gaps_in"="5";
-      "gaps_out"="10";
-    
-      "border_size"="3";
-      "col.active_border"="0xAA83A589";
-      "col.inactive_border"="0xFF343A40";
-    });
-    
+    general = lib.mkForce {
+      "gaps_in" = "5";
+      "gaps_out" = "10";
+
+      "border_size" = "3";
+      "col.active_border" = "0xAA83A589";
+      "col.inactive_border" = "0xFF343A40";
+    };
+
     #-- Decoration ----------------------------------------------------
     # Decoration settings like Rounded Corners, Opacity, Blur, etc.
     decoration = {
-        "rounding"="8";       # Original: rounding=-1
-    
-        "active_opacity"="0.98";
-        "inactive_opacity"="0.9";
-        "fullscreen_opacity"="1.0";
-    
-        blur = {
-            "enabled"="true";
-            "size"="3";                	# minimum 1
-            "passes"="1";               # minimum 1, more passes = more resource intensive.
-            "ignore_opacity"="false";
-        };
+      "rounding" = "8"; # Original: rounding=-1
 
-        shadow = {
-          "enabled" = "false";
-        };
-    
-        # Your blur "amount" is blur_size * blur_passes, but high blur_size (over around 5-ish) will produce artifacts.
-        # if you want heavy blur, you need to up the blur_passes.
-        # the more passes, the more you can up the blur_size without noticing artifacts.
+      "active_opacity" = "0.98";
+      "inactive_opacity" = "0.9";
+      "fullscreen_opacity" = "1.0";
+
+      blur = {
+        "enabled" = "true";
+        "size" = "3"; # minimum 1
+        "passes" = "1"; # minimum 1, more passes = more resource intensive.
+        "ignore_opacity" = "false";
+      };
+
+      shadow = {
+        "enabled" = "false";
+      };
+
+      # Your blur "amount" is blur_size * blur_passes, but high blur_size (over around 5-ish) will produce artifacts.
+      # if you want heavy blur, you need to up the blur_passes.
+      # the more passes, the more you can up the blur_size without noticing artifacts.
     };
-    
+
     #-- Animations ----------------------------------------------------
     animations = {
-      "enabled"="1";
+      "enabled" = "1";
       # "animation"="NAME,ONOFF,SPEED,CURVE,STYLE";
-      animation= [
+      animation = [
         "windows,1,8,default,popin 80%"
         "fadeOut,1,8,default"
         "fadeIn,1,8,default"
@@ -196,62 +186,63 @@ in
         #"animation"="workspaces,1,6,overshot"
       ];
     };
-    
+
     #-- Dwindle ----------------------------------------------------
     dwindle = {
-        "pseudotile"="0"; 			# enable pseudotiling on dwindle
+      "pseudotile" = "0"; # enable pseudotiling on dwindle
     };
-    
+
     # https://wiki.hyprland.org/Configuring/Variables/#misc
-    misc = lib.mkDefault({
+    misc = lib.mkDefault {
       "force_default_wallpaper" = "0"; # Set to 0 or 1 to disable the anime mascot wallpapers
       "disable_hyprland_logo" = "true"; # If true disables the random hyprland logo / anime girl background. :(
-    });
-
+    };
 
     ###################
     ### KEYBINDINGS ###
     ###################
-    
+
     # See https://wiki.hyprland.org/Configuring/Keywords/
     "$mainMod" = "SUPER";
-    bind = [
-      "$mainMod, P, exec, $menu"
-      "$mainMod, E, exec, $fileManager"
-      "$mainMod, F, togglefloating"
-      "$mainMod SHIFT, F, fullscreen"
-      "$mainMod, S, togglesplit"
-      "$mainMod SHIFT, RETURN, exec, $terminal"
-      "$mainMod SHIFT, C, killactive"
-      "$mainMod SHIFT, Q, exit"
-      # Move focus with mainMod + arrow keys
-      "$mainMod, left, movefocus, h"
-      "$mainMod, right, movefocus, l"
-      "$mainMod, up, movefocus, k"
-      "$mainMod, down, movefocus, j"
+    bind =
+      [
+        "$mainMod, P, exec, $menu"
+        "$mainMod, E, exec, $fileManager"
+        "$mainMod, F, togglefloating"
+        "$mainMod SHIFT, F, fullscreen"
+        "$mainMod, S, togglesplit"
+        "$mainMod SHIFT, RETURN, exec, $terminal"
+        "$mainMod SHIFT, C, killactive"
+        "$mainMod SHIFT, Q, exit"
+        # Move focus with mainMod + arrow keys
+        "$mainMod, left, movefocus, h"
+        "$mainMod, right, movefocus, l"
+        "$mainMod, up, movefocus, k"
+        "$mainMod, down, movefocus, j"
 
-      "$mainMod, space, execr, fcitx5-remote -t"
+        "$mainMod, space, execr, fcitx5-remote -t"
 
-      # Screenshots
-      # ", Print, exec, grimblast copy area"
-      ",Print,exec,XDG_CURRENT_DESKTOP=sway flameshot gui --raw -p ~/Pictures/Screenshots | wl-copy"
-    ]
-    ++ (
-      # workspaces
-      # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
-      builtins.concatLists (builtins.genList (i:
-          let ws = i + 1;
-          in [
-            "$mainMod, code:1${toString i}, workspace, ${toString ws}"
-            "$mainMod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
-          ]
-        )
-        9)
-    );
+        # Screenshots
+        # ", Print, exec, grimblast copy area"
+        ",Print,exec,XDG_CURRENT_DESKTOP=sway flameshot gui --raw -p ~/Pictures/Screenshots | wl-copy"
+      ]
+      ++ (
+        # workspaces
+        # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
+        builtins.concatLists (builtins.genList (
+            i: let
+              ws = i + 1;
+            in [
+              "$mainMod, code:1${toString i}, workspace, ${toString ws}"
+              "$mainMod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+            ]
+          )
+          9)
+      );
     # Move/resize windows with mainMod + LMB/RMB and dragging
     bindm = [
       "$mainMod, mouse:272, movewindow"
-      "$mainMod, mouse:273, resizewindow" 
+      "$mainMod, mouse:273, resizewindow"
     ];
     bindel = [
       # backlight
@@ -275,10 +266,10 @@ in
     ##############################
     ### WINDOWS AND WORKSPACES ###
     ##############################
-    
+
     # See https://wiki.hyprland.org/Configuring/Window-Rules/ for more
     # See https://wiki.hyprland.org/Configuring/Workspace-Rules/ for workspace rules
-    
+
     windowrulev2 = [
       "fullscreen, class:Waydroid"
       "suppressevent maximize, class:.*"
@@ -295,9 +286,9 @@ in
     # for gtk apps
     dconf
 
-    # QT support 
-    libsForQt5.qt5.qtwayland  # qt5
-    kdePackages.qtwayland     # qt6
+    # QT support
+    libsForQt5.qt5.qtwayland # qt5
+    kdePackages.qtwayland # qt6
 
     # backlight
     brightnessctl
@@ -318,7 +309,7 @@ in
     xfce.thunar
 
     slurp
-    wl-clipboard 
+    wl-clipboard
     hyprshot
   ];
 
@@ -337,7 +328,6 @@ in
       #     "gtk"
       #   ];
       # };
-
     };
 
     # 添加额外的 portal 后端
@@ -349,7 +339,7 @@ in
 
   programs.kitty = {
     enable = true;
-    package = (config.lib.nixGL.wrap pkgs-stable.kitty);
+    package = config.lib.nixGL.wrap pkgs-stable.kitty;
     # settings = {
     #   background_opacity = "0.9";
     # };
@@ -377,7 +367,7 @@ in
 
   programs.rofi = {
     enable = true;
-    package = pkgs.rofi-wayland;
+    # nixpkgs 25.11 起 rofi-wayland 已合并进 rofi
+    package = pkgs.rofi;
   };
-  
 }

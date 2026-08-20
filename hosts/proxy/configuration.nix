@@ -1,12 +1,15 @@
 # Edit this configuration file to define what should be installed on
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
-{ inputs, config, lib, pkgs, ... }:
-
 {
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nix.settings.trusted-users = [ "root" "@wheel"];
+  inputs,
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
+  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.trusted-users = ["root" "@wheel"];
   nixpkgs.config.allowUnfree = true;
 
   networking.hostName = "proxy"; # Define your hostname.
@@ -26,17 +29,17 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.defaultUserShell = pkgs.zsh;
 
-  users.users.tyd = {
+  users.users.${config.dotfiles.machine.username} = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-      packages = with pkgs; [
-      ];
+    extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
+    packages = with pkgs; [
+    ];
   };
   # users.users.steam = {
   #   isNormalUser = true;
   #   extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
   #     packages = with pkgs; [
-	 #      steamcmd
+  #      steamcmd
   #     ];
   # };
 
@@ -88,4 +91,3 @@
   system.autoUpgrade.enable = true;
   # system.autoUpgrade.allowReboot = true;
 }
-

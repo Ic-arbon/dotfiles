@@ -1,5 +1,4 @@
-{pkgs, ... }:
-{
+{pkgs, ...}: {
   services.seafile = {
     enable = true;
     adminEmail = "dty2015@hotmail.com";
@@ -10,12 +9,11 @@
 
     seafileSettings = {
       fileserver = {
-    #     host = "unix:/run/seafile/server.sock";
+        #     host = "unix:/run/seafile/server.sock";
         host = "0.0.0.0";
       };
     };
 
     seahubAddress = "0.0.0.0:8083";
-
   };
 }

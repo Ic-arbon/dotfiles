@@ -1,208 +1,90 @@
 # Dotfiles for Multi-Platform Nix Configuration
 
-## 项目简介
-
-基于 Nix Flakes 的多机器多系统统一配置管理方案，支持 NixOS、macOS 和独立 home-manager 部署。
+基于 Nix Flakes 的多机器多系统统一配置管理方案，支持 NixOS、macOS（nix-darwin）、Fedora 独立 home-manager。
 
 **核心理念：**
-- 多机器多系统同步一套配置，快速移植开发环境
-- 不要让命令式部署环境，化作项目伙伴构建失败的泪水
-- 不要让处理更新和依赖，化作天天写Dockerfile的汗水
+- 一套配置跨 NixOS / macOS / Fedora 复用，快速迁移开发与生产环境
+- `<username>@<hostname>` 唯一确定一台机器的组件组合与机器事实
+- 新增机器 = 只新增一个 `machines/<username>@<hostname>.nix`
+- 模块不探测构建机，机器差异全部由声明式 options 注入
 
-**It works on my machine :)**
+## 目录结构
 
-## 项目架构
-
-本项目采用模块化架构，支持多种系统配置：
-
-```
+```text
 dotfiles/
-├── hosts/          # 各主机特定配置
-│   ├── tydsG16/    # 游戏本 (NixOS)
-│   ├── proxy/      # 代理服务器 (NixOS)
-│   ├── seafile/    # 文件服务器 (NixOS)
-│   ├── macbook-m2/ # MacBook (Darwin)
-│   └── steam-deck/ # Steam Deck (独立home-manager)
-├── outputs/        # 系统输出配置
-├── modules/        # 可复用的功能模块
-├── users/          # 用户配置
-└── overlays/       # 软件包覆盖
+├── machines/        # ★ 机器清单：文件即注册点，username@hostname.nix
+├── profiles/        # 组件套餐：core/server/dev/desktop/networking/platform
+├── modules/         # 通用模块：home/、nixos/、darwin/ 以及 meta options
+├── hosts/           # 机器私有硬件配置（hardware-configuration 等）
+├── outputs/         # builders + 自动扫描 machines/ 生成 flake outputs
+├── users/           # 每个用户的机器无关 common.nix
+└── secrets/         # 只允许 SOPS 加密的 secrets.yaml + README
 ```
 
-## 支持的系统
+## 机器清单
 
-- **NixOS 系统配置**: tydsG16 (游戏本)、proxy (代理服务器)、seafile (文件服务器)
-- **Darwin 系统配置**: macbook-m2 (MacBook)
-- **独立 home-manager**: steam-deck (Steam Deck)
+| identity | 类型 | 组合 |
+|---|---|---|
+| `tyd@tydsG16` | NixOS | desktop.hyprland + gaming + dev.embedded + networking |
+| `tyd@celestia` | NixOS | desktop.hyprland + gaming + dev.embedded + networking |
+| `tyd@proxy` | NixOS | core + server |
+| `tyd@seafile` | NixOS | core + server |
+| `tyd@tydsMBA` | nix-darwin | core + desktop.common + desktop.multimedia |
+| `deck@steam-deck` | standalone | core + desktop.common/fonts + networking.dae |
+| `tyd@OB714` | standalone Fedora | core + desktop.gnome |
 
-每个配置都包含针对特定用途优化的模块组合：
-- 桌面环境 (Hyprland + Waybar)
-- 开发工具 (Neovim + 嵌入式开发)
-- 游戏环境 (Steam + 游戏优化)
-- 服务器工具 (基础工具 + 网络配置)
+## 部署
 
-## 安装指南
-
-### 1. 安装 Nix 包管理器
-
-推荐使用 [Determinate Systems](https://zero-to-nix.com/) 的安装脚本，它修复了官方安装脚本的一些问题并默认启用 flakes：
-
-```shell
-curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install 
-```
-
-安装完成后，修改 `/etc/nix/nix.conf`，在文件末尾追加：
-```
-trusted-users = root your_username
-```
-
-### 2. 克隆配置仓库
-
-```shell
-git clone --recursive https://github.com/Ic-arbon/dotfiles ~/dotfiles
-cd ~/dotfiles
-```
-
-### 3. 配置个人信息
-
-修改 Git 用户信息：
-```shell
-~/dotfiles/modules/rename_git.sh
-```
-
-### 4. 选择部署方式
-
-根据你的系统类型选择对应的部署命令：
-
-#### NixOS 系统配置 (推荐)
-
-如果你使用 NixOS，可以直接部署系统级配置：
-
-```shell
-# 游戏本配置 (包含桌面环境、游戏、开发工具)
+```bash
+# NixOS
 sudo nixos-rebuild switch --flake ~/dotfiles#tydsG16
-
-# 代理服务器配置
+sudo nixos-rebuild switch --flake ~/dotfiles#celestia
 sudo nixos-rebuild switch --flake ~/dotfiles#proxy
-
-# 文件服务器配置
 sudo nixos-rebuild switch --flake ~/dotfiles#seafile
+
+# macOS
+darwin-rebuild switch --flake ~/dotfiles#tydsMBA
+
+# Steam Deck
+home-manager switch -b backup --flake ~/dotfiles#deck@steam-deck
+
+# Fedora OB714（首次运行 scripts/bootstrap-fedora.sh）
+home-manager switch -b backup --flake ~/dotfiles#tyd@OB714
 ```
 
-#### macOS 系统配置
+`update` 别名由当前机器的 identity 自动选择正确命令。
 
-如果你使用 macOS，需要先安装 nix-darwin：
+## 新增机器
 
-```shell
-# 安装 nix-darwin
-nix run nix-darwin -- switch --flake ~/dotfiles#macbook-m2
+1. 新建 `machines/<username>@<hostname>.nix`，填写 identity/facts/profiles；
+2. `nix flake show` 验证新输出；
+3. 部署。
+
+无需修改 `outputs/default.nix` 或任何共享模块。
+
+## Fedora OB714
+
+- 独立 home-manager，系统层继续由 dnf 管理。
+- 组件：`core + desktop.gnome`（GNOME 桌面工具，无 embedded/hyprland/gaming）。
+- 首次引导：`~/dotfiles/scripts/bootstrap-fedora.sh`。
+
+## 密钥安全
+
+- 明文密钥只在仓库外：`~/.config/dotfiles/secrets/`（700/600）。
+- 仓库内只允许 SOPS 密文：
+  - `secrets/common/secrets.yaml`（所有机器共享）
+  - `secrets/hosts/<identity>/secrets.yaml`（机器专属）
+- 解密身份优先复用 SSH key：
+  - NixOS/macOS 系统级：`/etc/ssh/ssh_host_ed25519_key`
+  - home-manager 用户级（所有平台）：`~/.ssh/id_ed25519`
+  - `setup-sops.sh` 会在 NixOS/macOS 上同时登记 host key 与 user key，standalone 只登记 user key
+- 初始化：`~/dotfiles/scripts/setup-sops.sh`；从旧位置迁移：`~/dotfiles/scripts/migrate-secrets.sh`。
+- pre-commit 已启用 gitleaks / detect-private-keys / no-plaintext-secrets。
+
+## 开发
+
+```bash
+nix fmt
+nix flake check
+nix flake show
 ```
-
-#### 独立 home-manager 配置
-
-适用于非 NixOS/Darwin 系统或仅需要用户级配置：
-
-```shell
-# Steam Deck 或其他 Linux 发行版
-nix run home-manager/release-24.11 -- switch --flake ~/dotfiles#"deck@steam-deck"
-
-# 通用方式 (需要先创建对应的用户配置)
-nix run home-manager/release-24.11 -- switch -b backup --impure --flake ~/dotfiles#your_username
-```
-
-> **注意**: 如果是第一次在非 NixOS 系统上使用，可能需要添加 `--impure` 参数。
-
-## 日常使用
-
-### 更新配置
-
-配置文件修改后，使用对应的命令重新部署：
-
-```shell
-# NixOS 系统
-sudo nixos-rebuild switch --flake ~/dotfiles#your-host
-
-# macOS 系统  
-darwin-rebuild switch --flake ~/dotfiles#macbook-m2
-
-# 独立 home-manager
-home-manager switch --flake ~/dotfiles#your-config
-```
-
-### 使用别名 (推荐)
-
-项目已配置了便捷的别名 `update`，你可以直接使用：
-
-```shell
-update  # 等价于对应系统的重新部署命令
-```
-
-> **提示**: 如果别名不生效，请手动执行 `source ~/.zshrc` 重新加载配置。
-
-### 添加新主机
-
-1. 在 `hosts/` 目录下创建新主机配置目录
-2. 在 `outputs/` 目录下创建对应的输出配置文件  
-3. 在 `outputs/default.nix` 中注册新主机
-
-### 自定义模块
-
-所有功能模块位于 `modules/` 目录，你可以：
-- 修改现有模块配置
-- 添加新的功能模块
-- 在主机配置中选择性导入需要的模块
-
-参考 [modules/README.md](modules/README.md) 了解模块开发规范。
-
-## 配置详情
-
-### 主机配置说明
-
-| 主机名称 | 系统类型 | 用途 | 主要模块 |
-|---------|----------|------|----------|
-| **tydsG16** | NixOS | 游戏本/开发机 | 桌面环境、游戏、开发工具、嵌入式 |
-| **proxy** | NixOS | 代理服务器 | 基础工具、网络代理、SSH |
-| **seafile** | NixOS | 文件服务器 | 基础工具、文件服务、网络 |
-| **macbook-m2** | Darwin | MacBook开发机 | 基础工具、开发环境 |
-| **steam-deck** | home-manager | Steam Deck | 游戏相关、基础工具 |
-
-### 模块组合策略
-
-不同类型的主机采用不同的模块组合：
-
-**桌面/游戏机** (tydsG16):
-```nix
-imports = [
-  hyprland waybar theme font fcitx5  # 桌面环境
-  browsers electron capture          # 日常应用  
-  gaming                            # 游戏环境
-  embedded                          # 开发工具
-  base-tools shell git astronvim    # 基础工具
-];
-```
-
-**服务器** (proxy, seafile):
-```nix
-imports = [
-  base-tools shell git astronvim     # 基础工具
-  ssh filemanager                   # 服务器必需
-  environment-detection              # 环境检测
-];
-```
-
-**macOS** (macbook-m2):
-```nix
-imports = [
-  base-tools shell git astronvim     # 基础工具
-  filemanager                       # 文件管理
-];
-```
-
-### 技术特性
-
-- **多系统支持**: NixOS、macOS (Darwin)、独立 home-manager
-- **模块化设计**: 可选择性导入功能模块
-- **环境检测**: 自动适配不同运行环境
-- **主题统一**: 使用 Stylix 实现一致的视觉风格
-- **开发友好**: 集成 direnv、各种开发工具链
-- **游戏优化**: Steam、游戏模式、性能调优

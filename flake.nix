@@ -32,6 +32,12 @@
     # NUR
     nur.url = "github:nix-community/NUR";
 
+    # sops-nix for encrypted secrets in repo
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # nixGL
     nixGL = {
       url = "github:nix-community/nixGL";
@@ -65,7 +71,7 @@
     #   url = "github:Open-Wine-Components/umu-launcher?dir=packaging/nix";
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
-    
+
     # add git hooks to format nix code before commit
     pre-commit-hooks = {
       url = "github:cachix/pre-commit-hooks.nix";
@@ -73,7 +79,7 @@
     };
 
     daeuniverse.url = "github:daeuniverse/flake.nix";
-    
+
     # yazi plugins
     yazi-plugins = {
       url = "github:yazi-rs/plugins";
@@ -86,18 +92,22 @@
   #     https://nixos-and-flakes.thiscute.world/nix-store/add-binary-cache-servers
   # TODO: add "trusted-users = user_name" to /etc/nix/nix.conf
   nixConfig = {
-    # substituers will be appended to the default substituters when fetching packages
-    extra-substituters = [
+    # 使用 substituters（覆盖式）让国内镜像真正优先于官方 cache
+    # 查询顺序：从上到下依次尝试，命中即止
+    substituters = [
+      # 国内镜像优先（SJTU 代理了官方 cache，大部分包在这里就能拿到）
+      "https://mirror.sjtu.edu.cn/nix-channels/store"
+
+      # 第三方 cache
+      "https://yazi.cachix.org"
       # "https://anyrun.cachix.org"
       # "https://nix-gaming.cachix.org"
       # "https://nixpkgs-wayland.cachix.org"
       # "https://hyprland.cachix.org"
-      "https://yazi.cachix.org"
-      "https://mirror.sjtu.edu.cn/nix-channels/store"
-      # "https://cache.nixos.org"
+      # "https://cache.garnix.io"  # dae for linux
 
-      # dae for linux
-      # "https://cache.garnix.io"
+      # 官方 cache 兜底（SJTU 镜像没覆盖的包 fallback 到这里）
+      "https://cache.nixos.org/"
     ];
     extra-trusted-public-keys = [
       # "anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s="

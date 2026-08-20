@@ -1,15 +1,17 @@
 # Edit this configuration file to define what should be installed on
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
-{ config, lib, pkgs, inputs, ... }:
-
 {
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nix.settings.trusted-users = [ "root" "@wheel"];
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: {
+  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.trusted-users = ["root" "@wheel"];
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.overlays = [ inputs.nur.overlays.default ];
-  
+  nixpkgs.overlays = [inputs.nur.overlays.default];
 
   networking.hostName = "tydsG16"; # Define your hostname.
 
@@ -18,7 +20,6 @@
     enable = true;
     displayManager.startx.enable = true;
   };
-
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -36,12 +37,12 @@
   users = {
     defaultUserShell = pkgs.zsh;
     users.root = {};
-    users.tyd = {
+    users.${config.dotfiles.machine.username} = {
       isNormalUser = true;
       shell = pkgs.zsh;
-      extraGroups = [ "networkmanager" "wheel" "video" "input" "uinput" "libvirtd" "wireshark" "uucp" "dialout" "plugdev"];
+      extraGroups = ["networkmanager" "wheel" "video" "input" "uinput" "libvirtd" "wireshark" "uucp" "dialout" "plugdev"];
       packages = with pkgs; [
-	      git
+        git
         # firefox
         # tree
       ];
@@ -133,6 +134,4 @@
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "25.05"; # Did you read the comment?
-
 }
-

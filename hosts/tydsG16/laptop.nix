@@ -1,10 +1,14 @@
-{ config, lib, pkgs, ... }:
 {
-  # logind
-  services.logind = {
-    powerKey = "ignore";
-    lidSwitch = "suspend";
-    lidSwitchExternalPower = "ignore";
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
+  # logind（25.11 起使用 settings.Login 命名）
+  services.logind.settings.Login = {
+    HandlePowerKey = "ignore";
+    HandleLidSwitch = "suspend";
+    HandleLidSwitchExternalPower = "ignore";
   };
 
   services.power-profiles-daemon.enable = true;
@@ -18,7 +22,5 @@
   #       prime.sync.enable = lib.mkForce false;
   #     };
   #   };
-  # };  
-
+  # };
 }
-

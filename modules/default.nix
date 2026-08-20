@@ -5,9 +5,8 @@
   # my-module = import ./my-module.nix;
   android-dev = import ./dev-tools/android;
   astronvim = import ./astronvim.nix;
-  environment-detection = import ./environment-detection.nix;
-  base-tools = import ./base-tools;
-  graphic-tools = import ./graphic-tools;
+  base-tools = import ./home/base-tools;
+  graphic-tools = import ./home/graphic-tools;
   bluetooth = import ./bluetooth.nix;
   # asus = import ./asus.nix;
   capture = import ./capture.nix;
@@ -16,13 +15,13 @@
   electron = import ./electron.nix;
   fcitx5 = import ./fcitx5.nix;
   filemanager = import ./filemanager.nix;
-  browsers = import ./browsers.nix;
+  browsers = import ./home/browsers;
   font = import ./font.nix;
   gaming = import ./gaming.nix;
   git = import ./git.nix;
   hyprland = import ./hyprland/hyprland.nix;
   # maa = import ./maa.nix;
-  multi-media-tools = import ./multi-media-tools;
+  multi-media-tools = import ./home/multi-media-tools;
   shell = import ./shell.nix;
   ssh = import ./ssh.nix; # 不能全自动化部署，需要ssh-keygen -t ed25519，并上传公钥
   # systemd = import ./systemd;

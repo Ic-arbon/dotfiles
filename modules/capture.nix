@@ -2,24 +2,18 @@
   config,
   pkgs,
   ...
-}:
-let
-  # 直接进行环境检测，避免循环依赖
-  isNixOS = builtins.pathExists /etc/nixos;
-  isArchLinux = builtins.pathExists /etc/arch-release;
-  isLaptop = builtins.pathExists "/sys/class/power_supply/BAT0" ||
-             builtins.pathExists "/sys/class/power_supply/BAT1";
-  hasNvidia = builtins.pathExists "/dev/nvidia0" ||
-              builtins.pathExists "/proc/driver/nvidia";
-in
-{
+}: let
+  # 部署形态由 machines 注入，不探测构建机文件系统
+  isNixOS = config.dotfiles.machine.kind == "nixos";
+in {
   # Screenshot
   # home.packages = with pkgs; [ wl-clipboard flameshot hyprshot ];
 
   # Video Record
   programs.obs-studio = {
     enable = true;
-    package = if isNixOS 
+    package =
+      if isNixOS
       then pkgs.obs-studio
       else (config.lib.nixGL.wrap pkgs.obs-studio);
     plugins = with pkgs; [

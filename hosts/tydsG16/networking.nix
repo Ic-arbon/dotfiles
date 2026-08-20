@@ -1,18 +1,21 @@
-{ inputs, config, lib, pkgs, ... }:
-let 
-  homeDir = "/home/tyd";
-in
 {
+  inputs,
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  homeDir = "/home/${config.dotfiles.machine.username}";
+in {
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
 
   networking.interfaces.enp56s0 = {
     wakeOnLan = {
       enable = true;
-      policy = [ "magic" ];
+      policy = ["magic"];
     };
-
   };
 
   # systemd.services.wakeonnlan = {
@@ -55,21 +58,23 @@ in
 
   # daed - dae with a web dashboard
   services.daed = {
+    enable = true;
+
+    openFirewall = {
       enable = true;
+      port = 12345;
+    };
 
-      openFirewall = {
-        enable = true;
-        port = 12345;
-      };
+    listen = "0.0.0.0:2023";
+    configDir = "${homeDir}/.config/daed";
 
-      listen = "0.0.0.0:2023";
-      configDir = "${homeDir}/.config/daed";
+    /*
+    default options
+    */
 
-      /* default options */
-
-      # package = inputs.daeuniverse.packages.x86_64-linux.daed;
-      # configDir = "/etc/daed";
-      # listen = "127.0.0.1:2023";
+    # package = inputs.daeuniverse.packages.x86_64-linux.daed;
+    # configDir = "/etc/daed";
+    # listen = "127.0.0.1:2023";
   };
 
   # services.udev = {

@@ -1,4 +1,9 @@
-{ lib, pkgs, pkgs-stable, ...}:{
+{
+  lib,
+  pkgs,
+  pkgs-stable,
+  ...
+}: {
   stylix = {
     enable = true;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-hard.yaml";
@@ -37,11 +42,8 @@
         package = pkgs.noto-fonts-color-emoji;
         name = "Noto Color Emoji";
       };
-    };#font end
+    }; #font end
 
     targets.firefox.profileNames = ["dev-edition-default"];
-
-  };#stylix end
-  
-
+  }; #stylix end
 }

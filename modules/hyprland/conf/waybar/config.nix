@@ -10,7 +10,7 @@
       "hyprland/submap"
       "sway/scratchpad"
     ];
-    modules-center = [ "hyprland/window" ];
+    modules-center = ["hyprland/window"];
     modules-right = [
       "mpris"
       "idle_inhibitor"
@@ -59,8 +59,8 @@
       noise_reduction = 0.77;
       input_delay = 2;
       hide_on_silence = true;
-      format-icons = [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
-      actions = { on-click-right = "mode"; };
+      format-icons = ["▁" "▂" "▃" "▄" "▅" "▆" "▇" "█"];
+      actions = {on-click-right = "mode";};
     };
     mpris = {
       format = " {status_icon} {dynamic}";
@@ -71,30 +71,39 @@
         paused = "⏸";
         stopped = "";
       };
-      dynamic-order = [ "title" "artist" ];
-      ignored-players = [ "firefox" "chromium" ];
+      dynamic-order = ["title" "artist"];
+      ignored-players = ["firefox" "chromium"];
     };
     idle_inhibitor = {
       format = "{icon}";
-      format-icons = { activated = ""; deactivated = ""; };
+      format-icons = {
+        activated = "";
+        deactivated = "";
+      };
     };
-    "hyprland/submap" = { format = "{}"; };
+    "hyprland/submap" = {format = "{}";};
     "sway/scratchpad" = {
       format = "{icon} {count}";
       show-empty = false;
-      format-icons = [ "" "" ];
+      format-icons = ["" ""];
       tooltip = true;
       tooltip-format = "{app}: {title}";
     };
     # 托盘
-    tray = { icon-size = 14; spacing = 10; };
-    load = { format = " {}"; };
-    cpu = { format = "{usage}% "; tooltip = false; };
-    memory = { format = "{}% "; };
+    tray = {
+      icon-size = 14;
+      spacing = 10;
+    };
+    load = {format = " {}";};
+    cpu = {
+      format = "{usage}% ";
+      tooltip = false;
+    };
+    memory = {format = "{}% ";};
     temperature = {
       critical-threshold = 80;
       format = "{temperatureC}°C {icon}";
-      format-icons = [ "" "" "" ];
+      format-icons = ["" "" ""];
     };
     # pulseaudio = {
     #   format = "{icon} {volume}%";
@@ -132,14 +141,14 @@
         phone = "";
         portable = "";
         car = "";
-        default = [ "" "" "" ];
+        default = ["" "" ""];
       };
       on-click = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
       on-click-right = "pavucontrol";
     };
     backlight = {
       format = "{icon} {percent}%";
-      format-icons = [ "" "" "" "" "" "" "" "" "" ];
+      format-icons = ["" "" "" "" "" "" "" "" ""];
     };
     clock = {
       interval = 1;
@@ -152,13 +161,16 @@
     };
     battery = {
       interval = 6;
-      states = { warning = 30; critical = 15; };
+      states = {
+        warning = 30;
+        critical = 15;
+      };
       format = "{icon} {capacity}%";
       format-full = "{icon} {capacity}%";
       format-charging = " {capacity}%";
       format-plugged = " {capacity}%";
       format-alt = "{icon} {time}";
-      format-icons = [ "" "" "" "" "" ];
+      format-icons = ["" "" "" "" ""];
     };
   }
   # {
