@@ -25,10 +25,11 @@
   };
 
   desktop = rec {
-    # GUI 通用：浏览器 + 主题（字体单独叶子，因为 macOS 当前不装 font profile）
+    # GUI 通用：浏览器 + 主题 + 终端（字体单独叶子，因为 macOS 当前不装 font profile）
     common = [
       hmModules.browsers
       hmModules.theme
+      hmModules.ghostty
     ];
     fonts = [hmModules.font];
     # 输入法属于桌面但不属于 common，按机器选择是否启用

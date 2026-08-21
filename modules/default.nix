@@ -7,6 +7,7 @@
   vm = import ./dev-tools/vm;
   astronvim = import ./astronvim.nix;
   base-tools = import ./home/base-tools;
+  ghostty = import ./home/ghostty.nix;
   graphic-tools = import ./home/graphic-tools;
   bluetooth = import ./bluetooth.nix;
   # asus = import ./asus.nix;

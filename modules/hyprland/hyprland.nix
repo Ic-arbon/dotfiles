@@ -337,15 +337,6 @@ in {
     ];
   };
 
-  programs.ghostty = {
-    enable = true;
-    package = config.lib.nixGL.wrap pkgs.ghostty;
-    enableZshIntegration = true;
-    # settings = {
-    #   background-opacity = "0.9";
-    # };
-  };
-
   home.sessionVariables = {
     # Optional, hint Electron apps to use Wayland:
     NIXOS_OZONE_WL = "1";
