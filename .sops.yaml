@@ -13,10 +13,12 @@
 # 恢复密钥建议：离线生成一个 age key，把公钥也加入 &hosts。
 keys:
   - &hosts:
+      - age15hd22eu4yhxsue6qc39yv83wyrjq6thha7kyfkxdhctqcyhstq3quhjazr
       - age1ln2z4tsujmj72dcw6e5y7jx68h0xnchsku2ds95qy4udhuhs24nskvzmjs
       - age13qg6pjvxffunte6ry9vk9e5xewx6sys0fa4hhv9yualz5j27kdws9ecvw0
 
   - &host_tyd_tydsMBA: [age1ln2z4tsujmj72dcw6e5y7jx68h0xnchsku2ds95qy4udhuhs24nskvzmjs, age13qg6pjvxffunte6ry9vk9e5xewx6sys0fa4hhv9yualz5j27kdws9ecvw0]
+  - &host_tyd_OB714: [age15hd22eu4yhxsue6qc39yv83wyrjq6thha7kyfkxdhctqcyhstq3quhjazr]
 creation_rules:
   - path_regex: ^secrets/common/secrets\.yaml$
     key_groups:
@@ -33,3 +35,8 @@ creation_rules:
     key_groups:
       - age:
           - *host_tyd_tydsMBA
+
+  - path_regex: ^secrets/hosts/tyd@OB714/secrets\.yaml$
+    key_groups:
+      - age:
+          - *host_tyd_OB714
