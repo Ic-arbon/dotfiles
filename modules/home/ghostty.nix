@@ -5,8 +5,12 @@
 }: {
   programs.ghostty = {
     enable = true;
-    # 桌面 profile（hyprland 等）可以用更高优先级覆盖为 stable 版本
-    package = lib.mkDefault pkgs.ghostty;
+    # macOS 使用官方 dmg 的 ghostty-bin；Linux 使用 nixpkgs 源码包。
+    package = lib.mkDefault (
+      if pkgs.stdenv.hostPlatform.isDarwin
+      then pkgs.ghostty-bin
+      else pkgs.ghostty
+    );
     enableZshIntegration = true;
   };
 }
