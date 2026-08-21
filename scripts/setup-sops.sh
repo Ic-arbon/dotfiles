@@ -119,17 +119,25 @@ ensure_user_key() {
 }
 
 SSH_PUB_KEYS=()
+SSH_KEY_LABELS=()
 if [ -n "${SOPS_SSH_PUBLIC_KEYS:-}" ]; then
   IFS=, read -r -a SSH_PUB_KEYS <<<"$SOPS_SSH_PUBLIC_KEYS"
+  for idx in "${!SSH_PUB_KEYS[@]}"; do
+    SSH_KEY_LABELS+=("key${idx}")
+  done
 elif [ -n "${SOPS_SSH_PRIVATE_KEY:-}" ]; then
   SSH_PUB_KEYS+=("${SOPS_SSH_PUBLIC_KEY:-${SOPS_SSH_PRIVATE_KEY}.pub}")
+  SSH_KEY_LABELS+=("user")
 elif command -v nixos-rebuild >/dev/null 2>&1 \
   || [ -f /etc/NIXOS ] \
   || [ "$(uname -s)" = "Darwin" ]; then
   SSH_PUB_KEYS+=("$(ensure_host_key)")
+  SSH_KEY_LABELS+=("host")
   SSH_PUB_KEYS+=("$(ensure_user_key)")
+  SSH_KEY_LABELS+=("user")
 else
   SSH_PUB_KEYS+=("$(ensure_user_key)")
+  SSH_KEY_LABELS+=("user")
 fi
 
 AGE_RECIPIENTS=()
@@ -143,82 +151,98 @@ for pub in "${SSH_PUB_KEYS[@]}"; do
 done
 
 AGE_RECIPIENTS_CSV="$(IFS=,; echo "${AGE_RECIPIENTS[*]}")"
+AGE_LABELS_CSV="$(IFS=,; echo "${SSH_KEY_LABELS[*]}")"
 
 # ---------------------------------------------------------------------------
 # 维护 .sops.yaml：
-#   - 当前机器的所有 recipients 加入 common 的 &hosts 组
-#   - 为当前机器建立独立 anchor（flow list）与 host 专属 creation_rule
+#   - 每个 recipient 使用独立的 YAML anchor（sops updatekeys 要求）
+#   - common 规则引用所有机器 anchor
+#   - 每台机器有自己的 host 专属 creation_rule
 # ---------------------------------------------------------------------------
 if [ ! -f "$SOPS_CONFIG" ]; then
   cp "$REPO_DIR/sops.yaml.example" "$SOPS_CONFIG"
 fi
 
-ANCHOR="host_$(printf '%s' "$IDENTITY" | tr -c 'A-Za-z0-9_' '_')"
-python3 - "$SOPS_CONFIG" "$IDENTITY" "$ANCHOR" "$AGE_RECIPIENTS_CSV" <<'PY'
+ANCHOR="$(printf '%s' "$IDENTITY" | tr -c 'A-Za-z0-9_' '_')"
+python3 - "$SOPS_CONFIG" "$IDENTITY" "$ANCHOR" "$AGE_RECIPIENTS_CSV" "$AGE_LABELS_CSV" <<'PY'
 import pathlib
 import re
 import sys
 
 cfg_path = pathlib.Path(sys.argv[1])
 identity = sys.argv[2]
-anchor = sys.argv[3]
+anchor_base = sys.argv[3]
 recipients = [r.strip() for r in sys.argv[4].split(",") if r.strip()]
+labels = sys.argv[5].split(",") if len(sys.argv) > 5 and sys.argv[5] else []
 text = cfg_path.read_text()
 
-# 1. 替换初始占位符
-if "__AGE_HOST_KEYS__" in text:
-    block = "\n      ".join(f"- {r}" for r in recipients)
-    text = text.replace("__AGE_HOST_KEYS__", block)
-
-# 2. 把缺失的 recipients 插入 `- &hosts:` 序列
-missing = [
-    r
-    for r in recipients
-    if not re.search(rf"^\s*-\s*{re.escape(r)}\s*$", text, flags=re.MULTILINE)
-]
-if missing and re.search(r"^\s*-\s*&hosts\s*:", text, flags=re.MULTILINE):
-    lines = text.splitlines()
-    out = []
-    inserted = False
-    for line in lines:
-        out.append(line)
-        if not inserted and re.match(r"^\s*-\s*&hosts\s*:", line):
-            for r in missing:
-                out.append(f"      - {r}")
-            inserted = True
-    text = "\n".join(out) + "\n"
-
-# 3. 机器专属 anchor：flow list 同时包含 host key 与 user key
-flow = "[" + ", ".join(recipients) + "]"
-anchor_line = f"  - &{anchor}: {flow}"
-if f"&{anchor}" not in text:
-    text = re.sub(
-        r"^creation_rules:\s*$",
-        anchor_line + "\ncreation_rules:",
-        text,
-        count=1,
-        flags=re.MULTILINE,
-    )
-else:
-    text = re.sub(
-        rf"^\s*-\s*&{re.escape(anchor)}\s*:.*$",
-        anchor_line,
-        text,
-        count=1,
-        flags=re.MULTILINE,
-    )
-
-# 4. host 专属 creation_rule（追加到 creation_rules 列表末尾）
-if f"secrets/hosts/{identity}/secrets" not in text:
-    text = text.rstrip("\n") + f"""
-
-  - path_regex: ^secrets/hosts/{identity}/secrets\\.yaml$
-    key_groups:
-      - age:
-          - *{anchor}
+header = """# sops 配置文件（仅含公钥，可安全提交）。
+#
+# 约定：
+#   - 每个 age recipient 使用独立的 YAML anchor；
+#   - common 密文允许所有机器解密；
+#   - 机器专属密文只允许对应机器的 keys。
+#
+# 添加新机器后，需要在任一已授权机器上运行：
+#   sops updatekeys secrets/common/secrets.yaml
 """
 
-cfg_path.write_text(text)
+# 1. 读取既有 anchor（其他机器的 recipient），剔除当前机器的旧 anchor
+anchors = {}
+for line in text.splitlines():
+    m = re.match(r"^\s*-\s*&([A-Za-z0-9_]+)\s+(age1[0-9a-zA-Z]+)\s*$", line)
+    if m:
+        anchors[m.group(1)] = m.group(2)
+
+anchors = {
+    name: rec
+    for name, rec in anchors.items()
+    if not name.startswith(anchor_base + "_")
+}
+has_existing_anchors = bool(anchors)
+
+# 2. 加入当前机器的 host/user recipients
+for idx, recipient in enumerate(recipients):
+    label = labels[idx] if idx < len(labels) else f"key{idx}"
+    anchors[f"{anchor_base}_{label}"] = recipient
+
+# 3. 生成 keys 段与 common 规则
+keys_block = ["keys:", "  - &hosts:"]
+keys_block += [f"      - &{name} {rec}" for name, rec in anchors.items()]
+
+common_refs = "\n".join(f"          - *{name}" for name in anchors)
+
+# 4. 保留其他机器的 host 规则，删除当前机器的旧 host 规则。
+#    若旧文件是首次从模板复制的（没有任何 age anchor），则丢弃模板规则。
+rules_tail = ""
+if has_existing_anchors and "creation_rules:" in text:
+    rules_tail = text.split("creation_rules:", 1)[1]
+# 旧 common 规则与当前机器的 host 规则都由本脚本重新生成
+rules_tail = re.sub(
+    r"(?ms)^  - path_regex: \^secrets/common/secrets\\\.yaml\$.*?(?=^  - path_regex:|\Z)",
+    "",
+    rules_tail,
+)
+rules_tail = re.sub(
+    rf"(?ms)^  - path_regex: \^secrets/hosts/{re.escape(identity)}/secrets\\\.yaml\$.*?(?=^  - path_regex:|\Z)",
+    "",
+    rules_tail,
+)
+rules_tail = rules_tail.rstrip()
+
+current_rule = f"""  - path_regex: ^secrets/hosts/{identity}/secrets\\.yaml$
+    key_groups:
+      - age:
+"""
+current_rule += "\n".join(f"          - *{name}" for name in anchors if name.startswith(anchor_base + "_"))
+
+new_text = header + "\n" + "\n".join(keys_block) + "\n\ncreation_rules:\n" + f"""  - path_regex: ^secrets/common/secrets\\.yaml$
+    key_groups:
+      - age:
+{common_refs}
+""" + rules_tail + "\n\n" + current_rule + "\n"
+
+cfg_path.write_text(new_text)
 PY
 echo "==> 已更新 $SOPS_CONFIG"
 

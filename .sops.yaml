@@ -10,21 +10,15 @@
 
 keys:
   - &hosts:
+      - &tyd_OB714 age15hd22eu4yhxsue6qc39yv83wyrjq6thha7kyfkxdhctqcyhstq3quhjazr
       - &tyd_tydsMBA_host age1ln2z4tsujmj72dcw6e5y7jx68h0xnchsku2ds95qy4udhuhs24nskvzmjs
       - &tyd_tydsMBA_user age13qg6pjvxffunte6ry9vk9e5xewx6sys0fa4hhv9yualz5j27kdws9ecvw0
-      - &tyd_OB714 age15hd22eu4yhxsue6qc39yv83wyrjq6thha7kyfkxdhctqcyhstq3quhjazr
 
 creation_rules:
   - path_regex: ^secrets/common/secrets\.yaml$
     key_groups:
       - age:
-          - *tyd_tydsMBA_host
-          - *tyd_tydsMBA_user
           - *tyd_OB714
-
-  - path_regex: ^secrets/hosts/tyd@tydsMBA/secrets\.yaml$
-    key_groups:
-      - age:
           - *tyd_tydsMBA_host
           - *tyd_tydsMBA_user
 
@@ -32,3 +26,9 @@ creation_rules:
     key_groups:
       - age:
           - *tyd_OB714
+
+  - path_regex: ^secrets/hosts/tyd@tydsMBA/secrets\.yaml$
+    key_groups:
+      - age:
+          - *tyd_tydsMBA_host
+          - *tyd_tydsMBA_user

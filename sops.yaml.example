@@ -1,16 +1,13 @@
 # sops 配置文件（仅含公钥，可安全提交）。
 #
-# 本文件由 scripts/setup-sops.sh 自动创建并维护：
-#   - `&hosts` 里是每台机器 SSH 公钥转换出的 age recipient；
-#   - common 密文允许所有 hosts 解密；
-#   - 机器专属密文建议单独添加 creation_rule，只授权对应机器。
+# 约定：
+#   - 每个 age recipient 使用独立的 YAML anchor；
+#   - common 密文允许所有机器解密；
+#   - 机器专属密文只允许对应机器的 keys。
 #
-# 添加新机器：
-#   1. 在新机器运行 scripts/setup-sops.sh（自动插入其 age recipient）；
-#   2. 在任一已授权机器上运行：
-#        sops updatekeys secrets/common/secrets.yaml
-#
-# 恢复密钥建议：离线生成一个 age key，把公钥也加入 &hosts。
+# 添加新机器后，需要在任一已授权机器上运行：
+#   sops updatekeys secrets/common/secrets.yaml
+
 keys:
   - &hosts:
       __AGE_HOST_KEYS__
@@ -19,10 +16,4 @@ creation_rules:
   - path_regex: ^secrets/common/secrets\.yaml$
     key_groups:
       - age:
-          - *hosts
-
-  # 机器专属密文示例（把 <host> 替换成实际 hostname，并为它建独立 anchor）：
-  # - path_regex: ^secrets/hosts/[^/]+/<host>/secrets\.yaml$
-  #   key_groups:
-  #     - age:
-  #         - *host_<host>
+          __COMMON_HOST_ANCHORS__
