@@ -123,7 +123,7 @@ in {
       export PATH="$HOME/.local/bin:$PATH"
       export LC_ALL=en_US.UTF-8
       export LANG=en_US.UTF-8
-      if [[ "$TERM" == "xterm-kitty" ]]; then
+      if [[ "$TERM" == "xterm-ghostty" ]]; then
         alias ssh="TERM=xterm-256color ssh"
       fi
     '';

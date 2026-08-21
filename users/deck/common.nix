@@ -19,7 +19,7 @@
   };
 
   # Steam Deck 使用 nixGL 默认 mesa wrapper
-  nixGL = {
+  targets.genericLinux.nixGL = {
     packages = nixgl.packages;
     defaultWrapper = "mesa";
   };

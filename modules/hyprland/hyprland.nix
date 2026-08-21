@@ -75,7 +75,7 @@ in {
     # See https://wiki.hyprland.org/Configuring/Keywords/
 
     # Set programs that you use
-    "$terminal" = "kitty";
+    "$terminal" = "ghostty";
     "$fileManager" = "thunar";
     "$menu" = "rofi -show drun -show-icons";
 
@@ -337,15 +337,13 @@ in {
     ];
   };
 
-  programs.kitty = {
+  programs.ghostty = {
     enable = true;
-    package = config.lib.nixGL.wrap pkgs-stable.kitty;
+    package = config.lib.nixGL.wrap pkgs.ghostty;
+    enableZshIntegration = true;
     # settings = {
-    #   background_opacity = "0.9";
+    #   background-opacity = "0.9";
     # };
-    themeFile = "GruvboxMaterialDarkHard";
-    # font.name = "FiraCode Nerd Font";
-    # font.size = 16;
   };
 
   home.sessionVariables = {
