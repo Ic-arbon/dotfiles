@@ -13,6 +13,5 @@
     stirling-pdf
     bluetuith
     pavucontrol
-    qemu
   ]);
 }

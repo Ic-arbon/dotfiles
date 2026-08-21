@@ -31,7 +31,7 @@ dotfiles/
 | `tyd@seafile` | NixOS | core + server |
 | `tyd@tydsMBA` | nix-darwin | core + desktop.common + desktop.multimedia |
 | `deck@steam-deck` | standalone | core + desktop.common/fonts + networking.dae |
-| `tyd@OB714` | standalone Fedora | core + desktop.gnome |
+| `tyd@OB714` | standalone Fedora | core + desktop.gnome + dev.vm |
 
 ## 部署
 
@@ -65,7 +65,7 @@ home-manager switch -b backup --flake ~/dotfiles#tyd@OB714
 ## Fedora OB714
 
 - 独立 home-manager，系统层继续由 dnf 管理。
-- 组件：`core + desktop.gnome`（GNOME 桌面工具，无 embedded/hyprland/gaming）。
+- 组件：`core + desktop.gnome + dev.vm`（GNOME 桌面工具 + 虚拟化开发工具，无 electron/embedded/hyprland/gaming）。
 - 首次引导：`~/dotfiles/scripts/bootstrap-fedora.sh`。
 
 ## 密钥安全

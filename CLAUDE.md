@@ -43,8 +43,8 @@ nix flake show
 2. **profiles 是组件套餐**：
    - `home.core`：所有机器强制（builder 自动注入）
    - `home.server`：无头服务器生产工具
-   - `home.dev.{full,embedded,android}`：开发工具
-   - `home.desktop.{common,fonts,input,multimedia,gnome,hyprland,gaming}`：GUI 组件
+   - `home.dev.{full,embedded,android,vm}`：开发工具
+   - `home.desktop.{common,fonts,input,multimedia,electron,gnome,hyprland,gaming}`：GUI 组件
    - `home.networking.{ssh,dae}`
    - `home.platform.*`：由 `identity.kind` 自动注入
 3. **模块只读 options，不做探测**：机器身份/事实通过 `modules/meta.nix` 的 `dotfiles.machine`、`dotfiles.hardware` 等注入。禁止在模块中 `builtins.pathExists /etc/nixos`、读电池/NVIDIA 设备等构建机探测。

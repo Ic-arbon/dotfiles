@@ -21,6 +21,7 @@
     ];
     embedded = [hmModules.embedded];
     android = [hmModules.android-dev];
+    vm = [hmModules.vm];
   };
 
   desktop = rec {
@@ -37,17 +38,18 @@
       hmModules.multi-media-tools
       hmModules.graphic-tools
     ];
-    # Fedora GNOME：common + fonts + input + multimedia + electron/capture
+    # Electron 应用单独成类，GNOME 默认不强制带
+    electron = [hmModules.electron];
+    # Fedora GNOME：common + fonts + input + multimedia + capture
     gnome =
       common
       ++ fonts
       ++ input
       ++ multimedia
       ++ [
-        hmModules.electron
         hmModules.capture
       ];
-    # 完整 Hyprland WM 桌面：common + fonts + input + hyprland 全家桶
+    # 完整 Hyprland WM 桌面：common + fonts + input + hyprland 全家桶 + electron
     hyprland =
       common
       ++ fonts
@@ -57,8 +59,8 @@
         hmModules.waybar
         hmModules.capture
         hmModules.bluetooth
-        hmModules.electron
-      ];
+      ]
+      ++ electron;
     gaming = [hmModules.gaming];
   };
 

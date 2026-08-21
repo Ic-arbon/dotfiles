@@ -4,6 +4,7 @@
   # List your module files here
   # my-module = import ./my-module.nix;
   android-dev = import ./dev-tools/android;
+  vm = import ./dev-tools/vm;
   astronvim = import ./astronvim.nix;
   base-tools = import ./home/base-tools;
   graphic-tools = import ./home/graphic-tools;

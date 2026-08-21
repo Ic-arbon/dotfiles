@@ -1,5 +1,5 @@
 # tyd@OB714 —— Fedora 笔记本（standalone home-manager）
-# 组件组合：core（自动）+ desktop.gnome，无 embedded / hyprland / gaming。
+# 组件组合：core（自动）+ desktop.gnome + dev.vm，无 electron / embedded / hyprland / gaming。
 {profiles, ...}: {
   identity = {
     username = "tyd";
@@ -17,6 +17,7 @@
   profiles = {
     home = [
       profiles.home.desktop.gnome
+      profiles.home.dev.vm
     ];
     system = [];
   };
