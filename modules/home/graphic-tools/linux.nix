@@ -7,7 +7,6 @@
   ...
 }: {
   home.packages = lib.mkIf pkgs.stdenv.isLinux (with pkgs; [
-    (config.lib.nixGL.wrap pkgs-unstable.qcm)
     vlc
     zotero
     libreoffice

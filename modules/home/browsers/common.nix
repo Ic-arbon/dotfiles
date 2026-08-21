@@ -21,7 +21,7 @@
         name = "profile_0";
         isDefault = true;
         extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
-          adblocker-ultimate
+          # adblocker-ultimate
           darkreader
           vimium
           # tampermonkey
