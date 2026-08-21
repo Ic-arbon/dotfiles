@@ -53,7 +53,6 @@
     # dev tools
     # pkgs-unstable.codex
     pkgs-unstable.claude-code
-    nodejs
 
     # office
     # pkgs-stable.qq
