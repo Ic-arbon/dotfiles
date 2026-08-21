@@ -1,30 +1,18 @@
 {
-  inputs,
   config,
   lib,
   pkgs,
   pkgs-stable,
   ...
 }: let
-  # 部署形态与硬件事实由 machines 注入，不探测构建机文件系统
-  isNixOS = config.dotfiles.machine.kind == "nixos";
+  # 硬件事实由 machines 注入，不探测构建机文件系统
   hasNvidia = config.dotfiles.hardware.nvidia;
 in {
   wayland.windowManager.hyprland = {
     enable = true;
-    package = lib.mkDefault (
-      if isNixOS
-      # 在NixOS上使用来自inputs的hyprland
-      # then inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland
-      then pkgs.hyprland
-      # 在非NixOS（如ArchLinux）上使用nixGL包装的hyprland
-      else (config.lib.nixGL.wrap pkgs-stable.hyprland)
-    );
-    # 根据环境选择portal包
-    portalPackage =
-      if isNixOS
-      then inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland
-      else pkgs-stable.xdg-desktop-portal-hyprland;
+    package = lib.mkDefault pkgs.hyprland;
+    # 统一使用 nixpkgs 的 portal 包，与 hyprland 包来源保持一致
+    portalPackage = pkgs.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
     systemd = {
       enable = true;
@@ -33,7 +21,7 @@ in {
   };
 
   wayland.windowManager.hyprland.plugins = [
-    # inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprbars
+    # hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprbars
     # "/absolute/path/to/plugin.so"
   ];
 

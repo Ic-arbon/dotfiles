@@ -5,7 +5,7 @@
 }: {
   home.packages = with pkgs; [
     # HARDWARE DESIGN
-    # (config.lib.nixGL.wrap pkgs.kicad)
+    # pkgs.kicad
     # easyeda2kicad
 
     # toolchain
@@ -31,7 +31,7 @@
     # openocd
     tio
     minicom
-    # (config.lib.nixGL.wrap pkgs.pulseview)
+    # pkgs.pulseview
     # libsigrok
     # (import ./scripts/udev {inherit pkgs;})
     # segger-ozone

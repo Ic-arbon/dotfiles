@@ -54,6 +54,15 @@ home-manager switch -b backup --flake ~/dotfiles#tyd@OB714
 
 `update` 别名由当前机器的 identity 自动选择正确命令。
 
+## 非 NixOS GPU
+
+standalone Linux 机器统一使用 Home Manager 的 `targets.genericLinux.gpu`，
+不再使用 nixGL 逐包 wrap。
+
+首次部署 standalone 机器时，`home-manager switch` 会提示运行一次
+`sudo /nix/store/.../non-nixos-gpu-setup`。具体操作、NVIDIA 版本锁定和卸载方法见
+[docs/gpu-non-nixos.md](docs/gpu-non-nixos.md)。
+
 ## 新增机器
 
 1. 新建 `machines/<username>@<hostname>.nix`，填写 identity/facts/profiles；

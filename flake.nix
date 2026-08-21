@@ -38,12 +38,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # nixGL
-    nixGL = {
-      url = "github:nix-community/nixGL";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
-    };
-
     hyprland.url = "github:hyprwm/Hyprland";
     # hyprland-plugins = {
     #   url = "github:hyprwm/hyprland-plugins";

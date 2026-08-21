@@ -25,11 +25,6 @@
     };
 
     nix-gaming = inputs.nix-gaming.packages.${system};
-
-    nixgl = {
-      packages = inputs.nixGL.packages.${system};
-      config.allowUnfree = true;
-    };
   };
 in {
   inherit forAllSystems genSpecialArgs;
